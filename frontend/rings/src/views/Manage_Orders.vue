@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import { getCurrentCustomerId } from '@/services/customerService';
+
+/**
+ * TO DO:
+ * - filter orders by customer ID
+ * - add location for order in the order card
+ */
 
 interface OrderRing {
   ringType: string;
@@ -11,11 +18,21 @@ interface OrderRing {
   price: number;
 }
 
+interface Location {
+  customerid: number;
+  street: string;
+  city: string;
+  state: string;
+  zip: number;
+}
+
 interface Order {
   orderId: string;
+  customerId: number;
   rings: OrderRing[];
   orderDate?: string;
   status?: string;
+  location: Location;
 }
 
 const orders = ref<Order[]>([]);
@@ -23,19 +40,23 @@ const loading = ref(true);
 const error = ref<string | null>(null);
 
 const fetchOrders = async () => {
+  const customerId = getCurrentCustomerId() || 1; // Default to customer 1 if not set
+  
   try {
     loading.value = true;
     error.value = null;
     // Replace with real endpoint
     const response = await axios.get('http://localhost:8080/api/orders');
-    orders.value = response.data;
+    //orders filtered by customer id
+    orders.value = response.data.filter((order: Order) => order.customerId === customerId);
   } catch (err) {
     console.error('Error fetching orders:', err);
     // error.value = 'Failed to load orders';
     // Mock data 
-    orders.value = [
+    const mockOrders = [
       {
         orderId: '12345',
+        customerId: 1,
         rings: [
           {
             ringType: 'Classic Band',
@@ -45,10 +66,18 @@ const fetchOrders = async () => {
             quantity: 2,
             price: 599.98
           }
-        ]
+        ],
+          location: {
+            customerid: 1,
+            street: '123 Main St',
+            city: 'Anytown',
+            state: 'CA',
+            zip: 90210
+          }
       },
       {
         orderId: '12346',
+        customerId: 1,
         rings: [
           {
             ringType: 'Classic Band',
@@ -66,10 +95,18 @@ const fetchOrders = async () => {
             quantity: 1,
             price: 899.99
           }
-        ]
+        ],
+        location: {
+          customerid: 1,
+          street: '123 Main St',
+          city: 'Anytown',
+          state: 'CA',
+          zip: 90210
+        }
       },
       {
         orderId: '12347',
+        customerId: 2,
         rings: [
           {
             ringType: 'Modern Band',
@@ -79,10 +116,18 @@ const fetchOrders = async () => {
             quantity: 3,
             price: 1299.97
           }
-        ]
+        ],
+          location: {
+            customerid: 2,
+            street: '456 Oak Ave',
+            city: 'Sometown',
+            state: 'NY',
+            zip: 10001
+          }
       },
       {
         orderId: '12348',
+        customerId: 3,
         rings: [
           {
             ringType: 'Classic Band',
@@ -92,9 +137,19 @@ const fetchOrders = async () => {
             quantity: 1,
             price: 349.99
           }
-        ]
+        ],
+          location: {
+            customerid: 3,
+            street: '789 Pine Rd',
+            city: 'Yourtown',
+            state: 'TX',
+            zip: 75001
+          }
       }
     ];
+    
+    // Filter mock data by customer ID
+    orders.value = mockOrders.filter(order => order.customerId === customerId);
   } finally {
     loading.value = false;
   }
@@ -160,6 +215,7 @@ onMounted(() => {
             <div class="order-cell">Quantity: {{ ring.quantity }}</div>
             <div class="order-cell">Price: ${{ ring.price.toFixed(2) }}</div>
           </div>
+          <div class="order-location">Location: {{ order.location.street }}, {{ order.location.city }}, {{ order.location.state }} {{ order.location.zip }}</div>
         </div>
       </div>
     </div>
@@ -173,6 +229,7 @@ onMounted(() => {
   max-width: 1200px;
   margin: 0 auto;
   color: rgba(255, 255, 255, 1);
+  box-sizing: border-box;
 }
 
 h1 {
@@ -190,6 +247,10 @@ h1 {
   background-color: rgb(88, 88, 88);
   border-radius: 8px;
   color: white;
+  box-sizing: border-box;
+  max-width: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 
 .loading-message p,
@@ -197,6 +258,7 @@ h1 {
 .empty-orders p {
   font-size: 1.2em;
   margin-bottom: 20px;
+  word-wrap: break-word;
 }
 
 .retry-btn,
@@ -273,6 +335,13 @@ h1 {
   align-items: center;
   font-size: 0.95em;
   color: white;
+}
+
+.order-location {
+  margin-top: 10px;
+  font-size: 0.9em;
+  color: #ddd;
+  padding-left: 20px;
 }
 
 .order-id {

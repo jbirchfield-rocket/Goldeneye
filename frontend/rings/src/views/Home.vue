@@ -1,13 +1,162 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import { setCustomerIdCookie, getCurrentCustomerId } from '@/services/customerService';
+
+const selectedCustomerId = ref<number | null>(null);
+
+//function to store a customer id in cookie to use in API calls
+const handleCustomerChange = (event: Event) => {
+  const customerId = Number((event.target as HTMLSelectElement).value);
+  setCustomerIdCookie(customerId);
+  selectedCustomerId.value = customerId;
+};
+
+// Load the current customer ID when component mounts
+onMounted(() => {
+  selectedCustomerId.value = getCurrentCustomerId();
+});
+</script>
 
 <template>
-    <img src="../assets/Goldeneye Logo2.png" alt="Goldeneye Logo" style="width: 400px; height: auto; margin-bottom: 5px;" />
-  <h1>Welcome to Goldeneye</h1>
-  <p>
-    Goldeneye is a company dedicated to those who have an eye for golden perfection.
-     We sell only the highest quality rings at reasonable prices. 
-     Have gold in your eyes and on your fingers.
-  </p>
+  <div class="home-container">
+    <div class="customer-selector-wrapper">
+      <label for="customer-select">Customer:</label>
+      <select 
+        id="customer-select"
+        class="customer-select" 
+        @change="handleCustomerChange($event)" 
+        :value="selectedCustomerId || ''"
+      >
+        <option value="" disabled>Select Customer</option>
+        <option value="1">Customer 1</option>
+        <option value="2">Customer 2</option>
+        <option value="3">Customer 3</option>
+      </select>
+    </div>
+    
+    <div class="content-center">
+      <img src="../assets/Goldeneye Logo2.png" alt="Goldeneye Logo" class="logo-image" />
+      <h1>Welcome to Goldeneye</h1>
+      <p class="description">
+        Goldeneye is a company dedicated to those who have an eye for golden perfection.
+        We sell only the highest quality rings at reasonable prices. 
+        Have gold in your eyes and on your fingers.
+      </p>
+    </div>
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.home-container {
+  position: relative;
+  width: 100%;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.customer-selector-wrapper {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 10px 15px;
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.customer-selector-wrapper label {
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  white-space: nowrap;
+}
+
+.content-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.logo-image {
+  width: 400px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 2.5em;
+  margin: 20px 0;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.description {
+  max-width: 700px;
+  font-size: 1.2em;
+  line-height: 1.6;
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+  margin: 0 20px;
+}
+.customer-select {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #baaa51;
+  background-color: rgba(0, 0, 0, 0.95);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 140px;
+}
+
+.customer-select:hover {
+  background-color: white;
+  border-color: #d4c570;
+  box-shadow: 0 0 8px rgba(186, 170, 81, 0.4);
+}
+
+.customer-select:focus {
+  outline: none;
+  border-color: #baaa51;
+  box-shadow: 0 0 8px rgba(186, 170, 81, 0.6);
+}
+
+.customer-select option {
+  background-color: white;
+  color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .customer-selector-wrapper {
+    position: static;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .logo-image {
+    width: 300px;
+  }
+  
+  h1 {
+    font-size: 2em;
+  }
+  
+  .description {
+    font-size: 1em;
+  }
+}
+</style>
