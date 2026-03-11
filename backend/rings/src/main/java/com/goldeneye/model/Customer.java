@@ -13,7 +13,7 @@ public class Customer {
     private int custId;
     private String name;
 
-    Customer(int custId, String name) {
+    public Customer(int custId, String name) {
         this.custId = custId;
         this.name = name;
     }

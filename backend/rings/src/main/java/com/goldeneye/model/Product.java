@@ -17,7 +17,7 @@ public class Product {
     private String description;
     private BigDecimal basePrice;
 
-    Product(int prodId, String name, String description, BigDecimal basePrice) {
+    public Product(int prodId, String name, String description, BigDecimal basePrice) {
         this.prodId = prodId;
         this.name = name;
         this.description = description;
