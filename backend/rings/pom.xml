@@ -67,6 +67,17 @@
 			<artifactId>spring-boot-starter-webmvc-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.ibm.db2.jcc</groupId>
+			<artifactId>db2jcc4</artifactId>
+			<version>11.5.8.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.ibm.db2.jcc</groupId>
+			<artifactId>db2jcc-license-cisuz</artifactId>
+			<version>11.5.8.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
