@@ -1,4 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useCart } from '@/services/useCart';
+
+const { cartCount } = useCart();
+</script>
 
 <template>
 
@@ -9,7 +13,10 @@
         <router-link to="/purchase-rings">Purchase Rings</router-link>
         <router-link to="/manage-orders">Manage Orders</router-link>
         <router-link to="/about-us">About Us</router-link>
-        <router-link class="right-link" to="/cart">Cart</router-link>
+        <router-link class="right-link cart-link" to="/cart">
+          Cart
+          <span v-if="cartCount > 0" class="cart-badge">{{ cartCount }}</span>
+        </router-link>
         <img class="logo" src="./assets/Goldeneye_Single.png" alt="Goldeneye Logo" />
       </nav>
       <router-view />
@@ -37,7 +44,8 @@ html, body {
   background-image: url('./assets/Background_img.png');
   background-size: cover;
   background-position: center;
-  height: 100vh;
+  background-attachment: fixed;
+  min-height: 100vh;
 }
 
 .foreground {
@@ -45,7 +53,7 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  height: 100%;
+  min-height: 100vh;
   color: white;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
   background-color: rgba(0, 0, 0, 0.6);
@@ -71,6 +79,27 @@ nav {
 
 .right-link {
   margin-left: auto;
+}
+
+.cart-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -12px;
+  background-color: #358600;
+  color: white;
+  border-radius: 20%;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: bold;
+  min-width: 20px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 nav a {
