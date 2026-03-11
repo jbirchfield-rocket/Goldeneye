@@ -1,10 +1,12 @@
 <script setup lang="ts"></script>
 
 <template>
-  <h1>You did it!</h1>
+    <img src="../assets/Goldeneye Logo2.png" alt="Goldeneye Logo" style="width: 400px; height: auto; margin-bottom: 5px;" />
+  <h1>Welcome to Goldeneye</h1>
   <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
+    Goldeneye is a company dedicated to those who have an eye for golden perfection.
+     We sell only the highest quality rings at reasonable prices. 
+     Have gold in your eyes and on your fingers.
   </p>
 </template>
 
