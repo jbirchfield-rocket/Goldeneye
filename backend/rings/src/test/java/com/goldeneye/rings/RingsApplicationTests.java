@@ -1,13 +1,11 @@
 package com.goldeneye.rings;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.Test;
 
-@SpringBootTest
-class RingsApplicationTests {
+public class RingsApplicationTests {
 
 	@Test
-	void contextLoads() {
+	public void contextLoads() {
 	}
 
 }

@@ -3,19 +3,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
  */
 
-package com.goldeneye.repo;
+package com.goldeneye.model;
 
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  *
- * @author scanales
+ * @author kwall
  */
-public class RepoTests {
+public class ProductTest {
 
-    @Test
-    public void RepoTests() {
+    public ProductTest() {
     }
-
 
 }
