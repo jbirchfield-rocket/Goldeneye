@@ -6,6 +6,10 @@
     <div class="foreground">
       <nav>
         <router-link to="/">Home</router-link>
+        <router-link to="/purchase-rings">Purchase Rings</router-link>
+        <router-link to="/manage-orders">Manage Orders</router-link>
+        <router-link to="/about-us">About Us</router-link>
+        <router-link class="right-link" to="/cart">Cart</router-link>
         <img class="logo" src="./assets/Goldeneye_Single.png" alt="Goldeneye Logo" />
       </nav>
       <router-view />
@@ -40,7 +44,7 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   height: 100%;
   color: white;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
@@ -65,12 +69,18 @@ nav {
   height: auto;
 }
 
+.right-link {
+  margin-left: auto;
+}
+
 nav a {
   color: white;
   text-decoration: none;
   font-size: 18px;
   font-weight: bold;
   transition: all 0.3s ease;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 nav a:visited {
