@@ -8,13 +8,17 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 /**
  *
  * @author kwall
  */
 
-
+@DisplayName("Product Entity Tests")
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class ProductTest {
 
     @Test
