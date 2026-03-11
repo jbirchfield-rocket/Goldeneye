@@ -17,7 +17,7 @@ public class Location {
     private String state;
     private int zip;
 
-    Location(int locationId, int custId, String street, String city, String state, int zip) {
+    public Location(int locationId, int custId, String street, String city, String state, int zip) {
         this.locationId = locationId;
         this.custId = custId;
         this.street = street;
