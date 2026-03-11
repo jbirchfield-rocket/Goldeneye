@@ -24,7 +24,7 @@ public class LocationTest {
     @Test
     public void constructor_initializesAllFields() {
         Location location = new Location(
-                1, 101, "123 Main St", "Denver", "CO", 80202
+                1, 101, "123 Main St", "Denver", "CO", "80202-1234"
         );
 
         assertEquals(1, location.getLocationId());
@@ -32,12 +32,12 @@ public class LocationTest {
         assertEquals("123 Main St", location.getStreet());
         assertEquals("Denver", location.getCity());
         assertEquals("CO", location.getState());
-        assertEquals(80202, location.getZip());
+        assertEquals("80202-1234", location.getZip());
     }
 
     @Test
     public void setLocationId_updatesValue() {
-        Location location = new Location(1, 101, "123 Main St", "Denver", "CO", 80202);
+        Location location = new Location(1, 101, "123 Main St", "Denver", "CO", "80202-1234");
 
         location.setLocationId(2);
 
@@ -46,7 +46,7 @@ public class LocationTest {
 
     @Test
     public void setCustId_updatesValue() {
-        Location location = new Location(1, 101, "123 Main St", "Denver", "CO", 80202);
+        Location location = new Location(1, 101, "123 Main St", "Denver", "CO", "80202-1234");
 
         location.setCustId(202);
 
@@ -55,7 +55,7 @@ public class LocationTest {
 
     @Test
     public void setStreet_updatesValue() {
-        Location location = new Location(1, 101, "123 Main St", "Denver", "CO", 80202);
+        Location location = new Location(1, 101, "123 Main St", "Denver", "CO", "80202-1234");
 
         location.setStreet("456 Oak Ave");
 
@@ -64,7 +64,7 @@ public class LocationTest {
 
     @Test
     public void setCity_updatesValue() {
-        Location location = new Location(1, 101, "123 Main St", "Denver", "CO", 80202);
+        Location location = new Location(1, 101, "123 Main St", "Denver", "CO", "80202-1234");
 
         location.setCity("Boulder");
 
@@ -73,7 +73,7 @@ public class LocationTest {
 
     @Test
     public void setState_updatesValue() {
-        Location location = new Location(1, 101, "123 Main St", "Denver", "CO", 80202);
+        Location location = new Location(1, 101, "123 Main St", "Denver", "CO", "80202-1234");
 
         location.setState("TX");
 
@@ -82,16 +82,16 @@ public class LocationTest {
 
     @Test
     public void setZip_updatesValue() {
-        Location location = new Location(1, 101, "123 Main St", "Denver", "CO", 80202);
+        Location location = new Location(1, 101, "123 Main St", "Denver", "CO", "80202-1234");
 
-        location.setZip(75001);
+        location.setZip("75001-5678");
 
-        assertEquals(75001, location.getZip());
+        assertEquals("75001-5678", location.getZip());
     }
 
     @Test
     public void setters_allowNullForReferenceFields() {
-        Location location = new Location(1, 101, "123 Main St", "Denver", "CO", 80202);
+        Location location = new Location(1, 101, "123 Main St", "Denver", "CO", "80202-1234");
 
         location.setStreet(null);
         location.setCity(null);

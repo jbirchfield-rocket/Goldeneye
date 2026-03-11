@@ -87,5 +87,14 @@ public class OrderItem {
     }
 
     // TODO: implement calculateUnitPrice() method
+    // public void calculateUnitPrice() {
+
+    //     this.unitPrice = (BandStyleType × MaterialMultiplier × BandWidthMultiplier) + StoneAdder 
+    // }
+    
     // TODO: implement calculateItemTotal() method
+    // public void calculateItemTotal(){
+    //     return this.unitPrice * this.quantity;
+    // }
+    
 }
