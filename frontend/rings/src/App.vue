@@ -6,6 +6,7 @@
     <div class="foreground">
       <nav>
         <router-link to="/">Home</router-link>
+        <img class="logo" src="./assets/Goldeneye_Single.png" alt="Goldeneye Logo" />
       </nav>
       <router-view />
     </div>
@@ -46,5 +47,39 @@ html, body {
   background-color: rgba(0, 0, 0, 0.6);
   max-width: 80%;
   margin: auto;
+}
+
+nav {
+  display: flex;
+  align-items: left;
+  justify-content: space-between;
+  width: 96%;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.logo {
+  float: right;
+  margin-left: 10px;
+  width: 50px;
+  height: auto;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+nav a:visited {
+  color: white;
+}
+
+nav a:hover,
+nav a:visited:hover {
+  color: #baaa51;
+  transform: scale(1.2);
 }
 </style>
