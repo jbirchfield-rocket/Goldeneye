@@ -1,7 +1,15 @@
 <script setup lang="ts">
 import { useCart } from '@/services/useCart';
+import { setCustomerIdCookie } from '@/services/customerService';
 
 const { cartCount } = useCart();
+
+//function to store a customer id in cookie to use in API calls
+const handleCustomerChange = (event: Event) => {
+  const customerId = Number((event.target as HTMLSelectElement).value);
+  setCustomerIdCookie(customerId);
+};
+
 </script>
 
 <template>
@@ -13,6 +21,13 @@ const { cartCount } = useCart();
         <router-link to="/purchase-rings">Purchase Rings</router-link>
         <router-link to="/manage-orders">Manage Orders</router-link>
         <router-link to="/about-us">About Us</router-link>
+        <select class="customer-select" @change="handleCustomerChange($event)">
+          <option value="" disabled selected>Select Customer</option>
+          <option value="1">Customer 1</option>
+          <option value="2">Customer 2</option>
+          <option value="3">Customer 3</option>
+        </select>
+
         <router-link class="right-link cart-link" to="/cart">
           Cart
           <span v-if="cartCount > 0" class="cart-badge">{{ cartCount }}</span>
@@ -100,6 +115,36 @@ nav {
   min-width: 20px;
   text-align: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.customer-select {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #baaa51;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.customer-select:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+  border-color: #baaa51;
+}
+
+.customer-select:focus {
+  outline: none;
+  border-color: #baaa51;
+  box-shadow: 0 0 5px rgba(186, 170, 81, 0.5);
+}
+
+.customer-select option {
+  background-color: #222;
+  color: white;
 }
 
 nav a {

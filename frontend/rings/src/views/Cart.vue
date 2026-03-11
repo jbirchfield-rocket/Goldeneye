@@ -1,8 +1,20 @@
 <script setup lang="ts">
 import { useCart } from '@/services/useCart';
-import { computed } from 'vue';
+import { computed, ref, onMounted } from 'vue';
+import axios from 'axios';
+import { getCurrentCustomerId } from '@/services/customerService';
 
 const { cartItems, cartCount, cartTotal, removeFromCart, updateQuantity, clearCart } = useCart();
+
+interface Locations {
+  customerid: number;
+  street: string;
+  city: string;
+  state: string;
+  zip: number;
+}
+
+const locations = ref<Locations[]>([]);
 
 const getPricePerUnit = (item: any) => {
   return item.price / item.quantity;
@@ -21,6 +33,56 @@ const handleCheckout = () => {
   // Implement checkout logic here
   alert(`Proceeding to checkout with ${cartCount.value} item(s) totaling $${cartTotal.value.toFixed(2)}`);
 };
+
+const fetchLocations = async () => {
+  // function to get delivery locations for a specific customer
+  const customerId = getCurrentCustomerId() || 3; // Default to 3 if no customer ID is found
+  try {
+    const response = await axios.get(`http://localhost:8080/api/customers/${customerId}/locations`);
+    // Filter locations to only show those matching the current customer ID
+    locations.value = response.data.filter((location: Locations) => location.customerid === customerId);
+  } catch (error) {
+    console.error('Error fetching delivery locations:', error);
+    // Mock data for development - filter to match current customerId
+    const mockData = [
+      {
+        customerid: 1,
+        street: '123 Main St',
+        city: 'Anytown',
+        state: 'CA',
+        zip: 12345
+      },
+      {
+        customerid: 1,
+        street: '456 Oak Ave',
+        city: 'Othertown',
+        state: 'NY',
+        zip: 67890
+      },
+      {
+        customerid: 2,
+        street: '789 Pine Rd',
+        city: 'Somewhere',
+        state: 'TX',
+        zip: 54321
+      },
+      {
+        customerid: 3,
+        street: '321 Elm St',
+        city: 'Springfield',
+        state: 'IL',
+        zip: 98765
+      }
+    ];
+    
+    // Filter mock data to only show locations for current customer
+    locations.value = mockData.filter(location => location.customerid === customerId);
+  }
+}
+
+// onMounted(() => {
+//   fetchLocations();
+// });
 </script>
 
 <template>
@@ -87,6 +149,13 @@ const handleCheckout = () => {
           <span>${{ cartTotal.toFixed(2) }}</span>
         </div>
         
+        <select class="delivery-select" @click="fetchLocations">
+          <option disabled selected>Select Delivery Location</option>
+          <option v-for="location in locations" :key="location.customerid" :value="location.street">
+            {{ location.street }}, {{ location.city }}, {{ location.state }} {{ location.zip }}
+          </option>
+        </select>
+
         <button @click="handleCheckout" class="checkout-btn">
           Proceed to Checkout
         </button>
@@ -283,6 +352,16 @@ h1 {
   margin-top: 10px;
   padding-top: 15px;
   border-top: 2px solid #baaa51;
+}
+
+.delivery-select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: rgb(210, 210, 210);
+  margin-top: 20px;
+  cursor: pointer;
 }
 
 .checkout-btn,
