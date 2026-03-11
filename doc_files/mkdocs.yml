@@ -26,6 +26,7 @@ theme:
   
 nav:
 - Introduction: index.md
+  - DB2 Configuration: db2-configuration.md
 
 markdown_extensions:
   - admonition
