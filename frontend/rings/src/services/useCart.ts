@@ -77,8 +77,8 @@ export function useCart() {
 
     if (existingItemIndex !== -1) {
       // Update quantity if item exists
-      cartItems.value[existingItemIndex].quantity += item.quantity;
-      cartItems.value[existingItemIndex].price += item.price;
+      cartItems.value[existingItemIndex]!.quantity += item.quantity;
+      cartItems.value[existingItemIndex]!.price += item.price;
     } else {
       // Add new item
       cartItems.value.push({
@@ -101,8 +101,8 @@ export function useCart() {
     if (newQuantity <= 0) {
       removeFromCart(index);
     } else {
-      cartItems.value[index].quantity = newQuantity;
-      cartItems.value[index].price = pricePerUnit * newQuantity;
+      cartItems.value[index]!.quantity = newQuantity;
+      cartItems.value[index]!.price = pricePerUnit * newQuantity;
       saveCart();
     }
   };

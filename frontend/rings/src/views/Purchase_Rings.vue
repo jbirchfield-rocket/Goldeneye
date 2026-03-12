@@ -78,9 +78,9 @@ const fetchRings = async () => {
     
     rings.value.forEach(ring => {
       selectedOptions.value[ring.id] = {
-        materialType: ring.materialTypes[0],
-        bandWidth: ring.bandWidths[0],
-        ringStone: ring.ringStones[0],
+        materialType: ring.materialTypes[0] || '',
+        bandWidth: ring.bandWidths[0] || '',
+        ringStone: ring.ringStones[0] || '',
         quantity: 1,
         proposedPrice: ring.basePrice
       };
@@ -90,7 +90,7 @@ const fetchRings = async () => {
 
 const updatePrice = (ringId: number) => {
   const ring = rings.value.find(r => r.id === ringId);
-  if (ring) {
+  if (ring && selectedOptions.value[ringId]) {
     const options = selectedOptions.value[ringId];
     // swap the price multipliers with multipliers from db
     let price = ring.basePrice;
@@ -143,7 +143,7 @@ onMounted(() => {
             <div class="option-group">
               <label>Select Material Type</label>
               <select 
-                v-model="selectedOptions[ring.id].materialType"
+                v-model="selectedOptions[ring.id]!.materialType"
                 @change="updatePrice(ring.id)"
                 class="option-select"
               >
@@ -156,7 +156,7 @@ onMounted(() => {
             <div class="option-group">
               <label>Select Band Width</label>
               <select 
-                v-model="selectedOptions[ring.id].bandWidth"
+                v-model="selectedOptions[ring.id]!.bandWidth"
                 @change="updatePrice(ring.id)"
                 class="option-select"
               >
@@ -169,7 +169,7 @@ onMounted(() => {
             <div class="option-group">
               <label>Select Ring Stone</label>
               <select 
-                v-model="selectedOptions[ring.id].ringStone"
+                v-model="selectedOptions[ring.id]!.ringStone"
                 @change="updatePrice(ring.id)"
                 class="option-select"
               >
@@ -184,7 +184,7 @@ onMounted(() => {
             <div class="option-group quantity-group">
               <label>Quantity</label>
               <select 
-                v-model.number="selectedOptions[ring.id].quantity"
+                v-model.number="selectedOptions[ring.id]!.quantity"
                 @change="updatePrice(ring.id)"
                 class="option-select"
               >
@@ -194,7 +194,7 @@ onMounted(() => {
             
             <div class="price-group">
               <label>Proposed Price</label>
-              <div class="price-display">${{ selectedOptions[ring.id].proposedPrice.toFixed(2) }}</div>
+              <div class="price-display">${{ selectedOptions[ring.id]!.proposedPrice.toFixed(2) }}</div>
             </div>
             
             <button @click="addToCart(ring.id)" class="add-to-cart-btn">

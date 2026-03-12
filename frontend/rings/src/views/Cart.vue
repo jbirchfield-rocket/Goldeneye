@@ -57,7 +57,7 @@ const handleCheckout = () => {
 
   // Adding cart items to an order interface item
   const order: Order = {
-    customerId: getCurrentCustomerId(),
+    customerId: getCurrentCustomerId() || 1,
     rings: cartItems.value.map(item => ({
       ringType: `Ring #${item.ringId}`,
       material: item.materialType,
@@ -67,7 +67,7 @@ const handleCheckout = () => {
       price: item.price
     })),
     location: {
-      customerid: getCurrentCustomerId(),
+      customerid: getCurrentCustomerId() || 1,
       street: '123 Main St',
       city: 'Anytown',
       state: 'CA',
