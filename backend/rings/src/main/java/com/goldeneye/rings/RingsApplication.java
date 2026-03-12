@@ -1,11 +1,7 @@
 package com.goldeneye.rings;
 
-import javax.sql.DataSource;
-
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
 
 @SpringBootApplication(scanBasePackages = "com.goldeneye")
@@ -16,12 +12,12 @@ public class RingsApplication {
         SpringApplication.run(RingsApplication.class, args);
     }
 
-    @Bean
-    CommandLineRunner testConnection(DataSource dataSource) {
-        return args -> {
-            try (var connection = dataSource.getConnection()) {
-                System.out.println("DB2 Connection successful: " + connection.getMetaData().getDatabaseProductVersion());
-            }
-        };
-    }
+    // @Bean
+    // CommandLineRunner testConnection(DataSource dataSource) {
+    //     return args -> {
+    //         try (var connection = dataSource.getConnection()) {
+    //             System.out.println("DB2 Connection successful: " + connection.getMetaData().getDatabaseProductVersion());
+    //         }
+    //     };
+    // }
 }
