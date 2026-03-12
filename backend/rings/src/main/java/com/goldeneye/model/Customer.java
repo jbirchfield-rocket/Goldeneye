@@ -5,11 +5,17 @@
 
 package com.goldeneye.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
+
 /**
  *
  * @author scanales
  */
+
+@Table("TBCUST")
 public class Customer {
+    @Id
     private int custId;
     private String name;
 
