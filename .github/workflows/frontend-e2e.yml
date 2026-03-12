@@ -34,8 +34,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build app
-        run: npm run dev
+      # Use build-only to skip vue-tsc in CI
+      - name: Build app (no type-check)
+        run: npm run build-only
 
       - name: Install Chrome
         uses: browser-actions/setup-chrome@v1
@@ -64,4 +65,3 @@ jobs:
             frontend/rings/tests/e2e/artifacts/logs/**
             frontend/rings/tests/e2e/artifacts/screenshots/**
           if-no-files-found: ignore
-    
