@@ -8,7 +8,7 @@ interface Ring {
   image: string;
   materialTypes: string[];
   bandWidths: string[];
-  ringSizes: string[];
+  ringStones: string[];
   basePrice: number;
 }
 
@@ -16,7 +16,7 @@ const rings = ref<Ring[]>([]);
 const selectedOptions = ref<Record<number, {
   materialType: string;
   bandWidth: string;
-  ringSize: string;
+  ringStone: string;
   quantity: number;
   proposedPrice: number;
 }>>({});
@@ -33,7 +33,7 @@ const fetchRings = async () => {
       selectedOptions.value[ring.id] = {
         materialType: ring.materialTypes[0] || '',
         bandWidth: ring.bandWidths[0] || '',
-        ringSize: ring.ringSizes[0] || '',
+        ringStone: ring.ringStones[0] || '',
         quantity: 1,
         proposedPrice: ring.basePrice || 0
       };
@@ -47,7 +47,7 @@ const fetchRings = async () => {
         image: '/api/placeholder/300/200',
         materialTypes: ['Silver', 'Gold', 'Platinum'],
         bandWidths: ['2mm', '4mm', '6mm'],
-        ringSizes: ['6', '7', '8', '9', '10'],
+        ringStones: ['Cubic Zirconia', 'Semi-precious', 'Lab-Grown Diamond', 'Natural Diamond'],
         basePrice: 299.99
       },
       {
@@ -55,7 +55,7 @@ const fetchRings = async () => {
         image: '/api/placeholder/300/200',
         materialTypes: ['Silver', 'Gold', 'Platinum'],
         bandWidths: ['2mm', '4mm', '6mm'],
-        ringSizes: ['6', '7', '8', '9', '10'],
+        ringStones: ['Cubic Zirconia', 'Semi-precious', 'Lab-Grown Diamond', 'Natural Diamond'],
         basePrice: 349.99
       },
       {
@@ -63,7 +63,7 @@ const fetchRings = async () => {
         image: '/api/placeholder/300/200',
         materialTypes: ['Silver', 'Gold', 'Platinum'],
         bandWidths: ['2mm', '4mm', '6mm'],
-        ringSizes: ['6', '7', '8', '9', '10'],
+        ringStones: ['Cubic Zirconia', 'Semi-precious', 'Lab-Grown Diamond', 'Natural Diamond'],
         basePrice: 399.99
       },
       {
@@ -71,7 +71,7 @@ const fetchRings = async () => {
         image: '/api/placeholder/300/200',
         materialTypes: ['Silver', 'Gold', 'Platinum'],
         bandWidths: ['2mm', '4mm', '6mm'],
-        ringSizes: ['6', '7', '8', '9', '10'],
+        ringStones: ['Cubic Zirconia', 'Semi-precious', 'Lab-Grown Diamond', 'Natural Diamond'],
         basePrice: 449.99
       }
     ];
@@ -80,7 +80,7 @@ const fetchRings = async () => {
       selectedOptions.value[ring.id] = {
         materialType: ring.materialTypes[0],
         bandWidth: ring.bandWidths[0],
-        ringSize: ring.ringSizes[0],
+        ringStone: ring.ringStones[0],
         quantity: 1,
         proposedPrice: ring.basePrice
       };
@@ -98,6 +98,9 @@ const updatePrice = (ringId: number) => {
     if (options.materialType === 'Platinum') price *= 2;
     if (options.bandWidth === '6mm') price *= 1.2;
     if (options.bandWidth === '4mm') price *= 1.1;
+    if (options.ringStone === 'Semi-precious') price *= 1.2;
+    if (options.ringStone === 'Lab-Grown Diamond') price *= 1.5;
+    if (options.ringStone === 'Natural Diamond') price *= 2;
     options.proposedPrice = price * options.quantity;
   }
 };
@@ -112,7 +115,7 @@ const addToCart = (ringId: number) => {
       ringImage: ring.image,
       materialType: options.materialType,
       bandWidth: options.bandWidth,
-      ringSize: options.ringSize,
+      ringStone: options.ringStone,
       quantity: options.quantity,
       price: options.proposedPrice,
       addedAt: Date.now()
@@ -164,14 +167,14 @@ onMounted(() => {
             </div>
             
             <div class="option-group">
-              <label>Select Ring Size</label>
+              <label>Select Ring Stone</label>
               <select 
-                v-model="selectedOptions[ring.id].ringSize"
+                v-model="selectedOptions[ring.id].ringStone"
                 @change="updatePrice(ring.id)"
                 class="option-select"
               >
-                <option v-for="size in ring.ringSizes" :key="size" :value="size">
-                  {{ size }}
+                <option v-for="stone in ring.ringStones" :key="stone" :value="stone">
+                  {{ stone }}
                 </option>
               </select>
             </div>

@@ -14,6 +14,23 @@ interface Locations {
   zip: number;
 }
 
+interface Order {
+  customerId: number;
+  rings: OrderRing[];
+  orderDate?: string;
+  status?: string;
+  location: Locations;
+}
+
+interface OrderRing {
+  ringType: string;
+  material: string;
+  width: string;
+  stone: string;
+  quantity: number;
+  price: number;
+}
+
 const locations = ref<Locations[]>([]);
 
 const getPricePerUnit = (item: any) => {
@@ -31,6 +48,40 @@ const handleCheckout = () => {
     return;
   }
   // Implement checkout logic here
+
+  // Adding cart items to an order interface item
+  const order: Order = {
+    customerId: getCurrentCustomerId(),
+    rings: cartItems.value.map(item => ({
+      ringType: `Ring #${item.ringId}`,
+      material: item.materialType,
+      width: item.bandWidth,
+      stone: item.ringStone,
+      quantity: item.quantity,
+      price: item.price
+    })),
+    location: {
+      customerid: getCurrentCustomerId(),
+      street: '123 Main St',
+      city: 'Anytown',
+      state: 'CA',
+      zip: 12345
+    }
+  };
+    // sending order to backend to be submitted and processed
+    try {
+      axios.post('http://localhost:8080/api/orders', order)
+        .then(response => {
+          console.log('Order submitted successfully:', response.data);
+          alert('Order submitted successfully!');
+          clearCart();
+        })
+    } catch(error) {
+      console.error('Error submitting order:', error);
+      alert('Failed to submit order. Please try again.');
+    }
+  
+
   alert(`Proceeding to checkout with ${cartCount.value} item(s) totaling $${cartTotal.value.toFixed(2)}`);
 };
 
@@ -108,7 +159,7 @@ const fetchLocations = async () => {
             <div class="item-specs">
               <p><strong>Material:</strong> {{ item.materialType }}</p>
               <p><strong>Band Width:</strong> {{ item.bandWidth }}</p>
-              <p><strong>Ring Size:</strong> {{ item.ringSize }}</p>
+              <p><strong>Ring Stone:</strong> {{ item.ringStone }}</p>
             </div>
           </div>
           
@@ -157,7 +208,7 @@ const fetchLocations = async () => {
         </select>
 
         <button @click="handleCheckout" class="checkout-btn">
-          Proceed to Checkout
+          Checkout
         </button>
         
         <button @click="clearCart" class="clear-cart-btn">

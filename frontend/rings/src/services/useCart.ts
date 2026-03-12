@@ -5,7 +5,7 @@ export interface CartItem {
   ringImage: string;
   materialType: string;
   bandWidth: string;
-  ringSize: string;
+  ringStone: string;
   quantity: number;
   price: number;
   addedAt: number;
@@ -72,7 +72,7 @@ export function useCart() {
         cartItem.ringId === item.ringId &&
         cartItem.materialType === item.materialType &&
         cartItem.bandWidth === item.bandWidth &&
-        cartItem.ringSize === item.ringSize
+        cartItem.ringStone === item.ringStone
     );
 
     if (existingItemIndex !== -1) {

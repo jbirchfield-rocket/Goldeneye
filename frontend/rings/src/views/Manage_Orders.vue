@@ -62,7 +62,7 @@ const fetchOrders = async () => {
             ringType: 'Classic Band',
             material: 'Gold',
             width: '4mm',
-            stone: 'None',
+            stone: 'Cubic Zirconia',
             quantity: 2,
             price: 599.98
           }
@@ -83,7 +83,7 @@ const fetchOrders = async () => {
             ringType: 'Classic Band',
             material: 'Silver',
             width: '4mm',
-            stone: 'Diamond',
+            stone: 'Natural Diamond',
             quantity: 1,
             price: 449.99
           },
@@ -91,7 +91,7 @@ const fetchOrders = async () => {
             ringType: 'Etched Band',
             material: 'Platinum',
             width: '6mm',
-            stone: 'Sapphire',
+            stone: 'Lab-Grown Diamond',
             quantity: 1,
             price: 899.99
           }
@@ -113,7 +113,7 @@ const fetchOrders = async () => {
             ringType: 'Modern Band',
             material: 'Gold',
             width: '2mm',
-            stone: 'Ruby',
+            stone: 'Semi-precious',
             quantity: 3,
             price: 1299.97
           }
@@ -134,7 +134,7 @@ const fetchOrders = async () => {
             ringType: 'Classic Band',
             material: 'Silver',
             width: '4mm',
-            stone: 'Emerald',
+            stone: 'Lab-Grown Diamond',
             quantity: 1,
             price: 349.99
           }
