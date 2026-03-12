@@ -32,6 +32,12 @@ interface OrderRing {
 }
 
 const locations = ref<Locations[]>([]);
+const newLocation = ref({
+  street: '',
+  city: '',
+  state: '',
+  zip: 0
+});
 
 const getPricePerUnit = (item: any) => {
   return item.price / item.quantity;
@@ -131,6 +137,23 @@ const fetchLocations = async () => {
   }
 }
 
+const addLocation = (newLocation: Omit<Locations, 'customerid'>) => {
+  // function to add a new delivery location for the current customer
+  const customerId = getCurrentCustomerId() || 3; // Default to 3 if no customer ID is found
+  const locationToAdd = { ...newLocation, customerid: customerId };
+  
+  try {
+    axios.post(`http://localhost:8080/api/customers/${customerId}/locations`, locationToAdd)
+      .then(response => {
+        console.log('Location added successfully:', response.data);
+        locations.value.push(response.data); // Add the new location to the list
+      })
+  } catch (error) {
+    console.error('Error adding delivery location:', error);
+    alert('Failed to add delivery location. Please try again.');
+  }
+};
+
 // onMounted(() => {
 //   fetchLocations();
 // });
@@ -206,6 +229,17 @@ const fetchLocations = async () => {
             {{ location.street }}, {{ location.city }}, {{ location.state }} {{ location.zip }}
           </option>
         </select>
+
+        <div class="no-location">
+          <h3>Location not found? Add a new one!</h3>
+          <form @submit.prevent="addLocation(newLocation)">
+            <input v-model="newLocation.street" placeholder="Street" required />
+            <input v-model="newLocation.city" placeholder="City" required />
+            <input v-model="newLocation.state" placeholder="State" required />
+            <input v-model="newLocation.zip" placeholder="ZIP Code" required />
+            <button type="submit">Add Location</button>
+          </form>
+        </div>
 
         <button @click="handleCheckout" class="checkout-btn">
           Checkout
