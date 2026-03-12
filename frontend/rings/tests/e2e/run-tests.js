@@ -40,6 +40,24 @@ async function takeScreenshot(driver, name = 'screenshot') {
   }
 }
 
+// Helper to get the text of the currently selected option in a select element 
+async function getSelectedOptionText(driver, selectCssOrId) {
+  // Find the <select>
+  const selectEl = await driver.findElement(By.css(selectCssOrId));
+  // Find the currently selected <option>
+  const selectedOptions = await selectEl.findElements(By.css('option:checked'));
+  if (selectedOptions.length === 0) {
+    // Fallback for browsers that might not support :checked the same way
+    const allOptions = await selectEl.findElements(By.css('option'));
+    for (const opt of allOptions) {
+      const isSelected = await opt.isSelected();
+      if (isSelected) return await opt.getText();
+    }
+    return '';
+  }
+  return await selectedOptions[0].getText();
+}
+
 async function main() {
   log(`Starting E2E against ${BASE_URL}`);
 
@@ -54,7 +72,6 @@ async function main() {
   const driver = await new Builder().forBrowser('chrome').setChromeOptions(options).build();
 
   try {
-    // === Smoke test example (customize as you add features) ===
     await driver.get(BASE_URL);
     log('Opened base URL');
 
@@ -62,12 +79,29 @@ async function main() {
     await driver.wait(until.elementLocated(By.css('#app')), 10000);
     log('Found #app root');
 
-    // Example: verify page title contains something expected (adjust as needed)
     const title = await driver.getTitle();
     log(`Page title: ${title}`);
 
-    // Add your first real behavior check here:
-    // e.g., await driver.findElement(By.css('a[href="/login"]')).click();
+    log('Checking customer dropdown default text...');
+    const selectSelector = '#customer-select';
+
+    // Wait until the select exists and is visible/clickable
+    const selectEl = await driver.wait(until.elementLocated(By.css(selectSelector)), 10000);
+    await driver.wait(until.elementIsVisible(selectEl), 5000);
+    await driver.wait(until.elementIsEnabled(selectEl), 5000);
+
+    // Grab the currently selected option's visible text
+    const selectedText = await getSelectedOptionText(driver, selectSelector);
+    log(`Dropdown selected text: "${selectedText}"`);
+
+    // Assert
+    const expected = 'Select Customer';
+    if (selectedText.trim() !== expected) {
+    await takeScreenshot(driver, 'customer-select-default-mismatch');
+    throw new Error(`Expected default dropdown text "${expected}", got "${selectedText}"`);
+    }
+
+    log('Customer dropdown default text assertion passed.');
 
     log('E2E smoke passed');
   } catch (err) {

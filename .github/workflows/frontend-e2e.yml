@@ -65,3 +65,8 @@ jobs:
             frontend/rings/tests/e2e/artifacts/logs/**
             frontend/rings/tests/e2e/artifacts/screenshots/**
           if-no-files-found: ignore
+      
+      - name: Clean previous artifacts (logs + screenshots)
+        run: |
+          rm -rf tests/e2e/artifacts/logs/*
+          rm -rf tests/e2e/artifacts/screenshots/
