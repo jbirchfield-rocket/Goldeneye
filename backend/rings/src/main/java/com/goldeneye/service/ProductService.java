@@ -9,6 +9,6 @@ package com.goldeneye.service;
  *
  * @author scanales
  */
-public class StyleService {
+public class ProductService {
 
 }

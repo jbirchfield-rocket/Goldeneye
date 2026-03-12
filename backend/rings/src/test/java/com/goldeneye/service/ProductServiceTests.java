@@ -1,7 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit5TestClass.java to edit this template
- */
+// /*
+//  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+//  * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit5TestClass.java to edit this template
+//  */
 
 // package com.goldeneye.service;
 
@@ -15,6 +15,7 @@
 
 // import org.junit.Test;
 // import org.junit.jupiter.api.BeforeAll;
+// import org.junit.jupiter.api.Disabled;
 // import org.junit.jupiter.api.DisplayName;
 // import org.junit.jupiter.api.DisplayNameGeneration;
 // import org.junit.jupiter.api.DisplayNameGenerator;
@@ -37,6 +38,7 @@
 //     }
 
 //     @Test
+//     @Disabled
 //     void readStylesReturnsListOfStyles() {
 //        List<Product> styles = styleService.readStyles();
 //        // TODO: Assert list is not null
@@ -45,6 +47,7 @@
 //     }
 
 //     @Test
+//     @Disabled
 //     void readStylesReturnsEmptyListWhenNoStyles() {
 //         List<Product> styles = styleService.readStyles();
 //         // TODO: Assert list is not null
@@ -52,6 +55,7 @@
 //     }
 
 //     @Test
+//     @Disabled
 //     void createStyleAddsNewStyle() {
 //         Product newStyle = new Product(0, "testProduct", "This is a test product.", BigDecimal.valueOf(9.99));
 //         List<Product> startingStyles = styleService.readStyles();
@@ -67,6 +71,7 @@
     
 
 //     @Test
+//     @Disabled
 //     void updateStyleModifiesExistingStyle() {
 //         List<Product> existingStyles = styleService.readStyles();
 //         assumeTrue(existingStyles != null);
@@ -84,6 +89,7 @@
 //     }
 
 //     @Test
+//     @Disabled
 //     void deleteStyleRemovesStyle() {
         
 //     }

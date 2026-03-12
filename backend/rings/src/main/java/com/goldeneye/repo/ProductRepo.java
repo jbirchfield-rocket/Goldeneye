@@ -9,6 +9,6 @@ package com.goldeneye.repo;
  *
  * @author scanales
  */
-public interface StyleRepo {
+public interface ProductRepo {
 
 }
