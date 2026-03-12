@@ -5,10 +5,33 @@
 
 package com.goldeneye.controller;
 
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.goldeneye.dto.CustomerDTO;
+import com.goldeneye.service.CustomerService;
+
 /**
  *
- * @author scanales
+ * @author dshelby
  */
+@RestController
+@RequestMapping("/api")
 public class GoldeneyeController {
+
+    private final CustomerService customerService;
+
+    public GoldeneyeController(CustomerService customerService) {
+        this.customerService = customerService;
+    }
+
+    @GetMapping("/customers")
+    public ResponseEntity<List<CustomerDTO>> getAllCustomers() {
+        return ResponseEntity.ok(customerService.getAllCustomers());
+    }
 
 }

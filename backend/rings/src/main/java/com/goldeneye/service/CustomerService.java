@@ -14,7 +14,7 @@ import com.goldeneye.repo.CustomerRepo;
 
 /**
  *
- * @author scanales
+ * @author dshelby
  */
 @Service
 public class CustomerService {
