@@ -96,6 +96,7 @@ const fetchOrders = async () => {
             price: 899.99
           }
         ],
+        orderDate: '2024-06-15',
         location: {
           customerid: 1,
           street: '123 Main St',
@@ -215,6 +216,7 @@ onMounted(() => {
             <div class="order-cell">Quantity: {{ ring.quantity }}</div>
             <div class="order-cell">Price: ${{ ring.price.toFixed(2) }}</div>
           </div>
+          <div v-if="order.orderDate" class="order-date">Date: {{ order.orderDate }}</div>
           <div class="order-location">Location: {{ order.location.street }}, {{ order.location.city }}, {{ order.location.state }} {{ order.location.zip }}</div>
         </div>
       </div>
@@ -335,6 +337,13 @@ h1 {
   align-items: center;
   font-size: 0.95em;
   color: white;
+}
+
+.order-date {
+  margin-top: 10px;
+  font-size: 0.9em;
+  color: #ddd;
+  padding-left: 20px;
 }
 
 .order-location {

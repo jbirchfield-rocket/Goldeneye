@@ -179,6 +179,7 @@ const fetchLocations = async () => {
   max-width: 1400px;
   margin: 0 auto;
   color: white;
+  box-sizing: border-box;
 }
 
 h1 {
@@ -225,6 +226,8 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .cart-item {
@@ -236,6 +239,8 @@ h1 {
   padding: 20px;
   border-radius: 8px;
   position: relative;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .item-image {
@@ -253,6 +258,7 @@ h1 {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+  margin-right: 50px;
 }
 
 .item-details h3 {
@@ -417,7 +423,7 @@ h1 {
   
   .cart-item {
     grid-template-columns: 100px 1fr;
-    gap: 15px;
+    gap: 20px;
   }
   
   .item-image {
@@ -425,9 +431,14 @@ h1 {
     height: 100px;
   }
   
+  .item-details {
+    padding-left: 10px;
+  }
+  
   .item-quantity,
   .item-price {
     grid-column: 2;
+    padding-left: 10px;
   }
   
   .remove-btn {

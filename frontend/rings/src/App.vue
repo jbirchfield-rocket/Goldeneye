@@ -1,9 +1,17 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import { useCart } from '@/services/useCart';
 
 const { cartCount } = useCart();
+const menuOpen = ref(false);
 
+const toggleMenu = () => {
+  menuOpen.value = !menuOpen.value;
+};
 
+const closeMenu = () => {
+  menuOpen.value = false;
+};
 
 </script>
 
@@ -12,15 +20,23 @@ const { cartCount } = useCart();
   <div class="background-img">
     <div class="foreground">
       <nav>
-        <router-link to="/">Home</router-link>
-        <router-link to="/purchase-rings">Purchase Rings</router-link>
-        <router-link to="/manage-orders">Manage Orders</router-link>
-        <router-link to="/about-us">About Us</router-link>
-        <router-link class="right-link cart-link" to="/cart">
-          Cart
-          <span v-if="cartCount > 0" class="cart-badge">{{ cartCount }}</span>
-        </router-link>
-        <img class="logo" src="./assets/Goldeneye_Single.png" alt="Goldeneye Logo" />
+        <div class="nav-content" :class="{ 'menu-open': menuOpen }">
+          <router-link to="/" @click="closeMenu">Home</router-link>
+          <router-link to="/purchase-rings" @click="closeMenu">Purchase Rings</router-link>
+          <router-link to="/manage-orders" @click="closeMenu">Manage Orders</router-link>
+          <router-link to="/about-us" @click="closeMenu">About Us</router-link>
+          <router-link class="right-link cart-link" to="/cart" @click="closeMenu">
+            Cart
+            <span v-if="cartCount > 0" class="cart-badge">{{ cartCount }}</span>
+          </router-link>
+        </div>
+        <img 
+          class="logo" 
+          src="./assets/Goldeneye_Single.png" 
+          alt="Goldeneye Logo"
+          @click="toggleMenu"
+          :class="{ 'menu-active': menuOpen }"
+        />
       </nav>
       <router-view />
     </div>
@@ -72,13 +88,20 @@ nav {
   padding: 20px;
   background-color: rgba(0, 0, 0, 0.7);
   box-sizing: border-box;
+  position: relative;
+}
+
+.nav-content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex: 1;
+  gap: 10px;
 }
 
 .logo {
   float: right;
-  margin-left: 10px;
   width: 50px;
-  height: auto;
 }
 
 .right-link {
@@ -125,5 +148,77 @@ nav a:hover,
 nav a:visited:hover {
   color: #baaa51;
   transform: scale(1.2);
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  nav {
+    flex-wrap: wrap;
+  }
+
+  .nav-content {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 70%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.95);
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 80px 20px 20px 20px;
+    gap: 20px;
+    transition: left 0.3s ease;
+    z-index: 1000;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .nav-content.menu-open {
+    left: 0;
+  }
+
+  .nav-content a {
+    font-size: 20px;
+    margin: 0;
+    width: 100%;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(186, 170, 81, 0.3);
+  }
+
+  .nav-content a:hover {
+    transform: translateX(10px);
+    color: #baaa51;
+  }
+
+  .right-link {
+    margin-left: 0 !important;
+  }
+
+   .logo {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    z-index: 1001;
+    float: right;
+    transition: transform 0.3s ease;
+
+  } 
+
+  .logo.menu-active {
+  transform: rotate(180deg);
+}
+
+  /* Overlay when menu is open */
+  .nav-content.menu-open::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+  }
 }
 </style>
