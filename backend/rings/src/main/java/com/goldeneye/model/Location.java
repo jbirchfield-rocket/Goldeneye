@@ -15,9 +15,9 @@ public class Location {
     private String street;
     private String city;
     private String state;
-    private int zip;
+    private String zip;
 
-    public Location(int locationId, int custId, String street, String city, String state, int zip) {
+    public Location(int locationId, int custId, String street, String city, String state, String zip) {
         this.locationId = locationId;
         this.custId = custId;
         this.street = street;
@@ -66,16 +66,20 @@ public class Location {
         this.state = state;
     }
 
-    public int getZip() {
+    public String getZip() {
         return zip;
     }
 
-    public void setZip(int zip) {
+    public void setZip(String zip) {
         this.zip = zip;
     }
 
     // TODO: Implement validateStreet() Method
+    // var char 200
     // TODO: Implement validateCity() Method
+    // var char 120
     // TODO: Implement validateState Method
+    // char 2
     // TODO: Implement validateZip() Method
+    // char 10
 }
