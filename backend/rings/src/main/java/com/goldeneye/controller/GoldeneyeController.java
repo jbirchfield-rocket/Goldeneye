@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.goldeneye.dto.CustomerDTO;
 import com.goldeneye.dto.LocationDTO;
+import com.goldeneye.dto.ProductDTO;
 import com.goldeneye.service.CustomerService;
 import com.goldeneye.service.LocationService;
+import com.goldeneye.service.ProductService;
 
 /**
  *
@@ -32,9 +34,10 @@ public class GoldeneyeController {
     private final LocationService locationService;
     private final ProductService productService;
 
-    public GoldeneyeController(CustomerService customerService, LocationService locationService) {
+    public GoldeneyeController(CustomerService customerService, LocationService locationService, ProductService productService) {
         this.customerService = customerService;
         this.locationService = locationService;
+        this.productService = productService;
     }
 
     @GetMapping("/customers")
