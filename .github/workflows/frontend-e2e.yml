@@ -1,4 +1,4 @@
-name: Frontend E2E (Selenium)
+name: Frontend E2E (Behave + Selenium)
 
 on:
   push:
@@ -12,9 +12,9 @@ on:
   workflow_dispatch: {}
 
 jobs:
-  e2e:
+  e2e-bdd:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
 
     defaults:
       run:
@@ -31,11 +31,10 @@ jobs:
           cache: 'npm'
           cache-dependency-path: 'frontend/rings/package-lock.json'
 
-      - name: Install dependencies
+      - name: Install Node dependencies
         run: npm ci
 
-      # Use build-only to skip vue-tsc in CI
-      - name: Build app (no type-check)
+      - name: Build Vue App (no TS type-check)
         run: npm run build-only
 
       - name: Install Chrome
@@ -43,30 +42,35 @@ jobs:
         with:
           chrome-version: stable
 
-      - name: Start preview server and wait
+      - name: Start preview server
         run: |
           npm run preview -- --port 5173 --strictPort --host &
           npx wait-on http://localhost:5173
 
-      - name: Run E2E (Selenium)
-        env:
-          CI: 'true'
-          BASE_URL: 'http://localhost:5173'
-          ARTIFACT_DIR: 'tests/e2e/artifacts'
-        run: |
-          xvfb-run -a npm run test:e2e
 
-      - name: Upload E2E artifacts
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+
+      - name: Install Python dependencies
+        working-directory: frontend/rings/tests/bdd
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Behave tests
+        working-directory: frontend/rings/tests/bdd
+        env:
+          BASE_URL: 'http://localhost:5173'
+        run: behave --no-capture
+
+      - name: Upload Behave artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: e2e-artifacts
+          name: bdd-artifacts
           path: |
-            frontend/rings/tests/e2e/artifacts/logs/**
-            frontend/rings/tests/e2e/artifacts/screenshots/**
+            frontend/rings/tests/bdd/artifacts/logs/**
+            frontend/rings/tests/bdd/artifacts/screenshots/**
           if-no-files-found: ignore
-      
-      - name: Clean previous artifacts (logs + screenshots)
-        run: |
-          rm -rf tests/e2e/artifacts/logs/*
-          rm -rf tests/e2e/artifacts/screenshots/
