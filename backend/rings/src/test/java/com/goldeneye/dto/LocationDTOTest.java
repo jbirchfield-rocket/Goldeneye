@@ -25,7 +25,7 @@ public class LocationDTOTest {
     void constructorInitializesAllFields() {
         // LocationDTO: CustID, Street, City, State, Zip
         LocationDTO locationDto = new LocationDTO(2, "999 Test St", "Testville", "TX", "99999-9999");
-        assertEquals(2, locationDto.getCustId());
+        assertEquals(2, locationDto.getCustID());
         assertEquals("999 Test St", locationDto.getStreet());
         assertEquals("Testville", locationDto.getCity());
         assertEquals("TX", locationDto.getState());
