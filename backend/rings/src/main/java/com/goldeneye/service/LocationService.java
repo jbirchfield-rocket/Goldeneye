@@ -28,7 +28,7 @@ public class LocationService {
     public List<LocationDTO> getLocationsByCustId(int custId) {
         return locationRepo.findByCustId(custId)
             .stream()
-            .map(c -> new LocationDTO(c.getCustId(), c.getStreet(), c.getCity(), c.getState(), c.getZip()))
+            .map(c -> new LocationDTO(c. getLocationId(), c.getCustId(), c.getStreet(), c.getCity(), c.getState(), c.getZip()))
             .toList();
     }
 

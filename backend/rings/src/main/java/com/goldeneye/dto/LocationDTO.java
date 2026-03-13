@@ -6,20 +6,24 @@ package com.goldeneye.dto;
  */
 
 public class LocationDTO {
-    // private int locId;
+    private int locId;
     private int custID;
     private String street;
     private String city;
     private String state;
     private String zip;
 
-    public LocationDTO(int custID, String street, String city, String state, String zip) {
-        // this.locId = locId;
+    public LocationDTO(int locId, int custID, String street, String city, String state, String zip) {
+        this.locId = locId;
         this.custID = custID;
         this.street = street;
         this.city = city;
         this.state = state;
         this.zip = zip;
+    }
+
+    public int getLocID() {
+        return locId;
     }
     
     public int getCustID() {
