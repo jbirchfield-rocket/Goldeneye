@@ -26,12 +26,15 @@ theme:
   
 nav:
 - Introduction: index.md
-  - DB2 Configuration: db2-configuration.md
+- Release Notes: topics/release-notes.md
+- DBA Guide:
+  - DB2 Configuration: topics/db-configuration.md
+  - DB2 Connections: topics/db2-connections.md
 
 markdown_extensions:
   - admonition
   - toc:
-      toc_depth: 2
+      toc_depth: 3
   - pymdownx.highlight:
       use_pygments: true
   - pymdownx.details
