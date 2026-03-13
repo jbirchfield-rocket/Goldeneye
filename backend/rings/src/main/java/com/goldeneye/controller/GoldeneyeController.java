@@ -30,6 +30,7 @@ public class GoldeneyeController {
 
     private final CustomerService customerService;
     private final LocationService locationService;
+    private final ProductService productService;
 
     public GoldeneyeController(CustomerService customerService, LocationService locationService) {
         this.customerService = customerService;
@@ -44,6 +45,11 @@ public class GoldeneyeController {
     @GetMapping("/locations/{custId}")
     public ResponseEntity<List<LocationDTO>> getLocationsByCustId(@PathVariable int custId) {
         return ResponseEntity.ok(locationService.getLocationsByCustId(custId));
+    }
+
+    @GetMapping("/products")
+    public ResponseEntity<List<ProductDTO>> getAllProducts() {
+        return ResponseEntity.ok(productService.getAllProducts());
     }
 
 }
