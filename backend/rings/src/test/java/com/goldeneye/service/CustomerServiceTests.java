@@ -46,4 +46,5 @@ public class CustomerServiceTests {
         assertTrue(customers.stream().anyMatch(c -> c.getCustId() == 1 && c.getName().equals("Golden Halo Jewelers")));
         assertTrue(customers.stream().anyMatch(c -> c.getCustId() == 20 && c.getName().equals("Precious Band Co.")));
     }
+    
 }
