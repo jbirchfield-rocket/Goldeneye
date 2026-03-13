@@ -23,7 +23,7 @@ interface Location {
   street: string;
   city: string;
   state: string;
-  zip: number;
+  zip: string;
 }
 
 interface Order {
@@ -72,7 +72,7 @@ const fetchOrders = async () => {
             street: '123 Main St',
             city: 'Anytown',
             state: 'CA',
-            zip: 90210
+            zip: '90210'
           }
       },
       {
@@ -102,7 +102,7 @@ const fetchOrders = async () => {
           street: '123 Main St',
           city: 'Anytown',
           state: 'CA',
-          zip: 90210
+          zip: '90210'
         }
       },
       {
@@ -123,7 +123,7 @@ const fetchOrders = async () => {
             street: '456 Oak Ave',
             city: 'Sometown',
             state: 'NY',
-            zip: 10001
+            zip: '10001'
           }
       },
       {
@@ -144,7 +144,7 @@ const fetchOrders = async () => {
             street: '789 Pine Rd',
             city: 'Yourtown',
             state: 'TX',
-            zip: 75001
+            zip: '75001'
           }
       }
     ];

@@ -7,7 +7,7 @@ const selectedCustomerId = ref<number | null>(null);
 
 //Interface for customer data
 interface Customer {
-  id: number;
+  custId: number;
   name: string;
 }
 
@@ -30,9 +30,9 @@ const getAvailableCustomers = async () => {
     console.error('Error fetching customers:', error);
     // mock data
     customers.value = [
-      { id: 1, name: 'Customer 1' },
-      { id: 2, name: 'Customer 2' },
-      { id: 3, name: 'Customer 3' }
+      { custId: 1, name: 'Customer 1' },
+      { custId: 2, name: 'Customer 2' },
+      { custId: 3, name: 'Customer 3' }
     ];
   }
 };
@@ -55,7 +55,7 @@ onMounted(() => {
         :value="selectedCustomerId || ''"
       >
         <option value="" disabled>Select Customer</option>
-        <option v-for="customer in customers" :key="customer.id" :value="customer.id">{{ customer.name }}</option>
+        <option v-for="customer in customers" :key="customer.custId" :value="customer.custId">{{ customer.name }}</option>
       </select>
     </div>
     

@@ -42,7 +42,30 @@ const selectedOptions = ref<Record<number, {
 
 const { addToCart: addItemToCart } = useCart();
 
+//find what material is low and store it to be displayed in UI
+const lowmaterial = ref<string>('');
+const findLowMaterial = () => {
+  rings.value.forEach(ring => {
+    ring.materialTypes.forEach(material => {
+      if (material.Inventory < 100) {
+        lowmaterial.value = material.type;
+        console.log(`Low inventory for material: ${material.type} in ring ID: ${ring.id}`);
+      }
+    });
+  });
+};
 
+const lowstone = ref<string>('');
+const findLowStone = () => {
+  rings.value.forEach(ring => {
+    ring.ringStones.forEach(stone => {
+      if (stone.Inventory < 5) {
+        lowstone.value = stone.name;
+        console.log(`Low inventory for stone: ${stone.name} in ring ID: ${ring.id}`);
+      }
+    });
+  });
+};
 
 //fetch stones
 const fetchStones = async () => {
@@ -260,11 +283,13 @@ const addToCart = (ringId: number) => {
   }
 };
 
-onMounted( () => {
-  fetchRings();
-  fetchStones();
-  fetchMaterials();
-  fetchWidths();
+onMounted(async () => {
+  await fetchRings();
+  await fetchStones();
+  await fetchMaterials();
+  await fetchWidths();
+  findLowMaterial();
+  findLowStone();
 });
 </script>
 
@@ -276,6 +301,15 @@ onMounted( () => {
           <img :src="ring.image" :alt="`Ring ${ring.id}`" class="ring-image" />
         </div>
         
+        <div class="Low-inventory-warning" v-if="ring.materialTypes.some(m => m.Inventory < 100) || ring.ringStones.some(s => s.Inventory < 5)">
+          <!-- Return what specific material is low -->
+          <p class="warning-text" v-if="ring.materialTypes.some(m => m.Inventory < 100)">Low Material Alert!</p>
+          <p class="warning-text" v-if="ring.materialTypes.some(m => m.Inventory < 100)">{{ lowmaterial }} is low!</p>
+          <!-- Return what specific stone is low -->
+          <p class="warning-text" v-if="ring.ringStones.some(s => s.Inventory < 5)">Low Stone Alert!</p>
+          <p class="warning-text" v-if="ring.ringStones.some(s => s.Inventory < 5)">{{ lowstone }} is low!</p>
+        </div>
+
         <div class="ring-options">
           <div class="option-row">
             <div class="option-group">
@@ -382,6 +416,14 @@ onMounted( () => {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+}
+
+.warning-text {
+  color: #ff4d4d;
+  font-weight: bold;
+  text-align: center;
+  margin: 5px 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .ring-options {
