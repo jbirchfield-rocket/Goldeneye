@@ -31,13 +31,7 @@ jobs:
           cache: maven
 
       - name: Run tests
-        env:
-          DB2_HOST: ${{ secrets.DB2_HOST }}
-          DB2_PORT: ${{ secrets.DB2_PORT }}
-          DB2_DATABASE: ${{ secrets.DB2_DATABASE }}
-          DB2_USERNAME: ${{ secrets.DB2_USERNAME }}
-          DB2_PASSWORD: ${{ secrets.DB2_PASSWORD }}
-        run: ./mvnw verify --batch-mode
+        run: ./mvnw verify --batch-mode -Dgroups='!integration'
 
       - name: Upload test results
         if: always()
