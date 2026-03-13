@@ -10,11 +10,14 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.goldeneye.dto.CustomerDTO;
+import com.goldeneye.dto.LocationDTO;
 import com.goldeneye.service.CustomerService;
+import com.goldeneye.service.LocationService;
 
 /**
  *
@@ -26,14 +29,21 @@ import com.goldeneye.service.CustomerService;
 public class GoldeneyeController {
 
     private final CustomerService customerService;
+    private final LocationService locationService;
 
-    public GoldeneyeController(CustomerService customerService) {
+    public GoldeneyeController(CustomerService customerService, LocationService locationService) {
         this.customerService = customerService;
+        this.locationService = locationService;
     }
 
     @GetMapping("/customers")
     public ResponseEntity<List<CustomerDTO>> getAllCustomers() {
         return ResponseEntity.ok(customerService.getAllCustomers());
+    }
+
+    @GetMapping("/locations/{custId}")
+    public ResponseEntity<List<LocationDTO>> getLocationsByCustId(@PathVariable int custId) {
+        return ResponseEntity.ok(locationService.getLocationsByCustId(custId));
     }
 
 }

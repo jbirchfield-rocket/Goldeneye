@@ -5,16 +5,34 @@
 
 package com.goldeneye.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
+
+
 /**
  *
  * @author scanales
  */
+@Table("TBLOC")
 public class Location {
+    @Id
+    @Column("LOCID")
     private int locationId;
+
+    @Column("CUSTID")
     private int custId;
+
+    @Column("STR")
     private String street;
+
+    @Column("CITY")
     private String city;
+
+    @Column("ST")
     private String state;
+
+    @Column("ZIP")
     private String zip;
 
     public Location(int locationId, int custId, String street, String city, String state, String zip) {

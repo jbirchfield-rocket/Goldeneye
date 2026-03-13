@@ -5,10 +5,33 @@
 
 package com.goldeneye.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.goldeneye.dto.LocationDTO;
+import com.goldeneye.repo.LocationRepo;
+
 /**
  *
- * @author scanales
+ * @author dshelby
  */
+@Service
 public class LocationService {
+
+    private final LocationRepo locationRepo;
+
+    public LocationService(LocationRepo locationRepo) {
+        this.locationRepo = locationRepo;
+    }
+
+    public List<LocationDTO> getLocationsByCustId(int custId) {
+        return locationRepo.findByCustId(custId)
+            .stream()
+            .map(c -> new LocationDTO(c. getLocationId(), c.getCustId(), c.getStreet(), c.getCity(), c.getState(), c.getZip()))
+            .toList();
+    }
+
+
 
 }
