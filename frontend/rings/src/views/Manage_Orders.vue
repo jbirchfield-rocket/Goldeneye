@@ -46,7 +46,7 @@ const fetchOrders = async () => {
     loading.value = true;
     error.value = null;
     // Replace with real endpoint
-    const response = await axios.get('http://localhost:8080/api/orders');
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/orders`);
     //orders filtered by customer id
     orders.value = response.data.filter((order: Order) => order.customerId === customerId);
   } catch (err) {

@@ -153,7 +153,8 @@ nav a:visited:hover {
 /* Mobile Styles */
 @media (max-width: 768px) {
   nav {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    justify-content: space-between;
   }
 
   .nav-content {
@@ -195,14 +196,11 @@ nav a:visited:hover {
   }
 
    .logo {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    width: 50px;
-    z-index: 1001;
+    position: relative;
     float: right;
+    cursor: pointer;
     transition: transform 0.3s ease;
-
+    
   } 
 
   .logo.menu-active {
