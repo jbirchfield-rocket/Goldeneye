@@ -15,7 +15,7 @@ import com.goldeneye.model.Customer;
 
 /**
  *
- * @author scanales
+ * @author dshelby
  */
 public interface CustomerRepo extends ListCrudRepository<Customer, Integer> {
     @Query("SELECT CUSTID, NAME FROM GLDEYE.TBCUST")
