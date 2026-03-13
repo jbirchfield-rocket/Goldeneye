@@ -32,6 +32,12 @@ interface OrderRing {
 }
 
 const locations = ref<Locations[]>([]);
+const newLocation = ref({
+  street: '',
+  city: '',
+  state: '',
+  zip: 0
+});
 
 const getPricePerUnit = (item: any) => {
   return item.price / item.quantity;
@@ -51,7 +57,7 @@ const handleCheckout = () => {
 
   // Adding cart items to an order interface item
   const order: Order = {
-    customerId: getCurrentCustomerId(),
+    customerId: getCurrentCustomerId() || 1,
     rings: cartItems.value.map(item => ({
       ringType: `Ring #${item.ringId}`,
       material: item.materialType,
@@ -61,7 +67,7 @@ const handleCheckout = () => {
       price: item.price
     })),
     location: {
-      customerid: getCurrentCustomerId(),
+      customerid: getCurrentCustomerId() || 1,
       street: '123 Main St',
       city: 'Anytown',
       state: 'CA',
@@ -70,7 +76,7 @@ const handleCheckout = () => {
   };
     // sending order to backend to be submitted and processed
     try {
-      axios.post('http://localhost:8080/api/orders', order)
+      axios.post(`${import.meta.env.VITE_API_URL}/orders`, order)
         .then(response => {
           console.log('Order submitted successfully:', response.data);
           alert('Order submitted successfully!');
@@ -89,7 +95,7 @@ const fetchLocations = async () => {
   // function to get delivery locations for a specific customer
   const customerId = getCurrentCustomerId() || 3; // Default to 3 if no customer ID is found
   try {
-    const response = await axios.get(`http://localhost:8080/api/customers/${customerId}/locations`);
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/customers/${customerId}/locations`);
     // Filter locations to only show those matching the current customer ID
     locations.value = response.data.filter((location: Locations) => location.customerid === customerId);
   } catch (error) {
@@ -131,9 +137,39 @@ const fetchLocations = async () => {
   }
 }
 
-// onMounted(() => {
-//   fetchLocations();
-// });
+const addLocation = (newLocation: Omit<Locations, 'customerid'>) => {
+  // function to add a new delivery location for the current customer
+  const customerId = getCurrentCustomerId() || 3; // Default to 3 if no customer ID is found
+  const locationToAdd = { ...newLocation, customerid: customerId };
+  
+  try {
+    axios.post(`${import.meta.env.VITE_API_URL}/customers/${customerId}/locations`, locationToAdd)
+      .then(response => {
+        console.log('Location added successfully:', response.data);
+        locations.value.push(response.data); // Add the new location to the list
+      })
+  } catch (error) {
+    console.error('Error adding delivery location:', error);
+    alert('Failed to add delivery location. Please try again.');
+  }
+};
+
+const showNewLocationSection = ref(false);
+const selectedLocation = ref('');
+
+const handleLocationChange = (event: Event) => {
+  const target = event.target as HTMLSelectElement;
+  if (target.value === 'ADD_NEW') {
+    showNewLocationSection.value = true;
+    
+    setTimeout(() => {
+      selectedLocation.value = '';
+    }, 0);
+  } else {
+    showNewLocationSection.value = false;
+  }
+};
+
 </script>
 
 <template>
@@ -200,12 +236,24 @@ const fetchLocations = async () => {
           <span>${{ cartTotal.toFixed(2) }}</span>
         </div>
         
-        <select class="delivery-select" @click="fetchLocations">
-          <option disabled selected>Select Delivery Location</option>
+        <select class="delivery-select" @click="fetchLocations" @change="handleLocationChange" v-model="selectedLocation">
+          <option disabled value="">Select Delivery Location</option>
           <option v-for="location in locations" :key="location.customerid" :value="location.street">
             {{ location.street }}, {{ location.city }}, {{ location.state }} {{ location.zip }}
           </option>
+          <option value="ADD_NEW">Add New Location</option>
         </select>
+
+        <div class="no-location" v-show="showNewLocationSection">
+          <h3>Location not found? Add a new one!</h3>
+          <form @submit.prevent="addLocation(newLocation)">
+            <input class="location-input" v-model="newLocation.street" placeholder="Street" required />
+            <input class="location-input" v-model="newLocation.city" placeholder="City" required />
+            <input class="location-input" v-model="newLocation.state" placeholder="State" required />
+            <input class="location-input" v-model="newLocation.zip" placeholder="ZIP Code" required />
+            <button class="add-location-btn" type="submit">Add Location</button>
+          </form>
+        </div>
 
         <button @click="handleCheckout" class="checkout-btn">
           Checkout
@@ -465,6 +513,28 @@ h1 {
 
 .continue-shopping-btn:hover {
   background-color: #a89840;
+}
+
+.location-input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #a89840;
+  background-color: #303030;
+  color: white;
+}
+
+.add-location-btn {
+  background-color: #baaa51;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 @media (max-width: 1024px) {

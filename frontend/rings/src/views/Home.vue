@@ -1,8 +1,17 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { setCustomerIdCookie, getCurrentCustomerId } from '@/services/customerService';
+import axios from 'axios';
 
 const selectedCustomerId = ref<number | null>(null);
+
+//Interface for customer data
+interface Customer {
+  id: number;
+  name: string;
+}
+
+const customers = ref<Customer[]>([]);
 
 //function to store a customer id in cookie to use in API calls
 const handleCustomerChange = (event: Event) => {
@@ -11,9 +20,27 @@ const handleCustomerChange = (event: Event) => {
   selectedCustomerId.value = customerId;
 };
 
+const getAvailableCustomers = async () => {
+  try {
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/customers`);
+    // Handle the response to populate customer options
+    customers.value = response.data;
+    console.log('Available customers:', response.data);
+  } catch (error) {
+    console.error('Error fetching customers:', error);
+    // mock data
+    customers.value = [
+      { id: 1, name: 'Customer 1' },
+      { id: 2, name: 'Customer 2' },
+      { id: 3, name: 'Customer 3' }
+    ];
+  }
+};
+
 // Load the current customer ID when component mounts
 onMounted(() => {
   selectedCustomerId.value = getCurrentCustomerId();
+  getAvailableCustomers();
 });
 </script>
 
@@ -28,9 +55,7 @@ onMounted(() => {
         :value="selectedCustomerId || ''"
       >
         <option value="" disabled>Select Customer</option>
-        <option value="1">Customer 1</option>
-        <option value="2">Customer 2</option>
-        <option value="3">Customer 3</option>
+        <option v-for="customer in customers" :key="customer.id" :value="customer.id">{{ customer.name }}</option>
       </select>
     </div>
     
