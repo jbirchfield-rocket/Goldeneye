@@ -1,0 +1,54 @@
+name: Backend Tests
+
+on:
+  push:
+    branches: [main, get-customers]
+    paths:
+      - 'backend/rings/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'backend/rings/**'
+
+jobs:
+  test:
+    name: Run Backend Tests
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: backend/rings
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 25
+        uses: actions/setup-java@v4
+        with:
+          java-version: '25'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Run tests
+        env:
+          DB2_HOST: ${{ secrets.DB2_HOST }}
+          DB2_PORT: ${{ secrets.DB2_PORT }}
+          DB2_DATABASE: ${{ secrets.DB2_DATABASE }}
+          DB2_USERNAME: ${{ secrets.DB2_USERNAME }}
+          DB2_PASSWORD: ${{ secrets.DB2_PASSWORD }}
+        run: ./mvnw verify --batch-mode
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: backend/rings/target/surefire-reports/
+
+      - name: Upload JaCoCo coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: backend/rings/target/site/jacoco/
