@@ -5,10 +5,19 @@
 
 package com.goldeneye.repo;
 
+import java.util.List;
+
+import org.springframework.data.jdbc.repository.query.Query;
+import org.springframework.data.repository.ListCrudRepository;
+
+import com.goldeneye.model.Customer;
+
+
 /**
  *
  * @author scanales
  */
-public interface CustomerRepo {
-
+public interface CustomerRepo extends ListCrudRepository<Customer, Integer> {
+    @Query("SELECT CUSTID, NAME FROM GLDEYE.TBCUST")
+    List<Customer> findAll();
 }

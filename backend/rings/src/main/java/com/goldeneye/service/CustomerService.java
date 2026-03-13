@@ -5,10 +5,33 @@
 
 package com.goldeneye.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.goldeneye.dto.CustomerDTO;
+import com.goldeneye.repo.CustomerRepo;
+
 /**
  *
- * @author scanales
+ * @author dshelby
  */
+@Service
 public class CustomerService {
+
+    private final CustomerRepo customerRepo;
+
+    public CustomerService(CustomerRepo customerRepo) {
+        this.customerRepo = customerRepo;
+    }
+
+    public List<CustomerDTO> getAllCustomers() {
+        return customerRepo.findAll()
+            .stream()
+            .map(c -> new CustomerDTO(c.getCustId(), c.getName()))
+            .toList();
+    }
+
+
 
 }
