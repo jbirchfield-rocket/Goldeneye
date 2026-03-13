@@ -21,6 +21,15 @@ import com.goldeneye.service.CustomerService;
 import com.goldeneye.service.LocationService;
 import com.goldeneye.service.ProductService;
 
+
+// import com.goldeneye.dto.StoneDTO;
+// import com.goldeneye.dto.MaterialDTO;
+// import com.goldeneye.dto.WidthDTO;
+
+// import com.goldeneye.service.StoneService;
+// import com.goldeneye.service.MaterialService;
+// import com.goldeneye.service.WidthService;
+
 /**
  *
  * @author dshelby
@@ -54,5 +63,20 @@ public class GoldeneyeController {
     public ResponseEntity<List<ProductDTO>> getAllProducts() {
         return ResponseEntity.ok(productService.getAllProducts());
     }
+
+    // @GetMapping("/stones")
+    // public ResponseEntity<List<StoneDTO>> getAllStones() {
+    //     return ResponseEntity.ok(stoneService.getAllStones());
+    // }
+
+    // @GetMapping("/materials")
+    // public ResponseEntity<List<MaterialDTO>> getAllMaterials() {
+    //     return ResponseEntity.ok(materialService.getAllMaterials());
+    // }
+
+    // @GetMapping("/widths")
+    // public ResponseEntity<List<WidthsDTO>> getAllWidths() {
+    //     return ResponseEntity.ok(widthService.getAllWidths());
+    // }
 
 }
