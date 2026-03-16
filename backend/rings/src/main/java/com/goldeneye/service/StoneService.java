@@ -26,4 +26,6 @@ public class StoneService {
             .map(c -> new StoneDTO(c.getStoneId(), c.getStoneName(), c.getInventory(), c.getPrice()))
             .toList();
     }
+
+    // TODO: add method for getting stone by id
 }

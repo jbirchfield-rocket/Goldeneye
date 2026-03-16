@@ -15,4 +15,6 @@ import com.goldeneye.model.Width;
 public interface WidthRepo extends ListCrudRepository<Width, Integer> {
     @Query("SELECT WID, WIDTH, MULTIPLIER, MATTUSE FROM GLDEYE.TBWIDTH")
     List<Width> findAll();
+
+    // TODO: add query for finding width by id
 }

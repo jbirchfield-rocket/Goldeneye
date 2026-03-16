@@ -15,4 +15,6 @@ import com.goldeneye.model.Stone;
 public interface StoneRepo extends ListCrudRepository<Stone, Integer> {
     @Query("SELECT STONEID, NAME, INVENTORY, PRICE FROM GLDEYE.TBSTONE")
     List<Stone> findAll();
+
+    // TODO: add query for finding stone by id
 }

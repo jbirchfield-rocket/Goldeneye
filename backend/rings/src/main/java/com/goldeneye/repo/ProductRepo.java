@@ -20,4 +20,6 @@ import com.goldeneye.model.Product;
 public interface ProductRepo extends ListCrudRepository<Product, Integer> {
     @Query("SELECT PRODID, NAME, DSCRP, BASEPRICE FROM GLDEYE.TBPROD")
     List<Product> findAll();
+
+    // TODO: add query for finding product by id
 }

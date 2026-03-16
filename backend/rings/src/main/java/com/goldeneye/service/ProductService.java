@@ -31,4 +31,6 @@ public class ProductService {
             .map(c -> new ProductDTO(c.getProdId(), c.getName(), c.getDescription(), c.getBasePrice()))
             .toList();
     }
+
+    // TODO: add method for getting product by id
 }

@@ -26,4 +26,6 @@ public class MaterialService {
             .map(c -> new MaterialDTO(c.getMaterialId(), c.getMaterialName(), c.getInventory(), c.getMultiplier()))
             .toList();
     }
+
+    // TODO: add method for getting material by id
 }

@@ -26,4 +26,6 @@ public class WidthService {
             .map(c -> new WidthDTO(c.getWidthId(), c.getWidth(), c.getMultiplier(), c.getMaterialUse()))
             .toList();
     }
+
+    // TODO: add method for getting width by id
 }
