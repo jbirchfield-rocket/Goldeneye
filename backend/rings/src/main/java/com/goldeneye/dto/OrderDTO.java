@@ -10,10 +10,19 @@ import com.goldeneye.dto.OrderItemDTO;
  * @author dshelby
  */
 public class OrderDTO {
+    private int orderId;
     private int custId;
     private int locationId;
     private Date date;
     private List<OrderItemDTO> orderItems;
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
 
     public int getCustId() { 
         return custId; 

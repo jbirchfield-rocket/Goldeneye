@@ -1,5 +1,7 @@
 package com.goldeneye.dto;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author dshelby
@@ -9,11 +11,15 @@ public class OrderItemDTO {
     private int materialId;
     private int widthId;
     private int stoneId;
+    private BigDecimal unitPrice;
     private int quantity;
 
     public int getProductId() { return productId; }
     public void setProductId(int productId) { this.productId = productId; }
 
+    public BigDecimal getUnitPrice() { return unitPrice; }
+    public void setUnitPrice(BigDecimal unitPrice) { this.unitPrice = unitPrice; }
+    
     public int getMaterialId() { return materialId; }
     public void setMaterialId(int materialId) { this.materialId = materialId; }
 
