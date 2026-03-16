@@ -26,6 +26,7 @@ interface Stones {
   name: string;
   multiplier: number;
   Inventory: number;
+  price: number;
 }
 
 interface Material {
@@ -36,7 +37,7 @@ interface Material {
 }
 
 interface Width {
-  widthName: string;
+  width: number;
   multiplier: number;
   materialUse: number;
   widthId?: number;
@@ -50,7 +51,7 @@ const stones = ref<Stones[]>([]);
 
 const selectedOptions = ref<Record<number, {
   materialType: string;
-  bandWidth: string;
+  bandWidth: number;
   ringStone: string;
   quantity: number;
   proposedPrice: number;
@@ -108,10 +109,10 @@ const fetchStones = async () => {
     console.error('Error fetching stones:', error);
     // Mock data
     stones.value = [
-      { id: 1, name: 'Cubic Zirconia', multiplier: 1, Inventory: 100 },
-      { id: 2, name: 'Semi-precious', multiplier: 1.5, Inventory: 50 },
-      { id: 3, name: 'Lab-Grown Diamond', multiplier: 2, Inventory: 20 },
-      { id: 4, name: 'Natural Diamond', multiplier: 3, Inventory: 10 }
+      { id: 1, name: 'Cubic Zirconia', multiplier: 1, Inventory: 100, price: 0 },
+      { id: 2, name: 'Semi-precious', multiplier: 1.5, Inventory: 50, price: 20 },
+      { id: 3, name: 'Lab-Grown Diamond', multiplier: 2, Inventory: 20, price: 40 },
+      { id: 4, name: 'Natural Diamond', multiplier: 3, Inventory: 10, price: 80 }
     ];
     console.log('Using mock stones:', stones.value);
   }
@@ -143,9 +144,9 @@ const fetchWidths = async () => {
     console.error('Error fetching widths:', error);
     // Mock data
     widths.value = [
-      { widthName: '2mm', multiplier: 1, materialUse: 1 },
-      { widthName: '4mm', multiplier: 1.5, materialUse: 1.5 },
-      { widthName: '6mm', multiplier: 2, materialUse: 2 }
+      { width: 2, multiplier: 1, materialUse: 1 },
+      { width: 4, multiplier: 1.5, materialUse: 1.5 },
+      { width: 6, multiplier: 2, materialUse: 2 }
     ];
     console.log('Using mock widths:', widths.value);
   }
@@ -166,7 +167,7 @@ const fetchRings = async () => {
     rings.value.forEach(ring => {
       selectedOptions.value[ring.prodId] = {
         materialType: ring.materialTypes[0]?.name || '',
-        bandWidth: ring.bandWidths[0]?.widthName || '',
+        bandWidth: ring.bandWidths[0]?.width || 0,
         ringStone: ring.ringStones[0]?.name || '',
         quantity: 1,
         proposedPrice: ring.basePrice || 0
@@ -255,22 +256,25 @@ const fetchRings = async () => {
         prodId: 4,
         name: 'Classic Solitaire',
         image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQx--tC3dy820ZF3LN3Vz3G71dAIQqvUwL2w&s',
-        materialTypes:  [
-          { name: 'Gold', multiplier: 1, Inventory: 100 },
-          { name: 'Platinum', multiplier: 1.5, Inventory: 50 },
-          { name: 'Palladium', multiplier: 1.2, Inventory: 30 }
-        ],
-        bandWidths: [
-          { widthName: '2mm', multiplier: 1, materialUse: 1 },
-          { widthName: '4mm', multiplier: 1.5, materialUse: 1.5 },
-          { widthName: '6mm', multiplier: 2, materialUse: 2 }
-        ],
-        ringStones: [
-          { id: 1, name: 'Cubic Zirconia', multiplier: 1, Inventory: 100 },
-          { id: 2, name: 'Semi-precious', multiplier: 1.5, Inventory: 50 },
-          { id: 3, name: 'Lab-Grown Diamond', multiplier: 2, Inventory: 20 },
-          { id: 4, name: 'Natural Diamond', multiplier: 3, Inventory: 10 }
-        ],
+        // materialTypes:  [
+        //   { name: 'Gold', multiplier: 1, Inventory: 100 },
+        //   { name: 'Platinum', multiplier: 1.5, Inventory: 50 },
+        //   { name: 'Palladium', multiplier: 1.2, Inventory: 30 }
+        // ],
+        materialTypes: materials.value,
+        // bandWidths: [
+        //   { widthName: '2mm', multiplier: 1, materialUse: 1 },
+        //   { widthName: '4mm', multiplier: 1.5, materialUse: 1.5 },
+        //   { widthName: '6mm', multiplier: 2, materialUse: 2 }
+        // ],
+        bandWidths: widths.value,
+        // ringStones: [
+        //   { id: 1, name: 'Cubic Zirconia', multiplier: 1, Inventory: 100 },
+        //   { id: 2, name: 'Semi-precious', multiplier: 1.5, Inventory: 50 },
+        //   { id: 3, name: 'Lab-Grown Diamond', multiplier: 2, Inventory: 20 },
+        //   { id: 4, name: 'Natural Diamond', multiplier: 3, Inventory: 10 }
+        // ],
+        ringStones: stones.value,
         basePrice: 449.99
       }
     ];
@@ -278,7 +282,7 @@ const fetchRings = async () => {
     rings.value.forEach(ring => {
       selectedOptions.value[ring.prodId] = {
         materialType: ring.materialTypes[0]?.name || '',
-        bandWidth: ring.bandWidths[0]?.widthName || '',
+        bandWidth: ring.bandWidths[0]?.width || 0,
         ringStone: ring.ringStones[0]?.name || '',
         quantity: 1,
         proposedPrice: ring.basePrice
@@ -294,13 +298,16 @@ const updatePrice = (ringId: number) => {
     // swap the price multipliers with multipliers from db
     let price = ring.basePrice;
     // use fetched values for attributes to calc price
-    const selectedWidth = ring.bandWidths.find(m => m.widthName === options.bandWidth);
+    const selectedWidth = ring.bandWidths.find(m => m.width === options.bandWidth);
+    console.log('Selected Width:', selectedWidth);
     const selectedMaterial = ring.materialTypes.find(m => m.name === options.materialType);
+    console.log('Selected Material:', selectedMaterial);
     const selectedStone = ring.ringStones.find(m => m.name === options.ringStone);
+    console.log('Selected Stone:', selectedStone);
 
     if (selectedWidth) price *= selectedWidth.multiplier;
     if (selectedMaterial) price *= selectedMaterial.multiplier;
-    if (selectedStone) price += selectedStone.multiplier;
+    if (selectedStone) price += selectedStone.price || 0;
 
     options.proposedPrice = price * options.quantity;
   }
@@ -382,8 +389,8 @@ onMounted(async () => {
                 @change="updatePrice(ring.prodId)"
                 class="option-select"
               >
-                <option v-for="width in ring.bandWidths" :key="width.widthName" :value="width.widthName">
-                  {{ width.widthName }}
+                <option v-for="width in ring.bandWidths" :key="width.width" :value="width.width">
+                  {{ width.width }}
                 </option>
               </select>
             </div>

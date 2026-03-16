@@ -20,13 +20,13 @@ interface Order {
   rings: OrderRing[];
   orderDate?: string;
   status?: string;
-  location: Locations;
+  locID: number;
 }
 
 interface OrderRing {
   ringType: string;
   material: string;
-  width: string;
+  width: number;
   stone: string;
   quantity: number;
   price: number;
@@ -51,10 +51,9 @@ const handleQuantityChange = (index: number, newQuantity: number) => {
 
 const handleCheckout = () => {
   if (cartItems.value.length === 0) {
-    alert('Your cart is empty!');
+    // alert('Your cart is empty!');
     return;
   }
-  // Implement checkout logic here
 
   // Adding cart items to an order interface item
   const order: Order = {
@@ -67,17 +66,11 @@ const handleCheckout = () => {
       quantity: item.quantity,
       price: item.price
     })),
-    location: {
-      custID: getCurrentCustomerId() || 1,
-      street: '123 Main St',
-      city: 'Anytown',
-      state: 'CA',
-      zip: "12345",
-      locID: 0
-    }
+    locID: Number(selectedLocation.value) || 0
   };
     // sending order to backend to be submitted and processed
     try {
+      console.log('Submitting order:', order);
       axios.post(`${import.meta.env.VITE_API_URL}/orders`, order)
         .then(response => {
           console.log('Order submitted successfully:', response.data);
@@ -90,17 +83,19 @@ const handleCheckout = () => {
     }
   
 
-  alert(`Proceeding to checkout with ${cartCount.value} item(s) totaling $${cartTotal.value.toFixed(2)}`);
+  // alert(`Proceeding to checkout with ${cartCount.value} item(s) totaling $${cartTotal.value.toFixed(2)}`);
 };
 
 const fetchLocations = async () => {
   // function to get delivery locations for a specific customer
   const customerId = getCurrentCustomerId() || 3; // Default to 3 if no customer ID is found
+  
   try {
     
     const response = await axios.get(`${import.meta.env.VITE_API_URL}/locations/${customerId}`);
     // Filter locations to only show those matching the current customer ID
     locations.value = response.data.filter((location: Locations) => location.custID === customerId);
+    
   } catch (error) {
     console.error('Error fetching delivery locations:', error);
     // Mock data for development - filter to match current customerId
@@ -141,6 +136,8 @@ const fetchLocations = async () => {
     
     // Filter mock data to only show locations for current customer
     locations.value = mockData.filter(location => location.custID === customerId);
+    console.log('Using mock locations data:', mockData);
+    console.log('Filtered locations for customer ID', customerId, ':', locations.value);
   }
 }
 
@@ -189,6 +186,10 @@ const handleLocationChange = (event: Event) => {
     showNewLocationSection.value = false;
   }
 };
+
+onMounted(() => {
+  fetchLocations();
+});
 
 
 </script>
@@ -257,14 +258,13 @@ const handleLocationChange = (event: Event) => {
           <span>${{ cartTotal.toFixed(2) }}</span>
         </div>
         
-        <select class="delivery-select" @click="fetchLocations" @change="handleLocationChange" v-model="selectedLocation">
+        <select class="delivery-select" @click="fetchLocations"  @change="handleLocationChange" v-model="selectedLocation">
           <option disabled value="">Select Delivery Location</option>
-          <option v-for="location in locations" :key="`${location.custID}-${location.locID}`" :value="location.street">
+          <option v-for="location in locations" :key="`${location.custID}-${location.locID}`" :value="`${location.locID}`"> 
             {{ location.street }}, {{ location.city }}, {{ location.state }} {{ location.zip }}
           </option>
           <option value="ADD_NEW">Add New Location</option>
         </select>
-
         <div class="no-location" v-show="showNewLocationSection">
           <h3>Location not found? Add a new one!</h3>
           <form @submit.prevent="handleAddLocation">
