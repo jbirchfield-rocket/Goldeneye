@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.goldeneye.dto.CustomerDTO;
 import com.goldeneye.dto.LocationDTO;
+import com.goldeneye.dto.ProductDTO;
 import com.goldeneye.dto.StoneDTO;
 import com.goldeneye.service.CustomerService;
 import com.goldeneye.service.LocationService;
+import com.goldeneye.service.ProductService;
 import com.goldeneye.service.StoneService;
 
 /**
@@ -32,11 +34,13 @@ public class GoldeneyeController {
 
     private final CustomerService customerService;
     private final LocationService locationService;
+    private final ProductService productService;
     private final StoneService stoneService;
 
-    public GoldeneyeController(CustomerService customerService, LocationService locationService, StoneService stoneService) {
+    public GoldeneyeController(CustomerService customerService, LocationService locationService, ProductService productService, StoneService stoneService) {
         this.customerService = customerService;
         this.locationService = locationService;
+        this.productService = productService;
         this.stoneService = stoneService;
     }
 
@@ -48,6 +52,11 @@ public class GoldeneyeController {
     @GetMapping("/locations/{custId}")
     public ResponseEntity<List<LocationDTO>> getLocationsByCustId(@PathVariable int custId) {
         return ResponseEntity.ok(locationService.getLocationsByCustId(custId));
+    }
+
+    @GetMapping("/products")
+    public ResponseEntity<List<ProductDTO>> getProductsByCustId() {
+        return ResponseEntity.ok(productService.getAllProducts());
     }
 
     @GetMapping("/stones")
