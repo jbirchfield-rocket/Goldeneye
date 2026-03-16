@@ -5,22 +5,45 @@
 
 package com.goldeneye.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
+
 import java.math.BigDecimal;
 
 /**
  *
  * @author scanales
  */
+@Table("TBORDITM")
 public class OrderItem {
+    @Id
+    @Column("ORDITMID")
+    private int orderItemId;
+
+    @Column("ORDERID")
     private int orderId;
+
+    @Column("PRODID")
     private int productId;
+
+    @Column("MATTID")
     private int materialId;
+
+    @Column("WID")
     private int widthId;
+
+    @Column("STONEID")
     private int stoneId;
+
+    @Column("UNITPRICE")
     private BigDecimal unitPrice;
+
+    @Column("QTY")
     private int quantity;
 
-    public OrderItem(int orderId, int productId, int materialId, int widthId, int stoneId, BigDecimal unitPrice, int quantity) {
+    public OrderItem(int orderItemId, int orderId, int productId, int materialId, int widthId, int stoneId, BigDecimal unitPrice, int quantity) {
+        this.orderItemId = orderItemId;
         this.orderId = orderId;
         this.productId = productId;
         this.materialId = materialId;
@@ -28,6 +51,14 @@ public class OrderItem {
         this.stoneId = stoneId;
         this.unitPrice = unitPrice;
         this.quantity = quantity;
+    }
+
+    public int getOrderItemId() {
+        return orderItemId;
+    }
+
+    public void setOrderItemId(int orderItemId) {
+        this.orderItemId = orderItemId;
     }
 
     public int getOrderId() {
