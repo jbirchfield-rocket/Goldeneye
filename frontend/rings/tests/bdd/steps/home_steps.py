@@ -1,6 +1,10 @@
+from multiprocessing import context
+
 from behave import given, when, then
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support.ui import Select
+from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.support import expected_conditions as EC
 
 def _get_selected_option_text(driver, select_css):
@@ -106,32 +110,47 @@ def step_dropdown_default(context, expected):
 def step_select_first_customer(context):
     d = context.driver
     select_css = "#customer-select"
+
     select_el = _wait_for_select_ready(d, select_css, min_options=2, open_first=True)
+    sel = Select(select_el)
 
     first_opt, first_text = _first_real_option(select_el)
     if not first_opt or not first_text:
         raise AssertionError("Could not find a selectable customer option in the dropdown.")
     try:
-        first_opt.click()
+        sel.select_by_visible_text(first_text)
     except StaleElementReferenceException:
         select_el = _wait_for_select_ready(d, select_css, min_options=2, open_first=True)
+        sel = Select(select_el)
         first_opt, first_text = _first_real_option(select_el)
-        if not first_opt:
-            raise AssertionError("Option went stale and could not be re-located after refresh.")
-        first_opt.click()
+        sel.select_by_visible_text(first_text)
 
+    d.execute_script(
+        "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));",
+        select_el
+    )
     context.selected_first_customer_text = first_text
 
 @then("the first customer option is the value of the drop down")
 def step_first_customer_is_selected(context):
     d = context.driver
     select_css = "#customer-select"
-    _ = _wait_for_select_ready(d, select_css, min_options=2, open_first=False)
 
-    actual = _get_selected_option_text(d, select_css)
     expected = (getattr(context, "selected_first_customer_text", "") or "").strip()
+    assert expected, "Missing expected value from context; did the When step set it?"
 
-    if not expected:
-        raise AssertionError("Missing expected value from context; did the When step set it?")
-    assert actual == expected, f'Expected dropdown selection "{expected}", got "{actual}"'
+    select_el = _wait_for_select_ready(d, select_css, min_options=2, open_first=False)
+    sel = Select(select_el)
 
+    def _is_selected():
+        try:
+            match_xpath = f"//select[@id='customer-select']/option[normalize-space()='{expected}']"
+            opt = d.find_element(By.XPATH, match_xpath)
+            return opt.is_selected()
+        except StaleElementReferenceException:
+            return False
+
+    WebDriverWait(d, 20).until(lambda _: _is_selected(), f'Option "{expected}" never became selected.')
+
+    actual_text = _get_selected_option_text(d, select_css)
+    assert actual_text == expected, f'Expected dropdown selection "{expected}", got "{actual_text}"'
