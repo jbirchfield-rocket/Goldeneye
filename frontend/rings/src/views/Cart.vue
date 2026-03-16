@@ -55,9 +55,17 @@ const handleCheckout = () => {
     return;
   }
 
+  // Check if customer ID exists
+  const customerId = getCurrentCustomerId();
+  if (!customerId) {
+    alert('Please log in to place an order.');
+    console.error('No customer ID found. User must be logged in to checkout.');
+    return;
+  }
+
   // Adding cart items to an order interface item
   const order: Order = {
-    customerId: getCurrentCustomerId() || 1,
+    customerId: customerId, //require customer ID
     rings: cartItems.value.map(item => ({
       ringType: `Ring #${item.ringId}`,
       material: item.materialType,
