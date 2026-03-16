@@ -5,11 +5,9 @@ from selenium.webdriver.support import expected_conditions as EC
 
 def _get_selected_option_text(driver, select_css):
     select_el = driver.find_element(By.CSS_SELECTOR, select_css)
-    # Prefer :checked (fast path)
     selected = select_el.find_elements(By.CSS_SELECTOR, "option:checked")
     if selected:
         return selected[0].text.strip()
-    # Fallback: iterate options
     for opt in select_el.find_elements(By.CSS_SELECTOR, "option"):
         if opt.is_selected():
             return opt.text.strip()
@@ -23,7 +21,6 @@ def _wait_for_select_ready(driver, css, min_options=2, open_first=False):
     <option> elements (e.g., placeholder + 1 real option). Optionally clicks the select first.
     Returns a *freshly located* select element (avoid stale refs).
     """
-    # Step 1: wait until the <select> exists and is interactable
     select_locator = (By.CSS_SELECTOR, css)
     el = WebDriverWait(driver, 20).until(EC.presence_of_element_located(select_locator))
     WebDriverWait(driver, 20).until(EC.visibility_of(el))
@@ -36,7 +33,6 @@ def _wait_for_select_ready(driver, css, min_options=2, open_first=False):
                 el = WebDriverWait(driver, 10).until(EC.presence_of_element_located(select_locator))
                 el.click()
 
-    # Step 2: wait for options to be populated
     def _options_ready():
         try:
             sel = driver.find_element(*select_locator)
@@ -80,7 +76,6 @@ def _first_real_option(select_el):
 
 @given("the app is running")
 def step_app_running(context):
-    # Server is started outside (vite preview).
     pass
 
 @given("I am on the home page")
