@@ -16,8 +16,8 @@ import com.goldeneye.model.Order;
 public interface OrderRepo extends ListCrudRepository<Order, Integer> {
 
     @Modifying
-    @Query("INSERT INTO GLDEYE.TBORDER (CUSTID, ORDERDATE) VALUES (:custId, :orderDate)")
-    void insertOrder(@Param("custId") int custId, @Param("orderDate") LocalDate orderDate);
+    @Query("INSERT INTO GLDEYE.TBORDER (CUSTID, LOCID) VALUES (:custId, :locationId)")
+    void insertOrder(@Param("custId") int custId, @Param("locationId") int locationId);
 
     @Query("SELECT INTEGER(IDENTITY_VAL_LOCAL()) FROM SYSIBM.SYSDUMMY1")
     int getLastGeneratedId();

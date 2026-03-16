@@ -90,7 +90,7 @@ public class GoldeneyeController {
 
     @PostMapping("/order")
     public ResponseEntity<Integer> submitOrder(@RequestBody OrderDTO) {
-        int newOrderId = orderService.createOrder(orderDTO);
+        int newOrderId = orderService.createOrder(OrderDTO);
         return ResponseEntity.ok(newOrderId);
     }
 
