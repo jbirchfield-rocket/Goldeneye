@@ -51,6 +51,10 @@ html, body {
   overflow-x: hidden;
 }
 
+body {
+  font-family: 'Cormorant Garamond', serif;
+}
+
 #app {
   margin: 0;
   padding: 0;
