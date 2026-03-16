@@ -23,7 +23,7 @@ public class WidthService {
     public List<WidthDTO> getAllWidths() {
         return widthRepo.findAll()
             .stream()
-            .map(c -> new WidthDTO(c.getWidthId(), c.getWidthName(), c.getMultiplier(), c.getMaterialUse()))
+            .map(c -> new WidthDTO(c.getWidthId(), c.getWidth(), c.getMultiplier(), c.getMaterialUse()))
             .toList();
     }
 }
