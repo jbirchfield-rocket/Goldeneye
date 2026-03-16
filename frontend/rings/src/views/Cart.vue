@@ -63,6 +63,13 @@ const handleCheckout = () => {
     return;
   }
 
+  const selectedLocID = Number(selectedLocation.value);
+  if (!selectedLocID) {
+    alert('Please select a delivery location before checking out.');
+    console.error('No delivery location selected. locID is required to checkout.');
+    return;
+  }
+
   // Adding cart items to an order interface item
   const order: Order = {
     customerId: customerId, //require customer ID
