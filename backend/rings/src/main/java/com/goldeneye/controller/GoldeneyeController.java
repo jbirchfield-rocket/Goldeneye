@@ -16,14 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.goldeneye.dto.CustomerDTO;
 import com.goldeneye.dto.LocationDTO;
+import com.goldeneye.dto.MaterialDTO;
 import com.goldeneye.dto.ProductDTO;
 import com.goldeneye.dto.StoneDTO;
-import com.goldeneye.dto.MaterialDTO;
+import com.goldeneye.dto.WidthDTO;
 import com.goldeneye.service.CustomerService;
 import com.goldeneye.service.LocationService;
+import com.goldeneye.service.MaterialService;
 import com.goldeneye.service.ProductService;
 import com.goldeneye.service.StoneService;
-import com.goldeneye.service.MaterialService;
+import com.goldeneye.service.WidthService;
 
 /**
  *
@@ -39,13 +41,15 @@ public class GoldeneyeController {
     private final ProductService productService;
     private final StoneService stoneService;
     private final MaterialService materialService;
+    private final WidthService widthService;
 
-    public GoldeneyeController(CustomerService customerService, LocationService locationService, ProductService productService, StoneService stoneService, MaterialService materialService) {
+    public GoldeneyeController(CustomerService customerService, LocationService locationService, ProductService productService, StoneService stoneService, MaterialService materialService, WidthService widthService) {
         this.customerService = customerService;
         this.locationService = locationService;
         this.productService = productService;
         this.stoneService = stoneService;
         this.materialService = materialService;
+        this.widthService = widthService;
     }
 
     @GetMapping("/customers")
@@ -71,6 +75,11 @@ public class GoldeneyeController {
     @GetMapping("/materials")
     public ResponseEntity<List<MaterialDTO>> getAllMaterials() {
         return ResponseEntity.ok(materialService.getAllMaterials());
+    }
+
+    @GetMapping("/widths")
+    public ResponseEntity<List<WidthDTO>> getAllWidths() {
+        return ResponseEntity.ok(widthService.getAllWidths());
     }
 
 }

@@ -5,37 +5,50 @@
 
 package com.goldeneye.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
+
 /**
  *
- * @author scanales
+ * @author dshelby
  */
+@Table("TBWIDTH")
 public class Width {
-        private int widthId;
-    private String widthName;
-    private float multiplier;
-    private int inventory;
+    @Id
+    @Column("WID")
+    private int widthId;
 
-    public Width(int widthId, String widthName, float multiplier, int inventory) {
+    @Column("WIDTH")
+    private int width;
+
+    @Column("MULTIPLIER")
+    private float multiplier;
+
+    @Column("MATTUSE")
+    private int materialUse;
+
+    public Width(int widthId, int width, float multiplier, int materialUse) {
         this.widthId = widthId;
-        this.widthName = widthName;
+        this.width = width;
         this.multiplier = multiplier;
-        this.inventory = inventory;
+        this.materialUse = materialUse;
     }
 
-    public int getwidthId() {
+    public int getWidthId() {
         return widthId;
     }
 
-    public void setwidthId(int widthId) {
+    public void setWidthId(int widthId) {
         this.widthId = widthId;
     }
 
-    public String getwidthName() {
-        return widthName;
+    public int getWidth() {
+        return width;
     }
 
-    public void setwidthName(String widthName) {
-        this.widthName = widthName;
+    public void setWidth(int width) {
+        this.width = width;
     }
 
     public float getMultiplier() {
@@ -46,11 +59,14 @@ public class Width {
         this.multiplier = multiplier;
     }
 
-    public int getInventory() {
-        return inventory;
+    public int getMaterialUse() {
+        return materialUse;
     }
 
-    public void setInventory(int inventory) {
-        this.inventory = inventory;
+    public void setMaterialUse(int materialUse) {
+        this.materialUse = materialUse;
     }
+
+    
+    
 }
