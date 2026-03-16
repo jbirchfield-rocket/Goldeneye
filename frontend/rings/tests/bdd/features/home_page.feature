@@ -7,7 +7,7 @@ Feature: Customer dropdown
     Given the app is running
     When I open the home page
     Then the customer dropdown default is "Select Customer"
-  Scenario: Customer dropdown has selectable options
+  Scenario: Customer dropdown is rendered and functional
     Given I am on the home page
     When I click the customer dropdown
-    Then the dropdown should have at least one selectable option
+    Then the dropdown should be visible and contain options
