@@ -59,11 +59,11 @@ public class Material {
         this.inventory = inventory;
     }
     
-        public float getMultiplier() {
-            return multiplier;
-        }
-    
-        public void setMultiplier(float multiplier) {
-            this.multiplier = multiplier;
-        }
+    public float getMultiplier() {
+        return multiplier;
+    }
+
+    public void setMultiplier(float multiplier) {
+        this.multiplier = multiplier;
+    }
 }
