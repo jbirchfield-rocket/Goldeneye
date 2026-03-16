@@ -26,6 +26,7 @@ interface Stones {
   name: string;
   multiplier: number;
   Inventory: number;
+  price: number;
 }
 
 interface Material {
@@ -108,10 +109,10 @@ const fetchStones = async () => {
     console.error('Error fetching stones:', error);
     // Mock data
     stones.value = [
-      { id: 1, name: 'Cubic Zirconia', multiplier: 1, Inventory: 100 },
-      { id: 2, name: 'Semi-precious', multiplier: 1.5, Inventory: 50 },
-      { id: 3, name: 'Lab-Grown Diamond', multiplier: 2, Inventory: 20 },
-      { id: 4, name: 'Natural Diamond', multiplier: 3, Inventory: 10 }
+      { id: 1, name: 'Cubic Zirconia', multiplier: 1, Inventory: 100, price: 0 },
+      { id: 2, name: 'Semi-precious', multiplier: 1.5, Inventory: 50, price: 20 },
+      { id: 3, name: 'Lab-Grown Diamond', multiplier: 2, Inventory: 20, price: 40 },
+      { id: 4, name: 'Natural Diamond', multiplier: 3, Inventory: 10, price: 80 }
     ];
     console.log('Using mock stones:', stones.value);
   }
@@ -298,12 +299,15 @@ const updatePrice = (ringId: number) => {
     let price = ring.basePrice;
     // use fetched values for attributes to calc price
     const selectedWidth = ring.bandWidths.find(m => m.widthName === options.bandWidth);
+    console.log('Selected Width:', selectedWidth);
     const selectedMaterial = ring.materialTypes.find(m => m.name === options.materialType);
+    console.log('Selected Material:', selectedMaterial);
     const selectedStone = ring.ringStones.find(m => m.name === options.ringStone);
+    console.log('Selected Stone:', selectedStone);
 
     if (selectedWidth) price *= selectedWidth.multiplier;
     if (selectedMaterial) price *= selectedMaterial.multiplier;
-    if (selectedStone) price += selectedStone.multiplier;
+    if (selectedStone) price += selectedStone.price || 0;
 
     options.proposedPrice = price * options.quantity;
   }
