@@ -63,7 +63,7 @@ jobs:
         working-directory: frontend/rings/tests/bdd
         env:
           BASE_URL: 'http://localhost:5173'
-        run: behave --no-capture
+        run: behave --no-capture --tags ~@api
 
       - name: Upload Behave artifacts
         if: always()

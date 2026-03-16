@@ -106,6 +106,41 @@ def step_dropdown_default(context, expected):
     if actual != expected:
         raise AssertionError(f'Expected default dropdown text "{expected}", got "{actual}"')
 
+@when("I wait for the customer dropdown to be populated from the API")
+def step_wait_for_api_data(context):
+    d = context.driver
+    _wait_for_select_ready(d, "#customer-select", min_options=2, open_first=False)
+
+@when("I select the first available customer")
+def step_select_first_available_customer(context):
+    d = context.driver
+    select_css = "#customer-select"
+    select_el = _wait_for_select_ready(d, select_css, min_options=2, open_first=False)
+    first_opt, first_text = _first_real_option(select_el)
+    if not first_opt or not first_text:
+        raise AssertionError("No real customer options found in the dropdown after API load")
+    sel = Select(select_el)
+    try:
+        sel.select_by_visible_text(first_text)
+    except StaleElementReferenceException:
+        select_el = _wait_for_select_ready(d, select_css, min_options=2, open_first=False)
+        sel = Select(select_el)
+        first_opt, first_text = _first_real_option(select_el)
+        sel.select_by_visible_text(first_text)
+    d.execute_script(
+        "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));",
+        select_el
+    )
+    context.selected_customer_text = first_text
+
+@then("the selected customer remains selected in the dropdown")
+def step_selected_customer_persists(context):
+    d = context.driver
+    expected = (getattr(context, "selected_customer_text", "") or "").strip()
+    assert expected, "No customer was selected in the previous step"
+    actual = _get_selected_option_text(d, "#customer-select")
+    assert actual == expected, f'Expected "{expected}" to remain selected, got "{actual}"'
+
 @when("I click the customer dropdown")
 def step_click_customer_dropdown(context):
     d = context.driver

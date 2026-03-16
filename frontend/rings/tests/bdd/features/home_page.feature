@@ -11,3 +11,10 @@ Feature: Customer dropdown
     Given I am on the home page
     When I click the customer dropdown
     Then the dropdown should be visible and contain options
+
+  @api
+  Scenario: Customer dropdown is populated from API and selection persists
+    Given I am on the home page
+    When I wait for the customer dropdown to be populated from the API
+    And I select the first available customer
+    Then the selected customer remains selected in the dropdown
