@@ -23,7 +23,7 @@ interface Location {
   street: string;
   city: string;
   state: string;
-  zip: number;
+  zip: string;
 }
 
 interface Order {
@@ -40,7 +40,7 @@ const loading = ref(true);
 const error = ref<string | null>(null);
 
 const fetchOrders = async () => {
-  const customerId = getCurrentCustomerId() || 1; // Default to customer 1 if not set
+  const customerId = getCurrentCustomerId() || 2; // Default to customer 1 if not set
   
   try {
     loading.value = true;
@@ -72,7 +72,7 @@ const fetchOrders = async () => {
             street: '123 Main St',
             city: 'Anytown',
             state: 'CA',
-            zip: 90210
+            zip: '90210'
           }
       },
       {
@@ -102,7 +102,7 @@ const fetchOrders = async () => {
           street: '123 Main St',
           city: 'Anytown',
           state: 'CA',
-          zip: 90210
+          zip: '90210'
         }
       },
       {
@@ -123,7 +123,7 @@ const fetchOrders = async () => {
             street: '456 Oak Ave',
             city: 'Sometown',
             state: 'NY',
-            zip: 10001
+            zip: '10001'
           }
       },
       {
@@ -144,7 +144,7 @@ const fetchOrders = async () => {
             street: '789 Pine Rd',
             city: 'Yourtown',
             state: 'TX',
-            zip: 75001
+            zip: '75001'
           }
       }
     ];
@@ -216,8 +216,8 @@ onMounted(() => {
             <div class="order-cell">Quantity: {{ ring.quantity }}</div>
             <div class="order-cell">Price: ${{ ring.price.toFixed(2) }}</div>
           </div>
+          <div class="order-location">Delivery Location: {{ order.location.street }}, {{ order.location.city }}, {{ order.location.state }} {{ order.location.zip }}</div>
           <div v-if="order.orderDate" class="order-date">Date: {{ order.orderDate }}</div>
-          <div class="order-location">Location: {{ order.location.street }}, {{ order.location.city }}, {{ order.location.state }} {{ order.location.zip }}</div>
         </div>
       </div>
     </div>
@@ -329,7 +329,7 @@ h1 {
 }
 
 .order-row.first-row {
-  border-top: 2px solid #666;
+  border-top: 2px solid #424242;
 }
 
 .order-cell {
@@ -341,16 +341,20 @@ h1 {
 
 .order-date {
   margin-top: 10px;
-  font-size: 0.9em;
+  font-size: .95em;
   color: #ddd;
   padding-left: 20px;
+  font-weight: bold;
 }
 
 .order-location {
   margin-top: 10px;
-  font-size: 0.9em;
+  font-size: .95em;
   color: #ddd;
   padding-left: 20px;
+  border-top: #baaa51 1px solid;
+  padding-top: 10px;
+  font-weight: bold;
 }
 
 .order-id {
@@ -363,6 +367,11 @@ h1 {
   .order-header {
     display: none;
   }
+
+  .order-body{
+    width: 100%;
+    border-radius: 3px;
+  }
   
   .order-row {
     display: flex;
@@ -370,11 +379,12 @@ h1 {
     gap: 8px;
     padding: 20px;
     border-bottom: 2px solid #999;
+    background-color: rgba(42, 42, 42, 0.95);
   }
   
   .order-row.first-row {
     border-top: 3px solid #333;
-    background-color: rgba(75, 75, 75, 0.95);
+    background-color: rgba(0, 0, 0, 0.95);
   }
   
   .order-cell {
@@ -400,5 +410,6 @@ h1 {
     margin: 0 -10px;
     border-radius: 0;
   }
+
 }
 </style>

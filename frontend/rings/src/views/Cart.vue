@@ -7,11 +7,12 @@ import { getCurrentCustomerId } from '@/services/customerService';
 const { cartItems, cartCount, cartTotal, removeFromCart, updateQuantity, clearCart } = useCart();
 
 interface Locations {
-  customerid: number;
+  custID: number;
   street: string;
   city: string;
   state: string;
-  zip: number;
+  zip: string;
+  locID: number;
 }
 
 interface Order {
@@ -36,7 +37,7 @@ const newLocation = ref({
   street: '',
   city: '',
   state: '',
-  zip: 0
+  zip: ''
 });
 
 const getPricePerUnit = (item: any) => {
@@ -67,11 +68,12 @@ const handleCheckout = () => {
       price: item.price
     })),
     location: {
-      customerid: getCurrentCustomerId() || 1,
+      custID: getCurrentCustomerId() || 1,
       street: '123 Main St',
       city: 'Anytown',
       state: 'CA',
-      zip: 12345
+      zip: "12345",
+      locID: 0
     }
   };
     // sending order to backend to be submitted and processed
@@ -95,52 +97,57 @@ const fetchLocations = async () => {
   // function to get delivery locations for a specific customer
   const customerId = getCurrentCustomerId() || 3; // Default to 3 if no customer ID is found
   try {
-    const response = await axios.get(`${import.meta.env.VITE_API_URL}/customers/${customerId}/locations`);
+    
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/locations/${customerId}`);
     // Filter locations to only show those matching the current customer ID
-    locations.value = response.data.filter((location: Locations) => location.customerid === customerId);
+    locations.value = response.data.filter((location: Locations) => location.custID === customerId);
   } catch (error) {
     console.error('Error fetching delivery locations:', error);
     // Mock data for development - filter to match current customerId
     const mockData = [
       {
-        customerid: 1,
+        custID: 1,
         street: '123 Main St',
         city: 'Anytown',
         state: 'CA',
-        zip: 12345
+        zip: "12345",
+        locID: 1
       },
       {
-        customerid: 1,
+        custID: 1,
         street: '456 Oak Ave',
         city: 'Othertown',
         state: 'NY',
-        zip: 67890
+        zip: "67890",
+        locID: 2
       },
       {
-        customerid: 2,
+        custID: 2,
         street: '789 Pine Rd',
         city: 'Somewhere',
         state: 'TX',
-        zip: 54321
+        zip: "54321",
+        locID: 3
       },
       {
-        customerid: 3,
+        custID: 3,
         street: '321 Elm St',
         city: 'Springfield',
         state: 'IL',
-        zip: 98765
+        zip: "98765",
+        locID: 4
       }
     ];
     
     // Filter mock data to only show locations for current customer
-    locations.value = mockData.filter(location => location.customerid === customerId);
+    locations.value = mockData.filter(location => location.custID === customerId);
   }
 }
 
-const addLocation = (newLocation: Omit<Locations, 'customerid'>) => {
+const addLocation = (newLocation: Omit<Locations, 'custID' | 'locID'>) => {
   // function to add a new delivery location for the current customer
   const customerId = getCurrentCustomerId() || 3; // Default to 3 if no customer ID is found
-  const locationToAdd = { ...newLocation, customerid: customerId };
+  const locationToAdd = { ...newLocation, custID: customerId, locID: 0 };
   
   try {
     axios.post(`${import.meta.env.VITE_API_URL}/customers/${customerId}/locations`, locationToAdd)
@@ -157,6 +164,19 @@ const addLocation = (newLocation: Omit<Locations, 'customerid'>) => {
 const showNewLocationSection = ref(false);
 const selectedLocation = ref('');
 
+const handleAddLocation = () => {
+  addLocation(newLocation.value);
+  // Reset form after submission
+  newLocation.value = {
+    street: '',
+    city: '',
+    state: '',
+    zip: ''
+  };
+  showNewLocationSection.value = false;
+  selectedLocation.value = '';
+};
+
 const handleLocationChange = (event: Event) => {
   const target = event.target as HTMLSelectElement;
   if (target.value === 'ADD_NEW') {
@@ -169,6 +189,7 @@ const handleLocationChange = (event: Event) => {
     showNewLocationSection.value = false;
   }
 };
+
 
 </script>
 
@@ -238,7 +259,7 @@ const handleLocationChange = (event: Event) => {
         
         <select class="delivery-select" @click="fetchLocations" @change="handleLocationChange" v-model="selectedLocation">
           <option disabled value="">Select Delivery Location</option>
-          <option v-for="location in locations" :key="location.customerid" :value="location.street">
+          <option v-for="location in locations" :key="`${location.custID}-${location.locID}`" :value="location.street">
             {{ location.street }}, {{ location.city }}, {{ location.state }} {{ location.zip }}
           </option>
           <option value="ADD_NEW">Add New Location</option>
@@ -246,7 +267,7 @@ const handleLocationChange = (event: Event) => {
 
         <div class="no-location" v-show="showNewLocationSection">
           <h3>Location not found? Add a new one!</h3>
-          <form @submit.prevent="addLocation(newLocation)">
+          <form @submit.prevent="handleAddLocation">
             <input class="location-input" v-model="newLocation.street" placeholder="Street" required />
             <input class="location-input" v-model="newLocation.city" placeholder="City" required />
             <input class="location-input" v-model="newLocation.state" placeholder="State" required />
