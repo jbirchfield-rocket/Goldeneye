@@ -24,6 +24,7 @@ interface Location {
   city: string;
   state: string;
   zip: string;
+  locID: number;
 }
 
 interface Order {
@@ -72,7 +73,8 @@ const fetchOrders = async () => {
             street: '123 Main St',
             city: 'Anytown',
             state: 'CA',
-            zip: '90210'
+            zip: '90210',
+            locID: 1
           }
       },
       {
@@ -102,7 +104,8 @@ const fetchOrders = async () => {
           street: '123 Main St',
           city: 'Anytown',
           state: 'CA',
-          zip: '90210'
+          zip: '90210',
+          locID: 1
         }
       },
       {
@@ -123,7 +126,8 @@ const fetchOrders = async () => {
             street: '456 Oak Ave',
             city: 'Sometown',
             state: 'NY',
-            zip: '10001'
+            zip: '10001',
+            locID: 2
           }
       },
       {
@@ -144,7 +148,8 @@ const fetchOrders = async () => {
             street: '789 Pine Rd',
             city: 'Yourtown',
             state: 'TX',
-            zip: '75001'
+            zip: '75001',
+            locID: 3
           }
       }
     ];
@@ -216,8 +221,12 @@ onMounted(() => {
             <div class="order-cell">Quantity: {{ ring.quantity }}</div>
             <div class="order-cell">Price: ${{ ring.price.toFixed(2) }}</div>
           </div>
-          <div class="order-location">Delivery Location: {{ order.location.street }}, {{ order.location.city }}, {{ order.location.state }} {{ order.location.zip }}</div>
-          <div v-if="order.orderDate" class="order-date">Date: {{ order.orderDate }}</div>
+          <div class="additional-info">
+            <div class="order-location">Delivery Location: {{ order.location.street }}, {{ order.location.city }}, {{ order.location.state }} {{ order.location.zip }}</div>
+            <div v-if="order.orderDate" class="order-date">Date: {{ order.orderDate }}</div>
+            <!-- display order total -->
+            <div class="order-total">Total: ${{ getOrderTotal(order).toFixed(2) }}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -339,6 +348,11 @@ h1 {
   color: white;
 }
 
+.additional-info {
+  padding: 15px 20px;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
 .order-date {
   margin-top: 10px;
   font-size: .95em;
@@ -348,6 +362,16 @@ h1 {
 }
 
 .order-location {
+  margin-top: 10px;
+  font-size: .95em;
+  color: #ddd;
+  padding-left: 20px;
+  border-top: #baaa51 1px solid;
+  padding-top: 10px;
+  font-weight: bold;
+}
+
+.order-total {
   margin-top: 10px;
   font-size: .95em;
   color: #ddd;
