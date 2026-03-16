@@ -255,22 +255,25 @@ const fetchRings = async () => {
         prodId: 4,
         name: 'Classic Solitaire',
         image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQx--tC3dy820ZF3LN3Vz3G71dAIQqvUwL2w&s',
-        materialTypes:  [
-          { name: 'Gold', multiplier: 1, Inventory: 100 },
-          { name: 'Platinum', multiplier: 1.5, Inventory: 50 },
-          { name: 'Palladium', multiplier: 1.2, Inventory: 30 }
-        ],
-        bandWidths: [
-          { widthName: '2mm', multiplier: 1, materialUse: 1 },
-          { widthName: '4mm', multiplier: 1.5, materialUse: 1.5 },
-          { widthName: '6mm', multiplier: 2, materialUse: 2 }
-        ],
-        ringStones: [
-          { id: 1, name: 'Cubic Zirconia', multiplier: 1, Inventory: 100 },
-          { id: 2, name: 'Semi-precious', multiplier: 1.5, Inventory: 50 },
-          { id: 3, name: 'Lab-Grown Diamond', multiplier: 2, Inventory: 20 },
-          { id: 4, name: 'Natural Diamond', multiplier: 3, Inventory: 10 }
-        ],
+        // materialTypes:  [
+        //   { name: 'Gold', multiplier: 1, Inventory: 100 },
+        //   { name: 'Platinum', multiplier: 1.5, Inventory: 50 },
+        //   { name: 'Palladium', multiplier: 1.2, Inventory: 30 }
+        // ],
+        materialTypes: materials.value,
+        // bandWidths: [
+        //   { widthName: '2mm', multiplier: 1, materialUse: 1 },
+        //   { widthName: '4mm', multiplier: 1.5, materialUse: 1.5 },
+        //   { widthName: '6mm', multiplier: 2, materialUse: 2 }
+        // ],
+        bandWidths: widths.value,
+        // ringStones: [
+        //   { id: 1, name: 'Cubic Zirconia', multiplier: 1, Inventory: 100 },
+        //   { id: 2, name: 'Semi-precious', multiplier: 1.5, Inventory: 50 },
+        //   { id: 3, name: 'Lab-Grown Diamond', multiplier: 2, Inventory: 20 },
+        //   { id: 4, name: 'Natural Diamond', multiplier: 3, Inventory: 10 }
+        // ],
+        ringStones: stones.value,
         basePrice: 449.99
       }
     ];
@@ -315,6 +318,7 @@ const addToCart = (ringId: number) => {
       ringId: ring.prodId,
       ringImage: ring.image,
       materialType: options.materialType,
+      
       bandWidth: options.bandWidth,
       ringStone: options.ringStone,
       quantity: options.quantity,
