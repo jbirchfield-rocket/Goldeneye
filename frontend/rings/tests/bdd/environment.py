@@ -3,6 +3,7 @@ from pathlib import Path
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.common.exceptions import WebDriverException
 
 ARTIFACTS = Path(__file__).resolve().parent / "artifacts"
 LOGS_DIR = ARTIFACTS / "logs"
@@ -39,13 +40,21 @@ def before_all(context):
 
 def after_scenario(context, scenario):
     if scenario.status == "failed":
-        ts = int(time.time())
-        name = f"{ts}-{scenario.name.replace(' ', '_')}.png"
-        path = context.screenshots_dir / name
         try:
-            context.driver.save_screenshot(str(path))
-        except Exception as e:
-            print(f"[e2e] Could not save screenshot: {e}")
+            entries = context.driver.manage().logs().get('browser')
+            console_path = context.logs_dir / f"console-{int(time.time())}.log"
+            with open(console_path, "w", encoding="utf-8") as f:
+                for e in entries:
+                    f.write(f"[{e.level.name}] {e.message}\n")
+        except WebDriverException:
+            pass
+
+        try:
+            html_path = context.logs_dir / f"dom-{int(time.time())}.html"
+            with open(html_path, "w", encoding="utf-8") as f:
+                f.write(context.driver.page_source)
+        except Exception:
+            pass
 
 def after_all(context):
     try:
