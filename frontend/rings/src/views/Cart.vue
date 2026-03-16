@@ -26,7 +26,7 @@ interface Order {
 interface OrderRing {
   ringType: string;
   material: string;
-  width: string;
+  width: number;
   stone: string;
   quantity: number;
   price: number;

@@ -4,7 +4,7 @@ export interface CartItem {
   ringId: number;
   ringImage: string;
   materialType: string;
-  bandWidth: string;
+  bandWidth: number;
   ringStone: string;
   quantity: number;
   price: number;

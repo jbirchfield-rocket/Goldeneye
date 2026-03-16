@@ -37,7 +37,7 @@ interface Material {
 }
 
 interface Width {
-  widthName: string;
+  width: number;
   multiplier: number;
   materialUse: number;
   widthId?: number;
@@ -51,7 +51,7 @@ const stones = ref<Stones[]>([]);
 
 const selectedOptions = ref<Record<number, {
   materialType: string;
-  bandWidth: string;
+  bandWidth: number;
   ringStone: string;
   quantity: number;
   proposedPrice: number;
@@ -144,9 +144,9 @@ const fetchWidths = async () => {
     console.error('Error fetching widths:', error);
     // Mock data
     widths.value = [
-      { widthName: '2mm', multiplier: 1, materialUse: 1 },
-      { widthName: '4mm', multiplier: 1.5, materialUse: 1.5 },
-      { widthName: '6mm', multiplier: 2, materialUse: 2 }
+      { width: 2, multiplier: 1, materialUse: 1 },
+      { width: 4, multiplier: 1.5, materialUse: 1.5 },
+      { width: 6, multiplier: 2, materialUse: 2 }
     ];
     console.log('Using mock widths:', widths.value);
   }
@@ -167,7 +167,7 @@ const fetchRings = async () => {
     rings.value.forEach(ring => {
       selectedOptions.value[ring.prodId] = {
         materialType: ring.materialTypes[0]?.name || '',
-        bandWidth: ring.bandWidths[0]?.widthName || '',
+        bandWidth: ring.bandWidths[0]?.width || 0,
         ringStone: ring.ringStones[0]?.name || '',
         quantity: 1,
         proposedPrice: ring.basePrice || 0
@@ -282,7 +282,7 @@ const fetchRings = async () => {
     rings.value.forEach(ring => {
       selectedOptions.value[ring.prodId] = {
         materialType: ring.materialTypes[0]?.name || '',
-        bandWidth: ring.bandWidths[0]?.widthName || '',
+        bandWidth: ring.bandWidths[0]?.width || 0,
         ringStone: ring.ringStones[0]?.name || '',
         quantity: 1,
         proposedPrice: ring.basePrice
@@ -298,7 +298,7 @@ const updatePrice = (ringId: number) => {
     // swap the price multipliers with multipliers from db
     let price = ring.basePrice;
     // use fetched values for attributes to calc price
-    const selectedWidth = ring.bandWidths.find(m => m.widthName === options.bandWidth);
+    const selectedWidth = ring.bandWidths.find(m => m.width === options.bandWidth);
     console.log('Selected Width:', selectedWidth);
     const selectedMaterial = ring.materialTypes.find(m => m.name === options.materialType);
     console.log('Selected Material:', selectedMaterial);
@@ -322,7 +322,6 @@ const addToCart = (ringId: number) => {
       ringId: ring.prodId,
       ringImage: ring.image,
       materialType: options.materialType,
-      
       bandWidth: options.bandWidth,
       ringStone: options.ringStone,
       quantity: options.quantity,
@@ -390,8 +389,8 @@ onMounted(async () => {
                 @change="updatePrice(ring.prodId)"
                 class="option-select"
               >
-                <option v-for="width in ring.bandWidths" :key="width.widthName" :value="width.widthName">
-                  {{ width.widthName }}
+                <option v-for="width in ring.bandWidths" :key="width.width" :value="width.width">
+                  {{ width.width }}
                 </option>
               </select>
             </div>
