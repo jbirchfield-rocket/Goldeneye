@@ -5,24 +5,35 @@
 
 package com.goldeneye.model;
 
-import java.math.BigDecimal;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
+
 import java.time.LocalDate;
+
 
 /**
  *
- * @author scanales
+ * @author dshelby
  */
+@Table("TBORDER")
 public class Order {
+    @Id
+    @Column("ORDERID")
     private int orderId;
-    private int custId;
-    private LocalDate orderDate;
-    private BigDecimal totalPrice;
 
-    public Order (int orderId, int custId, LocalDate orderDate, BigDecimal totalPrice) {
+    @Column("CUSTID")
+    private int custId;
+
+    @Column("LOCID")
+    private int locationId;
+    private LocalDate orderDate;
+
+    public Order (int orderId, int custId, int locationId, LocalDate orderDate) {
         this.orderId = orderId;
         this.custId = custId;
+        this.locationId = locationId;
         this.orderDate = orderDate;
-        this.totalPrice = totalPrice;
     }
 
     public int getOrderId() {
@@ -41,6 +52,15 @@ public class Order {
         this.custId = custId;
     }
 
+    
+        public int getLocationId() {
+            return locationId;
+        }
+    
+        public void setLocationId(int locationId) {
+            this.locationId = locationId;
+        }
+
     public LocalDate getOrderDate() {
         return orderDate;
     }
@@ -49,13 +69,4 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    // TODO: Implement calculateTotalPrice() method    
 }
