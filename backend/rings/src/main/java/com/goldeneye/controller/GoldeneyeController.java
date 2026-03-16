@@ -18,10 +18,12 @@ import com.goldeneye.dto.CustomerDTO;
 import com.goldeneye.dto.LocationDTO;
 import com.goldeneye.dto.ProductDTO;
 import com.goldeneye.dto.StoneDTO;
+import com.goldeneye.dto.MaterialDTO;
 import com.goldeneye.service.CustomerService;
 import com.goldeneye.service.LocationService;
 import com.goldeneye.service.ProductService;
 import com.goldeneye.service.StoneService;
+import com.goldeneye.service.MaterialService;
 
 /**
  *
@@ -36,12 +38,14 @@ public class GoldeneyeController {
     private final LocationService locationService;
     private final ProductService productService;
     private final StoneService stoneService;
+    private final MaterialService materialService;
 
-    public GoldeneyeController(CustomerService customerService, LocationService locationService, ProductService productService, StoneService stoneService) {
+    public GoldeneyeController(CustomerService customerService, LocationService locationService, ProductService productService, StoneService stoneService, MaterialService materialService) {
         this.customerService = customerService;
         this.locationService = locationService;
         this.productService = productService;
         this.stoneService = stoneService;
+        this.materialService = materialService;
     }
 
     @GetMapping("/customers")
@@ -62,6 +66,11 @@ public class GoldeneyeController {
     @GetMapping("/stones")
     public ResponseEntity<List<StoneDTO>> getAllStones() {
         return ResponseEntity.ok(stoneService.getAllStones());
+    }
+
+    @GetMapping("/materials")
+    public ResponseEntity<List<MaterialDTO>> getAllMaterials() {
+        return ResponseEntity.ok(materialService.getAllMaterials());
     }
 
 }
