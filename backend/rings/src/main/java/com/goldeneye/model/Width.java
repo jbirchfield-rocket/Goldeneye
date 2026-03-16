@@ -20,7 +20,7 @@ public class Width {
     private int widthId;
 
     @Column("WIDTH")
-    private String widthName;
+    private int width;
 
     @Column("MULTIPLIER")
     private float multiplier;
@@ -28,9 +28,9 @@ public class Width {
     @Column("MATTUSE")
     private int materialUse;
 
-    public Width(int widthId, String widthName, float multiplier, int materialUse) {
+    public Width(int widthId, int width, float multiplier, int materialUse) {
         this.widthId = widthId;
-        this.widthName = widthName;
+        this.width = width;
         this.multiplier = multiplier;
         this.materialUse = materialUse;
     }
@@ -43,12 +43,12 @@ public class Width {
         this.widthId = widthId;
     }
 
-    public String getWidthName() {
-        return widthName;
+    public int getWidth() {
+        return width;
     }
 
-    public void setWidthName(String widthName) {
-        this.widthName = widthName;
+    public void setWidth(int width) {
+        this.width = width;
     }
 
     public float getMultiplier() {

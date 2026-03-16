@@ -8,13 +8,13 @@ package com.goldeneye.dto;
 
 public class WidthDTO {
     private int widthId;
-    private String widthName;
+    private int width;
     private float multiplier;
     private int materialUse;
 
-    public WidthDTO(int widthId, String widthName, float multiplier, int materialUse) {
+    public WidthDTO(int widthId, int width, float multiplier, int materialUse) {
         this.widthId = widthId;
-        this.widthName = widthName;
+        this.width = width;
         this.multiplier = multiplier;
         this.materialUse = materialUse;
     }
@@ -23,8 +23,8 @@ public class WidthDTO {
         return widthId; 
     }
 
-    public String getWidthName() { 
-        return widthName; 
+    public int getWidth() { 
+        return width; 
     }
     
     public float getMultiplier() {
