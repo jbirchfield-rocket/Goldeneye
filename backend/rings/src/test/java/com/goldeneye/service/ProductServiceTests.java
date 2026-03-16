@@ -1,96 +1,96 @@
-// /*
-//  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-//  * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit5TestClass.java to edit this template
-//  */
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit5TestClass.java to edit this template
+ */
 
-// package com.goldeneye.service;
+package com.goldeneye.service;
 
-// import static org.junit.Assert.assertNotNull;
-// import static org.junit.Assume.assumeFalse;
-// import static org.junit.Assume.assumeTrue;
-// import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+import java.util.List;
 
-// import java.math.BigDecimal;
-// import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-// import org.junit.Test;
-// import org.junit.jupiter.api.BeforeAll;
-// import org.junit.jupiter.api.Disabled;
-// import org.junit.jupiter.api.DisplayName;
-// import org.junit.jupiter.api.DisplayNameGeneration;
-// import org.junit.jupiter.api.DisplayNameGenerator;
-
-// import com.goldeneye.model.Product;
+import com.goldeneye.dto.ProductDTO;
+import com.goldeneye.rings.RingsApplication;
  
-// /**
-//  *
-//  * @author scanales
-//  */
+/**
+ *
+ * @author scanales
+ */
 
-// @DisplayName("Style Service Tests")
-// @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-// class StyleServiceTests {
-//     private static StyleService styleService;
 
-//     @BeforeAll
-//     static void StyleServiceTestsInit() {
-//         styleService = new StyleService();
-//     }
+@SpringBootTest(classes = RingsApplication.class)
+@DisplayName("Product Service Tests")
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@Tag("integration")
+class ProductServiceTests {
+    @Autowired
+    private ProductService productService;
 
-//     @Test
-//     @Disabled
-//     void readStylesReturnsListOfStyles() {
-//        List<Product> styles = styleService.readStyles();
-//        // TODO: Assert list is not null
-//        // TODO: Assert list is not empty
-//        // TODO: Assert list contains expected Product objects
-//     }
+    @Test
+    void getAllProductsReturnsListOfProducts() {
+       List<ProductDTO> products = productService.getAllProducts();
+       assertNotNull(products);
+       assertFalse(products.isEmpty());
+       assertTrue(products.stream().allMatch(p -> p instanceof ProductDTO));
+       assertEquals(4, products.size());
+       assertTrue(products.stream().anyMatch(p -> p.getProdId() == 1 && p.getName().equals("Standard Fit Grooved Band")));
+    }
 
-//     @Test
-//     @Disabled
-//     void readStylesReturnsEmptyListWhenNoStyles() {
-//         List<Product> styles = styleService.readStyles();
-//         // TODO: Assert list is not null
-//         // TODO: Assert list is empty
-//     }
+    // @Test
+    // @Disabled
+    // void readproductsReturnsEmptyListWhenNoproducts() {
+    //     List<Product> products = productService.readproducts();
+    //     // TODO: Assert list is not null
+    //     // TODO: Assert list is empty
+    // }
 
-//     @Test
-//     @Disabled
-//     void createStyleAddsNewStyle() {
-//         Product newStyle = new Product(0, "testProduct", "This is a test product.", BigDecimal.valueOf(9.99));
-//         List<Product> startingStyles = styleService.readStyles();
-//         assumeTrue(startingStyles != null);
-//         assumeFalse(startingStyles.contains(newStyle));
+    // @Test
+    // @Disabled
+    // void createproductAddsNewproduct() {
+    //     Product newproduct = new Product(0, "testProduct", "This is a test product.", BigDecimal.valueOf(9.99));
+    //     List<Product> startingproducts = productService.readproducts();
+    //     assumeTrue(startingproducts != null);
+    //     assumeFalse(startingproducts.contains(newproduct));
 
-//         styleService.createStyle(newStyle);
-//         List<Product> updatedStyles = styleService.readStyles();
-//         // TODO: Assert list is not null
-//         // TODO: Assert list is not empty
-//         // TODO: Assert list contains the new style
-//     }
+    //     productService.createproduct(newproduct);
+    //     List<Product> updatedproducts = productService.readproducts();
+    //     // TODO: Assert list is not null
+    //     // TODO: Assert list is not empty
+    //     // TODO: Assert list contains the new product
+    // }
     
 
-//     @Test
-//     @Disabled
-//     void updateStyleModifiesExistingStyle() {
-//         List<Product> existingStyles = styleService.readStyles();
-//         assumeTrue(existingStyles != null);
-//         assumeFalse(existingStyles.isEmpty());
+    // @Test
+    // @Disabled
+    // void updateproductModifiesExistingproduct() {
+    //     List<Product> existingproducts = productService.readproducts();
+    //     assumeTrue(existingproducts != null);
+    //     assumeFalse(existingproducts.isEmpty());
 
-//         Product styleToUpdate = existingStyles.get(0);
-//         styleToUpdate.setName("Updated Name");
-//         styleService.updateStyle(styleToUpdate);
+    //     Product productToUpdate = existingproducts.get(0);
+    //     productToUpdate.setName("Updated Name");
+    //     productService.updateproduct(productToUpdate);
 
-//         List<Product> updatedStyles = styleService.readStyles();
-//         // TODO: Assert list is not null
-//         // TODO: Assert list is not empty
-//         // TODO: Assert updated style has properly been updated
-//         // TODO: Assert other styles remain unchanged
-//     }
+    //     List<Product> updatedproducts = productService.readproducts();
+    //     // TODO: Assert list is not null
+    //     // TODO: Assert list is not empty
+    //     // TODO: Assert updated product has properly been updated
+    //     // TODO: Assert other products remain unchanged
+    // }
 
-//     @Test
-//     @Disabled
-//     void deleteStyleRemovesStyle() {
+    // @Test
+    // @Disabled
+    // void deleteproductRemovesproduct() {
         
-//     }
-// }
+    // }
+}
