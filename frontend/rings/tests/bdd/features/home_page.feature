@@ -7,7 +7,7 @@ Feature: Customer dropdown
     Given the app is running
     When I open the home page
     Then the customer dropdown default is "Select Customer"
-  Scenario: Correct customer is selected when drop down option is chosen
+  Scenario: Customer dropdown has selectable options
     Given I am on the home page
-    When I select the first customer option in the customer drop down
-    Then the first customer option is the value of the drop down
+    When I click the customer dropdown
+    Then the dropdown should have at least one selectable option

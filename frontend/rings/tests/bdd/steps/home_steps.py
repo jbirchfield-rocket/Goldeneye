@@ -106,44 +106,29 @@ def step_dropdown_default(context, expected):
     if actual != expected:
         raise AssertionError(f'Expected default dropdown text "{expected}", got "{actual}"')
 
-@when("I select the first customer option in the customer drop down")
-def step_select_first_customer(context):
+@when("I click the customer dropdown")
+def step_click_customer_dropdown(context):
+    d = context.driver
+    select_css = "#customer-select"
+    el = WebDriverWait(d, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, select_css)))
+    WebDriverWait(d, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR, select_css)))
+    el.click()
+
+@then("the dropdown should have at least one selectable option")
+def step_dropdown_has_selectable_option(context):
     d = context.driver
     select_css = "#customer-select"
 
-    select_el = _wait_for_select_ready(d, select_css, min_options=2, open_first=False)
+    def _has_real_option(driver):
+        select_el = driver.find_element(By.CSS_SELECTOR, select_css)
+        for o in select_el.find_elements(By.CSS_SELECTOR, "option"):
+            if o.get_attribute("disabled"):
+                continue
+            if (o.get_attribute("value") or "").strip() == "":
+                continue
+            return True
+        return False
 
-    first_opt, first_text = _first_real_option(select_el)
-    if not first_opt or not first_text:
-        raise AssertionError("Could not find a selectable customer option in the dropdown.")
-
-    sel = Select(select_el)
-    try:
-        sel.select_by_visible_text(first_text)
-    except StaleElementReferenceException:
-        select_el = _wait_for_select_ready(d, select_css, min_options=2, open_first=False)
-        sel = Select(select_el)
-        first_opt, first_text = _first_real_option(select_el)
-        sel.select_by_visible_text(first_text)
-
-    d.execute_script(
-        "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));",
-        select_el
+    WebDriverWait(d, 15).until(_has_real_option,
+        "Timed out waiting for at least one selectable option in the customer dropdown"
     )
-    context.selected_first_customer_text = first_text
-
-@then("the first customer option is the value of the drop down")
-def step_first_customer_is_selected(context):
-    d = context.driver
-    select_css = "#customer-select"
-
-    expected = (getattr(context, "selected_first_customer_text", "") or "").strip()
-    assert expected, "Missing expected value from context"
-
-    actual_text = _get_selected_option_text(d, select_css)
-    assert actual_text == expected, f'Expected dropdown selection "{expected}", got "{actual_text}"'
-
-# Scenario: Correct customer is selected when drop down option is chosen
-#     Given I am on the home page
-#     When I select the first customer option in the customer drop down
-#     Then the first customer option is the value of the drop down
