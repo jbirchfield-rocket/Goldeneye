@@ -5,11 +5,12 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.goldeneye.dto.MaterialDTO;
+import com.goldeneye.model.Material;
 import com.goldeneye.repo.MaterialRepo;
 
 /**
  *
- * @author dshelby
+ * @author dshelby, scanalesR
  */
 @Service
 public class MaterialService {
@@ -27,5 +28,13 @@ public class MaterialService {
             .toList();
     }
 
-    // TODO: add method for getting material by id
+    public MaterialDTO getMaterialById(int id) {
+        Material material = materialRepo.findById(id);
+        return new MaterialDTO(
+            material.getMaterialId(),
+            material.getMaterialName(), 
+            material.getInventory(), 
+            material.getMultiplier()
+        );
+    }
 }
