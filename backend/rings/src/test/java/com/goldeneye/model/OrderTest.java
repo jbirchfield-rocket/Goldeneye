@@ -5,7 +5,6 @@
 
 package com.goldeneye.model;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,19 +26,18 @@ public class OrderTest {
     @Test
     public void constructor_initializesAllFields() {
         LocalDate orderDate = LocalDate.of(2026, 3, 11);
-        BigDecimal totalPrice = new BigDecimal("499.99");
 
-        Order order = new Order(1, 101, orderDate, totalPrice);
+        Order order = new Order(1, 101, 5, orderDate);
 
         assertEquals(1, order.getOrderId());
         assertEquals(101, order.getCustId());
+        assertEquals(5, order.getLocationId());
         assertEquals(orderDate, order.getOrderDate());
-        assertEquals(0, totalPrice.compareTo(order.getTotalPrice()));
     }
 
     @Test
     public void setOrderId_updatesValue() {
-        Order order = new Order(1, 101, LocalDate.of(2026, 3, 11), new BigDecimal("499.99"));
+        Order order = new Order(1, 101, 5, LocalDate.of(2026, 3, 11));
 
         order.setOrderId(2);
 
@@ -48,7 +46,7 @@ public class OrderTest {
 
     @Test
     public void setCustId_updatesValue() {
-        Order order = new Order(1, 101, LocalDate.of(2026, 3, 11), new BigDecimal("499.99"));
+        Order order = new Order(1, 101, 5, LocalDate.of(2026, 3, 11));
 
         order.setCustId(202);
 
@@ -56,8 +54,17 @@ public class OrderTest {
     }
 
     @Test
+    public void setLocationId_updatesValue() {
+        Order order = new Order(1, 101, 5, LocalDate.of(2026, 3, 11));
+
+        order.setLocationId(10);
+
+        assertEquals(10, order.getLocationId());
+    }
+
+    @Test
     public void setOrderDate_updatesValue() {
-        Order order = new Order(1, 101, LocalDate.of(2026, 3, 11), new BigDecimal("499.99"));
+        Order order = new Order(1, 101, 5, LocalDate.of(2026, 3, 11));
         LocalDate updatedDate = LocalDate.of(2026, 4, 1);
 
         order.setOrderDate(updatedDate);
@@ -66,23 +73,11 @@ public class OrderTest {
     }
 
     @Test
-    public void setTotalPrice_updatesValue() {
-        Order order = new Order(1, 101, LocalDate.of(2026, 3, 11), new BigDecimal("499.99"));
-        BigDecimal updatedPrice = new BigDecimal("599.50");
-
-        order.setTotalPrice(updatedPrice);
-
-        assertEquals(0, updatedPrice.compareTo(order.getTotalPrice()));
-    }
-
-    @Test
-    public void setters_allowNullForReferenceFields() {
-        Order order = new Order(1, 101, LocalDate.of(2026, 3, 11), new BigDecimal("499.99"));
+    public void setOrderDate_allowsNull() {
+        Order order = new Order(1, 101, 5, LocalDate.of(2026, 3, 11));
 
         order.setOrderDate(null);
-        order.setTotalPrice(null);
 
         assertNull(order.getOrderDate());
-        assertNull(order.getTotalPrice());
     }
 }
