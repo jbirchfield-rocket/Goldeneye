@@ -5,11 +5,11 @@
 
 package com.goldeneye.model;
 
+import java.time.LocalDate;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
-
-import java.time.LocalDate;
 
 
 /**
@@ -20,7 +20,7 @@ import java.time.LocalDate;
 public class Order {
     @Id
     @Column("ORDERID")
-    private int orderId;
+    private Integer orderId;
 
     @Column("CUSTID")
     private int custId;
@@ -29,6 +29,9 @@ public class Order {
     private int locationId;
     private LocalDate orderDate;
 
+    public Order() {
+    }
+
     public Order (int orderId, int custId, int locationId, LocalDate orderDate) {
         this.orderId = orderId;
         this.custId = custId;
@@ -36,7 +39,7 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public int getOrderId() {
+    public Integer getOrderId() {
         return orderId;
     }
 

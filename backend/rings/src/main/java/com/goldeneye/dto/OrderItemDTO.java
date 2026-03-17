@@ -14,6 +14,9 @@ public class OrderItemDTO {
     private BigDecimal unitPrice;
     private int quantity;
 
+    public OrderItemDTO() {
+    }
+
     public OrderItemDTO(int productId, int materialId, int widthId, int stoneId, BigDecimal unitPrice, int quantity) {
         this.productId = productId;
         this.materialId = materialId;
@@ -23,7 +26,7 @@ public class OrderItemDTO {
         this.quantity = quantity;
     }
 
-    
+
     public int getProductId() { return productId; }
     public void setProductId(int productId) { this.productId = productId; }
 

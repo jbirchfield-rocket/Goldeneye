@@ -8,11 +8,14 @@ import java.util.List;
  * @author dshelby
  */
 public class OrderDTO {
-    private int orderId;
+    private Integer orderId;
     private int custId;
     private int locationId;
     private Date date;
     private List<OrderItemDTO> orderItems;
+
+    public OrderDTO() {
+    }
 
     public OrderDTO(int orderId, int custId, int locationId, Date date, List<OrderItemDTO> orderItems) {
         this.orderId = orderId;
@@ -22,11 +25,11 @@ public class OrderDTO {
         this.orderItems = orderItems;
     }
 
-    public int getOrderId() {
+    public Integer getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(int orderId) {
+    public void setOrderId(Integer orderId) {
         this.orderId = orderId;
     }
 
