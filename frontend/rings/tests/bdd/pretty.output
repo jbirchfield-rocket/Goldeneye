@@ -16,8 +16,25 @@ Feature: Customer dropdown # features/home_page.feature:1
   Scenario: Customer dropdown is populated from API and selection persists  # features/home_page.feature:16
     Given I am on the home page                                             # steps/home_steps.py:85
     When I wait for the customer dropdown to be populated from the API      # steps/home_steps.py:109
-    And I select the first available customer                               # steps/home_steps.py:114
-    Then the selected customer remains selected in the dropdown             # steps/home_steps.py:136
+      Traceback (most recent call last):
+        File "C:\Users\kwall\Documents\repos\goldeneye\frontend\rings\tests\bdd\.venv\Lib\site-packages\behave\model.py", line 1329, in run
+          match.run(runner.context)
+          ~~~~~~~~~^^^^^^^^^^^^^^^^
+        File "C:\Users\kwall\Documents\repos\goldeneye\frontend\rings\tests\bdd\.venv\Lib\site-packages\behave\matchers.py", line 98, in run
+          self.func(context, *args, **kwargs)
+          ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File "steps\home_steps.py", line 112, in step_wait_for_api_data
+          _wait_for_select_ready(d, "#customer-select", min_options=2, open_first=False)
+          ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File "steps\home_steps.py", line 61, in _wait_for_select_ready
+          WebDriverWait(driver, 20).until(lambda d: _options_ready(), "Timed out waiting for options to populate")
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File "C:\Users\kwall\Documents\repos\goldeneye\frontend\rings\tests\bdd\.venv\Lib\site-packages\selenium\webdriver\support\wait.py", line 121, in until
+          raise TimeoutException(message, screen, stacktrace)
+      selenium.common.exceptions.TimeoutException: Message: Timed out waiting for options to populate
+
+    And I select the first available customer                               # None
+    Then the selected customer remains selected in the dropdown             # None
 
 Feature: Primary navigation from Home # features/navigation.feature:1
   As a user
@@ -46,8 +63,28 @@ Feature: Purchase Rings page # features/purchase_rings.feature:1
     Given the app is running                                                # steps/home_steps.py:81
     And I am on the home page                                               # steps/home_steps.py:85
     And I select the first customer from the dropdown                       # steps/purchase_rings_steps.py:33
-    And I navigate to "Purchase Rings"                                      # steps/navigation_steps.py:66
-    Given the purchase rings page has loaded                                # steps/purchase_rings_steps.py:60
-    When I click the Add to Cart button on the first ring                   # steps/purchase_rings_steps.py:68
-    Then an alert should appear with the message "Added 1 ring(s) to cart!" # steps/purchase_rings_steps.py:77
+      Traceback (most recent call last):
+        File "C:\Users\kwall\Documents\repos\goldeneye\frontend\rings\tests\bdd\.venv\Lib\site-packages\behave\model.py", line 1329, in run
+          match.run(runner.context)
+          ~~~~~~~~~^^^^^^^^^^^^^^^^
+        File "C:\Users\kwall\Documents\repos\goldeneye\frontend\rings\tests\bdd\.venv\Lib\site-packages\behave\matchers.py", line 98, in run
+          self.func(context, *args, **kwargs)
+          ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File "steps\purchase_rings_steps.py", line 36, in step_select_first_customer_background
+          select_el = _wait_for_any_customer_option(d)
+        File "steps\purchase_rings_steps.py", line 27, in _wait_for_any_customer_option
+          WebDriverWait(driver, timeout).until(
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+              _has_option, "Timed out waiting for customer options to be available"
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          )
+          ^
+        File "C:\Users\kwall\Documents\repos\goldeneye\frontend\rings\tests\bdd\.venv\Lib\site-packages\selenium\webdriver\support\wait.py", line 121, in until
+          raise TimeoutException(message, screen, stacktrace)
+      selenium.common.exceptions.TimeoutException: Message: Timed out waiting for customer options to be available
+
+    And I navigate to "Purchase Rings"                                      # None
+    Given the purchase rings page has loaded                                # None
+    When I click the Add to Cart button on the first ring                   # None
+    Then an alert should appear with the message "Added 1 ring(s) to cart!" # None
 
