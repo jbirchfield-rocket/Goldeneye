@@ -28,7 +28,7 @@ nav:
 - Introduction: index.md
 - Release Notes: topics/release-notes.md
 - DBA Guide:
-  - DB2 Configuration: topics/db-configuration.md
+  - DB Schema: topics/db-schema.md
   - DB2 Connections: topics/db2-connections.md
 
 markdown_extensions:
