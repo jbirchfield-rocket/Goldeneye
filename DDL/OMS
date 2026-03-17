@@ -1,0 +1,43 @@
+------------------------------------------------------------------------
+-- Item-Level Order Summary with Aggregated Quantities
+-- Aggregates order items with identical product and attribute combinations
+-- Combines quantities for same product/material/width/stone combinations
+------------------------------------------------------------------------
+
+SELECT 
+    P.PRODID,
+    P.NAME AS PRODUCT_NAME,
+    M.MATTID,
+    M.NAME AS MATERIAL_NAME,
+    W.WID,
+    W.WIDTH AS BAND_WIDTH,
+    S.STONEID,
+    S.NAME AS STONE_NAME,
+    SUM(OI.QTY) AS TOTAL_QUANTITY,
+    AVG(OI.UNITPRICE) AS AVG_UNIT_PRICE,
+    SUM(OI.UNITPRICE * OI.QTY) AS TOTAL_VALUE,
+    COUNT(DISTINCT OI.ORDERID) AS ORDER_COUNT
+FROM 
+    GLDEYE.TBORDITM OI
+    INNER JOIN GLDEYE.TBPROD P 
+        ON OI.PRODID = P.PRODID
+    INNER JOIN GLDEYE.TBMATT M 
+        ON OI.MATTID = M.MATTID
+    INNER JOIN GLDEYE.TBWIDTH W 
+        ON OI.WID = W.WID
+    INNER JOIN GLDEYE.TBSTONE S 
+        ON OI.STONEID = S.STONEID
+GROUP BY 
+    P.PRODID,
+    P.NAME,
+    M.MATTID,
+    M.NAME,
+    W.WID,
+    W.WIDTH,
+    S.STONEID,
+    S.NAME
+ORDER BY 
+    TOTAL_QUANTITY DESC,
+    P.NAME ASC;
+
+COMMIT;
