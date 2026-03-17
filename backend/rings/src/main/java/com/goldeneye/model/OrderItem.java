@@ -5,11 +5,11 @@
 
 package com.goldeneye.model;
 
+import java.math.BigDecimal;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
-
-import java.math.BigDecimal;
 
 /**
  *
@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 public class OrderItem {
     @Id
     @Column("ORDITMID")
-    private int orderItemId;
+    private Integer orderItemId;
 
     @Column("ORDERID")
     private int orderId;
@@ -42,6 +42,9 @@ public class OrderItem {
     @Column("QTY")
     private int quantity;
 
+    public OrderItem() {
+    }
+
     public OrderItem(int orderItemId, int orderId, int productId, int materialId, int widthId, int stoneId, BigDecimal unitPrice, int quantity) {
         this.orderItemId = orderItemId;
         this.orderId = orderId;
@@ -53,7 +56,7 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
-    public int getOrderItemId() {
+    public Integer getOrderItemId() {
         return orderItemId;
     }
 

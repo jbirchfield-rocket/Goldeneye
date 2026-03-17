@@ -13,6 +13,8 @@ public class StoneDTO {
     private int inventory;
     private BigDecimal price;
 
+    public StoneDTO() {}
+
     public StoneDTO(int stoneId, String name, int inventory, BigDecimal price) {
         this.stoneId = stoneId;
         this.name = name;

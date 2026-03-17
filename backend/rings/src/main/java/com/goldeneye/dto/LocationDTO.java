@@ -13,6 +13,9 @@ public class LocationDTO {
     private String state;
     private String zip;
 
+    public LocationDTO() {
+    }
+
     public LocationDTO(int locId, int custID, String street, String city, String state, String zip) {
         this.locId = locId;
         this.custID = custID;
