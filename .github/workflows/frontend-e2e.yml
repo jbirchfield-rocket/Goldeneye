@@ -91,15 +91,6 @@ jobs:
             frontend/rings/tests/bdd/reports/**
           if-no-files-found: ignore
 
-      - name: Publish BDD test results
-        if: always()
-        uses: dorny/test-reporter@v1
-        with:
-          name: BDD Test Results
-          path: frontend/rings/tests/bdd/reports/junit/*.xml
-          reporter: java-junit
-          fail-on-error: false
-
       - name: Upload Behave artifacts
         if: always()
         uses: actions/upload-artifact@v4
