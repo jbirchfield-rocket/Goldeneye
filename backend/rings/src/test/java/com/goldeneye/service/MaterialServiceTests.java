@@ -47,4 +47,14 @@ public class MaterialServiceTests {
         assertTrue(materials.stream().anyMatch(m -> m.getMaterialId() == 1 && m.getName().equals("Gold Plated")));
         assertTrue(materials.stream().anyMatch(m -> m.getMaterialId() == 4 && m.getName().equals("Platinum")));
     }
+
+    @Test
+    void getMaterialByIdReturnsCorrectMaterial() {
+        MaterialDTO material = materialService.getMaterialById(1);
+        assertNotNull(material);
+        assertEquals(1, material.getMaterialId());
+        assertEquals("Gold Plated", material.getName());
+        assertEquals(71, material.getInventory());
+        assertEquals(0.500f, material.getMultiplier());
+    }
 }

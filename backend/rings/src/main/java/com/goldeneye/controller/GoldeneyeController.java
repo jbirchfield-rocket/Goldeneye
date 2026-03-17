@@ -11,18 +11,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.goldeneye.dto.CustomerDTO;
 import com.goldeneye.dto.LocationDTO;
 import com.goldeneye.dto.MaterialDTO;
+import com.goldeneye.dto.OrderDTO;
 import com.goldeneye.dto.ProductDTO;
 import com.goldeneye.dto.StoneDTO;
 import com.goldeneye.dto.WidthDTO;
 import com.goldeneye.service.CustomerService;
 import com.goldeneye.service.LocationService;
 import com.goldeneye.service.MaterialService;
+import com.goldeneye.service.OrderService;
 import com.goldeneye.service.ProductService;
 import com.goldeneye.service.StoneService;
 import com.goldeneye.service.WidthService;
@@ -42,14 +46,16 @@ public class GoldeneyeController {
     private final StoneService stoneService;
     private final MaterialService materialService;
     private final WidthService widthService;
+    private final OrderService orderService;
 
-    public GoldeneyeController(CustomerService customerService, LocationService locationService, ProductService productService, StoneService stoneService, MaterialService materialService, WidthService widthService) {
+    public GoldeneyeController(CustomerService customerService, LocationService locationService, ProductService productService, StoneService stoneService, MaterialService materialService, WidthService widthService, OrderService orderService) {
         this.customerService = customerService;
         this.locationService = locationService;
         this.productService = productService;
         this.stoneService = stoneService;
         this.materialService = materialService;
         this.widthService = widthService;
+        this.orderService = orderService;
     }
 
     @GetMapping("/customers")
@@ -80,6 +86,12 @@ public class GoldeneyeController {
     @GetMapping("/widths")
     public ResponseEntity<List<WidthDTO>> getAllWidths() {
         return ResponseEntity.ok(widthService.getAllWidths());
+    }
+
+    @PostMapping("/order")
+    public ResponseEntity<Integer> submitOrder(@RequestBody OrderDTO order) {
+        int newOrderId = orderService.createOrder(order);
+        return ResponseEntity.ok(newOrderId);
     }
 
 }
