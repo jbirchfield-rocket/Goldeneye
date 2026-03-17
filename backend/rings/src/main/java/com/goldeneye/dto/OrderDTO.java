@@ -17,7 +17,8 @@ public class OrderDTO {
     public OrderDTO() {
     }
 
-    public OrderDTO(int orderId, int custId, int locationId, LocalDate date, List<OrderItemDTO> orderItems) {
+
+    public OrderDTO(Integer orderId, int custId, int locationId, LocalDate date, List<OrderItemDTO> orderItems) {
         this.orderId = orderId;
         this.custId = custId;
         this.locationId = locationId;
