@@ -7,8 +7,6 @@ package com.goldeneye.service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -47,11 +45,7 @@ public class OrderServiceTests {
         OrderItemDTO item = new OrderItemDTO(1, 1, 1, 1, BigDecimal.valueOf(324), 3);
     
 
-        testOrderDTO = new OrderDTO(1, 2, 1, Date.from(
-            LocalDate.of(2026, 3, 17)
-            .atStartOfDay(ZoneId.systemDefault())
-            .toInstant()
-        ), List.of(item));
+        testOrderDTO = new OrderDTO(1, 2, 1, LocalDate.of(2026, 3, 11), List.of(item));
     }
 
     @Test
