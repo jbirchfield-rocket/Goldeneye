@@ -24,6 +24,11 @@ PAGES = {
         "path": "/about-us",
         "heading": "About Us",
     },
+    "Cart": {
+        "path": "/cart",
+        "heading": "Shopping Cart",
+        "link_selector": ".cart-link",
+    },
 }
 
 def _wait_for_app(context):
@@ -70,23 +75,26 @@ def step_navigate_to(context, page_name):
     assert page_name in PAGES, f"Unknown page name {page_name!r}. Add it to PAGES."
     meta = PAGES[page_name]
 
-    link_xpaths = [
-        f"//a[normalize-space()='{page_name}']",
-        f"//*[@role='link' and normalize-space()='{page_name}']",
-    ]
-    link_el = None
-    last_err = None
-    for xp in link_xpaths:
-        try:
-            link_el = _wait_visible_clickable(d, (By.XPATH, xp))
-            break
-        except Exception as e:
-            last_err = e
-    if link_el is None:
-        raise AssertionError(f"Could not find nav link for {page_name!r}. Last error: {last_err}")
+    # Use a CSS selector override when the link text isn't stable (e.g. cart badge changes it)
+    if "link_selector" in meta:
+        link_el = _wait_visible_clickable(d, (By.CSS_SELECTOR, meta["link_selector"]))
+    else:
+        link_xpaths = [
+            f"//a[normalize-space()='{page_name}']",
+            f"//*[@role='link' and normalize-space()='{page_name}']"
+        ]
+        link_el = None
+        last_err = None
+        for xp in link_xpaths:
+            try:
+                link_el = _wait_visible_clickable(d, (By.XPATH, xp))
+                break
+            except Exception as e:
+                last_err = e
+        if link_el is None:
+            raise AssertionError(f"Could not find nav link for {page_name!r}. Last error: {last_err}")
 
     link_el.click()
-
     _assert_url_path_is(context, meta["path"])
 
 @then('I should be on the "{page_name}" page')
