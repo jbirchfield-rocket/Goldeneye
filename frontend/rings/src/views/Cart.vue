@@ -72,6 +72,7 @@ const handleCheckout = () => {
   // Adding cart items to an order interface item
   const order: Order = {
     custId: customerId, //require customer ID
+    locationId: Number(selectedLocation.value) || 0,
     orderItems: cartItems.value.map(item => ({
       productId: item.ringId,
       materialId: item.materialType,
@@ -79,7 +80,7 @@ const handleCheckout = () => {
       stoneId: item.ringStone,
       quantity: item.quantity
     })),
-    locationId: Number(selectedLocation.value) || 0
+    
   };
     // sending order to backend to be submitted and processed
     try {
@@ -90,6 +91,8 @@ const handleCheckout = () => {
           alert('Order submitted successfully!');
           clearCart();
         })
+        //response with order number
+        // alert('Order submitted successfully! Your order number is: ' + response.data.orderNumber);
     } catch(error) {
       console.error('Error submitting order:', error);
       alert('Failed to submit order. Please try again.');
