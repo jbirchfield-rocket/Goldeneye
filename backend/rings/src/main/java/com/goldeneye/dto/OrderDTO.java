@@ -1,6 +1,6 @@
 package com.goldeneye.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -11,7 +11,7 @@ public class OrderDTO {
     private int orderId;
     private int custId;
     private int locationId;
-    private Date date;
+    private LocalDate date;
     private List<OrderItemDTO> orderItems;
 
     public OrderDTO(int orderId, int custId, int locationId, Date date, List<OrderItemDTO> orderItems) {
@@ -45,11 +45,11 @@ public class OrderDTO {
         this.locationId = locationId;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
