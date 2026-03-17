@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import com.goldeneye.model.Stone;
 
@@ -16,5 +17,7 @@ public interface StoneRepo extends ListCrudRepository<Stone, Integer> {
     @Query("SELECT STONEID, NAME, INVENTORY, PRICE FROM GLDEYE.TBSTONE")
     List<Stone> findAll();
 
-    // TODO: add query for finding stone by id
+
+    @Query("SELECT STONEID, NAME, INVENTORY, PRICE FROM GLDEYE.TBSTONE WHERE STONEID = :stoneId")
+    Stone findByStoneId(@Param("stoneId") int stoneId);
 }

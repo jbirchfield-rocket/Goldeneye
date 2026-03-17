@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.goldeneye.dto.WidthDTO;
 import com.goldeneye.repo.WidthRepo;
+import com.goldeneye.model.Width;
 
 /**
  *
@@ -27,5 +28,10 @@ public class WidthService {
             .toList();
     }
 
-    // TODO: add method for getting width by id
+
+    public WidthDTO getWidthById(int widthId) {
+        Width curr_width = widthRepo.findByWidthId(widthId);
+        return new WidthDTO(curr_width.getWidthId(), curr_width.getWidth(), curr_width.getMultiplier(), curr_width.getMaterialUse());
+
+    }
 }
