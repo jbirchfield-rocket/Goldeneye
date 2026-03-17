@@ -12,6 +12,8 @@ public class WidthDTO {
     private float multiplier;
     private int materialUse;
 
+    public WidthDTO() {}
+    
     public WidthDTO(int widthId, int width, float multiplier, int materialUse) {
         this.widthId = widthId;
         this.width = width;
