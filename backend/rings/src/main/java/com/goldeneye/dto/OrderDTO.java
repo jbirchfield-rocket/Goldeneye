@@ -3,8 +3,6 @@ package com.goldeneye.dto;
 import java.util.Date;
 import java.util.List;
 
-import com.goldeneye.dto.OrderItemDTO;
-
 /**
  *
  * @author dshelby
@@ -15,6 +13,14 @@ public class OrderDTO {
     private int locationId;
     private Date date;
     private List<OrderItemDTO> orderItems;
+
+    public OrderDTO(int orderId, int custId, int locationId, Date date, List<OrderItemDTO> orderItems) {
+        this.orderId = orderId;
+        this.custId = custId;
+        this.locationId = locationId;
+        this.date = date;
+        this.orderItems = orderItems;
+    }
 
     public int getOrderId() {
         return orderId;
