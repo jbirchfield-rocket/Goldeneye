@@ -1,13 +1,16 @@
 package com.goldeneye.service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.goldeneye.dto.MaterialDTO;
 import com.goldeneye.dto.OrderDTO;
 import com.goldeneye.dto.OrderItemDTO;
+import com.goldeneye.dto.ProductDTO;
+import com.goldeneye.dto.StoneDTO;
+import com.goldeneye.dto.WidthDTO;
 import com.goldeneye.repo.OrderItemRepo;
 import com.goldeneye.repo.OrderRepo;
 
@@ -58,11 +61,25 @@ public class OrderService {
 
     public BigDecimal calculateUnitPrice(int productId, int materialId, int widthId, int stoneId, int quantity) {
         // get base price from product
+        ProductDTO product = productService.getProductById(productId);
+        BigDecimal basePrice = product.getBasePrice();
         // get stone price from stone
+        StoneDTO stone = stoneService.getStoneById(stoneId);
+        BigDecimal stonePrice = stone.getPrice();
         // get material multiplier from material
+        MaterialDTO material = materialService.getMaterialById(materialId);
+        float materialMultiplier = material.getMultiplier();
         // get width multiplier from width
+        WidthDTO width = widthService.getWidthById(widthId);
+        float widthMultiplier = width.getMultiplier();
         // calculate final price: (stone price + (base price * material multiplier * width multiplier)) * quantity
+        BigDecimal ringPrice = basePrice
+            .multiply(BigDecimal.valueOf(materialMultiplier))
+            .multiply(BigDecimal.valueOf(widthMultiplier));
         
-        return BigDecimal.ZERO;
+        BigDecimal individualPrice = stonePrice.add(ringPrice);
+        BigDecimal totalPrice = individualPrice.multiply(BigDecimal.valueOf(quantity));
+        
+        return totalPrice;
     }
 }
