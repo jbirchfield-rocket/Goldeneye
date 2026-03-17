@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.goldeneye.dto.ProductDTO;
 import com.goldeneye.model.Product;
+import com.goldeneye.exception.ResourceNotFoundException;
 import com.goldeneye.repo.ProductRepo;
 
 /**
@@ -35,6 +36,9 @@ public class ProductService {
 
     public ProductDTO getProductById(int id) {
         Product p = productRepo.findById(id);
+        if (p == null) {
+            throw new ResourceNotFoundException("Product not found with id: " + id);
+        }
         return new ProductDTO(
             p.getProdId(), 
             p.getName(), 
