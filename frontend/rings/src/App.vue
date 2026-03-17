@@ -73,7 +73,6 @@ body {
 </style>
 
 <style scoped>
-
 .background-img {
   background-image: url('./assets/Background_img.png');
   background-size: cover;
@@ -250,4 +249,5 @@ nav a:visited:hover {
     display: block;
   }
 }
+
 </style>

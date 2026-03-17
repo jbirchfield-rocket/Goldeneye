@@ -16,20 +16,19 @@ interface Locations {
 }
 
 interface Order {
-  customerId: number;
-  rings: OrderRing[];
+  custId: number;
+  orderItems: OrderRing[];
   orderDate?: string;
   status?: string;
-  locID: number;
+  locationId: number;
 }
 
 interface OrderRing {
-  ringType: string;
-  material: string;
-  width: number;
-  stone: string;
+  productId: number;
+  materialId: number;
+  widthId: number;
+  stoneId: number;
   quantity: number;
-  price: number;
 }
 
 const locations = ref<Locations[]>([]);
@@ -41,7 +40,7 @@ const newLocation = ref({
 });
 
 const getPricePerUnit = (item: any) => {
-  return item.price / item.quantity;
+  return (item.price || 0) / (item.quantity || 1);
 };
 
 const handleQuantityChange = (index: number, newQuantity: number) => {
@@ -72,21 +71,20 @@ const handleCheckout = () => {
 
   // Adding cart items to an order interface item
   const order: Order = {
-    customerId: customerId, //require customer ID
-    rings: cartItems.value.map(item => ({
-      ringType: `Ring #${item.ringId}`,
-      material: item.materialType,
-      width: item.bandWidth,
-      stone: item.ringStone,
-      quantity: item.quantity,
-      price: item.price
+    custId: customerId, //require customer ID
+    orderItems: cartItems.value.map(item => ({
+      productId: item.ringId,
+      materialId: item.materialType,
+      widthId: item.bandWidth,
+      stoneId: item.ringStone,
+      quantity: item.quantity
     })),
-    locID: Number(selectedLocation.value) || 0
+    locationId: Number(selectedLocation.value) || 0
   };
     // sending order to backend to be submitted and processed
     try {
       console.log('Submitting order:', order);
-      axios.post(`${import.meta.env.VITE_API_URL}/orders`, order)
+      axios.post(`${import.meta.env.VITE_API_URL}/order`, order)
         .then(response => {
           console.log('Order submitted successfully:', response.data);
           alert('Order submitted successfully!');
@@ -249,7 +247,7 @@ onMounted(() => {
           
           <div class="item-price">
             <p class="unit-price">${{ getPricePerUnit(item).toFixed(2) }} each</p>
-            <p class="total-price">${{ item.price.toFixed(2) }}</p>
+            <p class="total-price">${{ (item.price || 0).toFixed(2) }}</p>
           </div>
           
           <button @click="removeFromCart(index)" class="remove-btn" title="Remove from cart">
