@@ -54,7 +54,7 @@ class ProductServiceTests {
         assertEquals(1, product.getProdId());
         assertEquals("Standard Fit Grooved Band", product.getName());
         assertEquals("A classic band with a center groove for a clean look.", product.getDescription());
-        assertEquals(BigDecimal.valueOf(120), product.getBasePrice());
+        assertEquals(0, product.getBasePrice().compareTo(BigDecimal.valueOf(120)));
     }
 
     // @Test
