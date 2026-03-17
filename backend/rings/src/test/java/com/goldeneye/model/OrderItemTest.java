@@ -29,11 +29,12 @@ public class OrderItemTest {
 
         OrderItem orderItem = new OrderItem(1, 10, 20, 30, 40, 50, unitPrice, 2);
 
-        assertEquals(1, orderItem.getOrderId());
-        assertEquals(10, orderItem.getProductId());
-        assertEquals(20, orderItem.getMaterialId());
-        assertEquals(30, orderItem.getWidthId());
-        assertEquals(40, orderItem.getStoneId());
+        assertEquals(1, orderItem.getOrderItemId());
+        assertEquals(10, orderItem.getOrderId());
+        assertEquals(20, orderItem.getProductId());
+        assertEquals(30, orderItem.getMaterialId());
+        assertEquals(40, orderItem.getWidthId());
+        assertEquals(50, orderItem.getStoneId());
         assertEquals(0, unitPrice.compareTo(orderItem.getUnitPrice()));
         assertEquals(2, orderItem.getQuantity());
     }
