@@ -3,16 +3,10 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { getCurrentCustomerId } from '@/services/customerService';
 
-/**
- * TO DO:
- * - filter orders by customer ID
- * - add location for order in the order card
- */
-
 interface OrderRing {
   ringType: string;
   material: string;
-  width: string;
+  width: number;
   stone: string;
   quantity: number;
   price: number;
@@ -47,9 +41,10 @@ const fetchOrders = async () => {
     loading.value = true;
     error.value = null;
     // Replace with real endpoint
-    const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/orders`);
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/orders/${customerId}`);
     //orders filtered by customer id
-    orders.value = response.data.filter((order: Order) => order.customerId === customerId);
+    // orders.value = response.data.filter((order: Order) => order.customerId === customerId);
+    orders.value = response.data;
   } catch (err) {
     console.error('Error fetching orders:', err);
     // error.value = 'Failed to load orders';
@@ -155,7 +150,7 @@ const fetchOrders = async () => {
     ];
     
     // Filter mock data by customer ID
-    orders.value = mockOrders.filter(order => order.customerId === customerId);
+    // orders.value = mockOrders.filter(order => order.customerId === customerId);
   } finally {
     loading.value = false;
   }

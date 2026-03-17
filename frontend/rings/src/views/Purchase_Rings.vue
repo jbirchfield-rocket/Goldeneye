@@ -59,6 +59,13 @@ const selectedOptions = ref<Record<number, {
 
 const { addToCart: addItemToCart } = useCart();
 
+// Helper function to get ring image path
+const getRingImagePath = (prodId: number): string => {
+  // Returns the path to the image in the public folder
+  // Files in public/ are served at the root, so /rings/ring-1.png
+  return `/rings/ring-${prodId}.png`;
+};
+
 //find what material is low and store it to be displayed in UI
 const lowmaterial = ref<string>('');
 const findLowMaterial = () => {
@@ -159,6 +166,7 @@ const fetchRings = async () => {
     fetchProducts();
     rings.value = response.data.map((product: Products) => ({
       ...product,
+      image: getRingImagePath(product.prodId),
       materialTypes: materials.value,
       bandWidths: widths.value,
       ringStones: stones.value

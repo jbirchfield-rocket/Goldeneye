@@ -88,18 +88,16 @@ const handleCheckout = () => {
       axios.post(`${import.meta.env.VITE_API_URL}/order`, order)
         .then(response => {
           console.log('Order submitted successfully:', response.data);
-          alert('Order submitted successfully!');
+          alert('Order submitted successfully! Your order number is: ' + response.data.orderNumber);
           clearCart();
         })
-        //response with order number
-        // alert('Order submitted successfully! Your order number is: ' + response.data.orderNumber);
+        
     } catch(error) {
       console.error('Error submitting order:', error);
       alert('Failed to submit order. Please try again.');
     }
   
 
-  // alert(`Proceeding to checkout with ${cartCount.value} item(s) totaling $${cartTotal.value.toFixed(2)}`);
 };
 
 const fetchLocations = async () => {
