@@ -542,7 +542,7 @@ onMounted(async () => {
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 8px;
-  font-size: 14px;
+  font-size: 1.1em;
   font-weight: bold;
   color: #333;
   text-align: center;

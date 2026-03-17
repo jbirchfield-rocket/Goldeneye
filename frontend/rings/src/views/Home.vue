@@ -61,7 +61,7 @@ onMounted(() => {
     
     <div class="content-center">
       <img src="../assets/Goldeneye Logo2.png" alt="Goldeneye Logo" class="logo-image" />
-      <h1>Welcome to Goldeneye</h1>
+      <h1 class="welcome-message">Welcome to Goldeneye</h1>
       <p class="description">
         Goldeneye is a company dedicated to those who have an eye for golden perfection.
         We sell only the highest quality rings at reasonable prices. 
@@ -80,6 +80,13 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   padding: 20px;
+}
+
+.welcome-message {
+  font-size: 2.5em;
+  margin: 20px 0;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .customer-selector-wrapper {
@@ -133,6 +140,12 @@ h1 {
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
   margin: 0 20px;
 }
+
+.customer-selector-wrapper{
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
 .customer-select {
   padding: 8px 12px;
   border-radius: 4px;
@@ -143,7 +156,9 @@ h1 {
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
-  min-width: 140px;
+  /* min-width: 140px; */
+  box-sizing: border-box;
+  max-width: 100%;
 }
 
 .customer-select:hover {
