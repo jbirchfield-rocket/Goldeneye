@@ -14,6 +14,16 @@ public class OrderItemDTO {
     private BigDecimal unitPrice;
     private int quantity;
 
+    public OrderItemDTO(int productId, int materialId, int widthId, int stoneId, BigDecimal unitPrice, int quantity) {
+        this.productId = productId;
+        this.materialId = materialId;
+        this.widthId = widthId;
+        this.stoneId = stoneId;
+        this.unitPrice = unitPrice;
+        this.quantity = quantity;
+    }
+
+    
     public int getProductId() { return productId; }
     public void setProductId(int productId) { this.productId = productId; }
 
