@@ -1,0 +1,18 @@
+<testsuite name="features.purchase_rings.Purchase Rings page" tests="1" errors="0" failures="0" skipped="0" time="1.433643" timestamp="2026-03-17T09:36:42.863219" hostname="RS-2HT3CB4"><testcase classname="features.purchase_rings.Purchase Rings page" name="Add to cart shows a confirmation alert" status="passed" time="1.433643"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @api
+  Scenario: Add to cart shows a confirmation alert
+    Given the app is running ... passed in 0.000s
+    And I am on the home page ... passed in 0.079s
+    And I select the first customer from the dropdown ... passed in 0.675s
+    And I navigate to "Purchase Rings" ... passed in 0.077s
+    Given the purchase rings page has loaded ... passed in 0.518s
+    When I click the Add to Cart button on the first ring ... passed in 0.081s
+    Then an alert should appear with the message "Added 1 ring(s) to cart!" ... passed in 0.005s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase></testsuite>

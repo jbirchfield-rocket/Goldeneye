@@ -7,7 +7,7 @@ Feature: Primary navigation from Home
     Given the app is running
     And I open the home page
 
-  Scenario: Navigate from Home to Purchase Rings → Manage Orders → About Us
+  Scenario: Navigate from Home to Purchase Rings to Manage Orders to About Us
     When I navigate to "Purchase Rings"
     Then I should be on the "Purchase Rings" page
 

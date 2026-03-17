@@ -63,6 +63,7 @@ def step_open_home(context):
     d.get(context.base_url)
     _wait_for_app(context)
 
+@given('I navigate to "{page_name}"')
 @when('I navigate to "{page_name}"')
 def step_navigate_to(context, page_name):
     d = context.driver
