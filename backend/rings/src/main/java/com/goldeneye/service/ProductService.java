@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.goldeneye.dto.ProductDTO;
+import com.goldeneye.model.Product;
 import com.goldeneye.repo.ProductRepo;
 
 /**
@@ -32,5 +33,13 @@ public class ProductService {
             .toList();
     }
 
-    // TODO: add method for getting product by id
+    public ProductDTO getProductById(int id) {
+        Product p = productRepo.findById(id);
+        return new ProductDTO(
+            p.getProdId(), 
+            p.getName(), 
+            p.getDescription(), 
+            p.getBasePrice()
+        );
+    }
 }
