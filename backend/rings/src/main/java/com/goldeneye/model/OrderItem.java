@@ -6,10 +6,13 @@
 package com.goldeneye.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
+
+import static com.goldeneye.constants.AppConstants.PRICESCALE;
 
 /**
  *
@@ -52,7 +55,7 @@ public class OrderItem {
         this.materialId = materialId;
         this.widthId = widthId;
         this.stoneId = stoneId;
-        this.unitPrice = unitPrice;
+        this.unitPrice = unitPrice.setScale(PRICESCALE, RoundingMode.HALF_UP);
         this.quantity = quantity;
     }
 
@@ -105,11 +108,11 @@ public class OrderItem {
     }
 
     public BigDecimal getUnitPrice() {
-        return unitPrice;
+        return unitPrice.setScale(PRICESCALE, RoundingMode.HALF_UP);
     }
 
     public void setUnitPrice(BigDecimal unitPrice) {
-        this.unitPrice = unitPrice;
+        this.unitPrice = unitPrice.setScale(PRICESCALE, RoundingMode.HALF_UP);
     }
 
     public int getQuantity() {

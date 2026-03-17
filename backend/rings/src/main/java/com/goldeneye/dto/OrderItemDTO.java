@@ -1,6 +1,9 @@
 package com.goldeneye.dto;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+import static com.goldeneye.constants.AppConstants.PRICESCALE;
 
 /**
  *
@@ -22,7 +25,7 @@ public class OrderItemDTO {
         this.materialId = materialId;
         this.widthId = widthId;
         this.stoneId = stoneId;
-        this.unitPrice = unitPrice;
+        this.unitPrice = unitPrice.setScale(PRICESCALE, RoundingMode.HALF_UP);
         this.quantity = quantity;
     }
 
@@ -30,8 +33,12 @@ public class OrderItemDTO {
     public int getProductId() { return productId; }
     public void setProductId(int productId) { this.productId = productId; }
 
-    public BigDecimal getUnitPrice() { return unitPrice; }
-    public void setUnitPrice(BigDecimal unitPrice) { this.unitPrice = unitPrice; }
+    public BigDecimal getUnitPrice() { 
+        return unitPrice.setScale(PRICESCALE, RoundingMode.HALF_UP); 
+    }
+    public void setUnitPrice(BigDecimal unitPrice) { 
+        this.unitPrice = unitPrice.setScale(PRICESCALE, RoundingMode.HALF_UP);
+    }
     
     public int getMaterialId() { return materialId; }
     public void setMaterialId(int materialId) { this.materialId = materialId; }

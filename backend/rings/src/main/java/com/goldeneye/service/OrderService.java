@@ -1,5 +1,6 @@
 package com.goldeneye.service;
 
+import java.math.RoundingMode;
 import java.math.BigDecimal;
 
 import org.springframework.stereotype.Service;
@@ -13,6 +14,8 @@ import com.goldeneye.dto.StoneDTO;
 import com.goldeneye.dto.WidthDTO;
 import com.goldeneye.repo.OrderItemRepo;
 import com.goldeneye.repo.OrderRepo;
+
+import static com.goldeneye.constants.AppConstants.PRICESCALE;
 
 
 /**
@@ -62,23 +65,24 @@ public class OrderService {
     public BigDecimal calculateUnitPrice(int productId, int materialId, int widthId, int stoneId, int quantity) {
         // get base price from product
         ProductDTO product = productService.getProductById(productId);
-        BigDecimal basePrice = product.getBasePrice();
+        BigDecimal basePrice = product.getBasePrice().setScale(PRICESCALE, RoundingMode.HALF_UP);
         // get stone price from stone
         StoneDTO stone = stoneService.getStoneById(stoneId);
-        BigDecimal stonePrice = stone.getPrice();
+        BigDecimal stonePrice = stone.getPrice().setScale(PRICESCALE, RoundingMode.HALF_UP);
         // get material multiplier from material
         MaterialDTO material = materialService.getMaterialById(materialId);
-        float materialMultiplier = material.getMultiplier();
+        BigDecimal materialMultiplier = BigDecimal.valueOf(material.getMultiplier());
         // get width multiplier from width
         WidthDTO width = widthService.getWidthById(widthId);
-        float widthMultiplier = width.getMultiplier();
+        BigDecimal widthMultiplier = BigDecimal.valueOf(width.getMultiplier());
         // calculate final price: (stone price + (base price * material multiplier * width multiplier)) * quantity
         BigDecimal ringPrice = basePrice
-            .multiply(BigDecimal.valueOf(materialMultiplier))
-            .multiply(BigDecimal.valueOf(widthMultiplier));
+            .multiply(materialMultiplier)
+            .multiply(widthMultiplier)
+            .setScale(PRICESCALE, RoundingMode.HALF_UP);
         
-        BigDecimal individualPrice = stonePrice.add(ringPrice);
-        BigDecimal totalPrice = individualPrice.multiply(BigDecimal.valueOf(quantity));
+        BigDecimal individualPrice = stonePrice.add(ringPrice).setScale(PRICESCALE, RoundingMode.HALF_UP);
+        BigDecimal totalPrice = individualPrice.multiply(BigDecimal.valueOf(quantity)).setScale(PRICESCALE, RoundingMode.HALF_UP);
         
         return totalPrice;
     }
