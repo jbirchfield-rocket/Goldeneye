@@ -14,6 +14,7 @@ import com.goldeneye.dto.StoneDTO;
 import com.goldeneye.dto.WidthDTO;
 import com.goldeneye.repo.OrderItemRepo;
 import com.goldeneye.repo.OrderRepo;
+import com.goldeneye.exception.InvalidOrderException;
 
 import static com.goldeneye.constants.AppConstants.PRICESCALE;
 
@@ -43,6 +44,9 @@ public class OrderService {
 
     @Transactional
     public int createOrder(OrderDTO orderDTO) {
+        if (orderDTO.getOrderItems() == null || orderDTO.getOrderItems().isEmpty()) {
+            throw new InvalidOrderException("Order must contain at least one item.");
+        }
         orderRepo.insertOrder(orderDTO.getCustId(), orderDTO.getLocationId());
         int orderId = orderRepo.getLastGeneratedId();
 
