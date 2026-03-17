@@ -30,15 +30,26 @@ const closeMenu = () => {
             <span v-if="cartCount > 0" class="cart-badge">{{ cartCount }}</span>
           </router-link>
         </div>
-        <img 
-          class="logo" 
-          src="./assets/Goldeneye_Single.png" 
-          alt="Goldeneye Logo"
-          @click="toggleMenu"
-          :class="{ 'menu-active': menuOpen }"
-        />
+        <!-- Three bar icon for hamburger menu only for mobile viewports-->
+          <img 
+              class="hamburger-icon" 
+              src="./assets/Hamburger_Icon.png" 
+              alt="Menu Icon" 
+              @click="toggleMenu"
+            />
+        <!-- Goldeneye logo links back to welcome/landing page-->
+         <router-link to="/" @click="closeMenu">
+            <img 
+              class="logo" 
+              src="./assets/Goldeneye_Single.png" 
+              alt="Goldeneye Logo"
+              :class="{ 'menu-active': menuOpen }"
+            />
+          </router-link>
       </nav>
-      <router-view />
+      <div class="foreground-content">
+        <router-view />
+      </div>
     </div>
   </div>
 </template>
@@ -62,7 +73,6 @@ body {
 </style>
 
 <style scoped>
-
 .background-img {
   background-image: url('./assets/Background_img.png');
   background-size: cover;
@@ -78,10 +88,16 @@ body {
   justify-content: flex-start;
   min-height: 100vh;
   color: white;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
   background-color: rgba(0, 0, 0, 0.6);
   max-width: 80%;
   margin: auto;
+  /* box-sizing: border-box; */
+}
+
+.foreground-content {
+  max-width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 nav {
@@ -125,8 +141,8 @@ nav {
   background-color: #358600;
   color: white;
   border-radius: 20%;
-  padding: 2px 6px;
-  font-size: 12px;
+  /* padding: 2px 6px; */
+  font-size: .8em;
   font-weight: bold;
   min-width: 20px;
   text-align: center;
@@ -152,6 +168,12 @@ nav a:hover,
 nav a:visited:hover {
   color: #baaa51;
   transform: scale(1.2);
+}
+
+.hamburger-icon {
+  display: none;
+  width: 30px;
+  cursor: pointer;
 }
 
 /* Mobile Styles */
@@ -222,5 +244,10 @@ nav a:visited:hover {
     background-color: rgba(0, 0, 0, 0.5);
     z-index: -1;
   }
+
+  .hamburger-icon {
+    display: block;
+  }
 }
+
 </style>

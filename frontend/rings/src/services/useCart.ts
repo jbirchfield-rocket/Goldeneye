@@ -3,9 +3,9 @@ import { ref, computed } from 'vue';
 export interface CartItem {
   ringId: number;
   ringImage: string;
-  materialType: string;
+  materialType: number;
   bandWidth: number;
-  ringStone: string;
+  ringStone: number;
   quantity: number;
   price: number;
   addedAt: number;
@@ -78,7 +78,6 @@ export function useCart() {
     if (existingItemIndex !== -1) {
       // Update quantity if item exists
       cartItems.value[existingItemIndex]!.quantity += item.quantity;
-      cartItems.value[existingItemIndex]!.price += item.price;
     } else {
       // Add new item
       cartItems.value.push({
@@ -119,7 +118,7 @@ export function useCart() {
   });
 
   const cartTotal = computed(() => {
-    return cartItems.value.reduce((total, item) => total + item.price, 0);
+    return cartItems.value.reduce((total, item) => total + (item.price || 0), 0);
   });
 
   // Load cart on first initialization only
