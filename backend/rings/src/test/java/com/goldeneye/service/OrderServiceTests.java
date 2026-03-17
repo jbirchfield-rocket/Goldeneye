@@ -56,7 +56,7 @@ public class OrderServiceTests {
     @Test
     void calculateUnitPriceCalculatesCorrectly() {
         BigDecimal unitPriceForTestOrder = orderService.calculateUnitPrice(1, 2, 1, 1, 3);
-        assertEquals(unitPriceForTestOrder, BigDecimal.valueOf(324));
+        assertEquals(0, unitPriceForTestOrder.compareTo(BigDecimal.valueOf(324)));
     }
 
     // cant test create order
