@@ -10,9 +10,12 @@ import com.goldeneye.model.Material;
 
 /**
  *
- * @author dshelby
+ * @author dshelby, scanalesR
  */
 public interface MaterialRepo extends ListCrudRepository<Material, Integer> {
     @Query("SELECT MATTID, NAME, INVENTORY, MULTIPLIER FROM GLDEYE.TBMATT")
     List<Material> findAll();
+
+    @Query("SELECT MATTID, NAME, INVENTORY, MULTIPLIER FROM GLDEYE.TBMATT WHERE MATTID = :id")
+    Material findById(int id);
 }

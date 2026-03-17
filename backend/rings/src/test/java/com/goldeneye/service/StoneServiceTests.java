@@ -5,6 +5,7 @@
 
 package com.goldeneye.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -46,5 +47,15 @@ public class StoneServiceTests {
         assertEquals(7, stones.size());
         assertTrue(stones.stream().anyMatch(s -> s.getStoneId() == 1 && s.getName().equals("None")));
         assertTrue(stones.stream().anyMatch(s -> s.getStoneId() == 7 && s.getName().equals("Natural diamond")));
+    }
+
+    @Test
+    void getStoneByIdReturnsCorrectStoneDTO() {
+        StoneDTO stone = stoneService.getStoneById(1);
+        assertNotNull(stone);
+        assertEquals(1, stone.getStoneId());
+        assertEquals("None", stone.getName());
+        assertEquals(9, stone.getInventory());
+        assertEquals(0, stone.getPrice().compareTo(BigDecimal.ZERO));
     }
 }

@@ -12,6 +12,8 @@ public class MaterialDTO {
     private int inventory;
     private float multiplier;
 
+    public MaterialDTO() {}
+    
     public MaterialDTO(int materialId, String name, int inventory, float multiplier) {
         this.materialId = materialId;
         this.name = name;
