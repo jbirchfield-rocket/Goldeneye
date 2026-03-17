@@ -5,6 +5,8 @@
 
 package com.goldeneye.model;
 
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import org.junit.jupiter.api.DisplayName;
@@ -23,44 +25,34 @@ public class StoneTest {
 
     @Test
     public void constructor_initializesAllFields() {
-        Stone stone = new Stone(1, "Diamond", 1.50f, 25);
-
-        assertEquals(1, stone.getstoneId());
-        assertEquals("Diamond", stone.getstoneName());
-        assertEquals(1.50f, stone.getMultiplier(), 0.0001f);
-        assertEquals(25, stone.getInventory());
+        Stone stone = new Stone(1, "Diamond", 10, BigDecimal.valueOf(100.10));
+        assertEquals(1, stone.getStoneId());
+        assertEquals("Diamond", stone.getStoneName());
+        assertEquals(10, stone.getInventory());
+        assertEquals(BigDecimal.valueOf(100.10), stone.getPrice());
     }
 
     @Test
     public void setstoneId_updatesValue() {
-        Stone stone = new Stone(1, "Diamond", 1.50f, 25);
+        Stone stone = new Stone(1, "Diamond", 5, BigDecimal.valueOf(25));
 
-        stone.setstoneId(2);
+        stone.setStoneId(2);
 
-        assertEquals(2, stone.getstoneId());
+        assertEquals(2, stone.getStoneId());
     }
 
     @Test
-    public void setstoneName_updatesValue() {
-        Stone stone = new Stone(1, "Diamond", 1.50f, 25);
+    public void setStoneName_updatesValue() {
+        Stone stone = new Stone(1, "Diamond", 1, BigDecimal.valueOf(25));
 
-        stone.setstoneName("Ruby");
+        stone.setStoneName("Ruby");
 
-        assertEquals("Ruby", stone.getstoneName());
-    }
-
-    @Test
-    public void setMultiplier_updatesValue() {
-        Stone stone = new Stone(1, "Diamond", 1.50f, 25);
-
-        stone.setMultiplier(1.75f);
-
-        assertEquals(1.75f, stone.getMultiplier(), 0.0001f);
+        assertEquals("Ruby", stone.getStoneName());
     }
 
     @Test
     public void setInventory_updatesValue() {
-        Stone stone = new Stone(1, "Diamond", 1.50f, 25);
+        Stone stone = new Stone(1, "Diamond", 1, BigDecimal.valueOf(25));
 
         stone.setInventory(40);
 
@@ -68,11 +60,20 @@ public class StoneTest {
     }
 
     @Test
-    public void setstoneName_allowsNull() {
-        Stone stone = new Stone(1, "Diamond", 1.50f, 25);
+    public void setPrice_updatesValue() {
+        Stone stone = new Stone(1, "Diamond", 1, BigDecimal.valueOf(25));
 
-        stone.setstoneName(null);
+        stone.setPrice(BigDecimal.valueOf(40));
 
-        assertNull(stone.getstoneName());
+        assertEquals(BigDecimal.valueOf(40), stone.getPrice());
+    }
+
+    @Test
+    public void setStoneName_allowsNull() {
+        Stone stone = new Stone(1, "Diamond", 1, BigDecimal.valueOf(25));
+
+        stone.setStoneName(null);
+
+        assertNull(stone.getStoneName());
     }
 }

@@ -6,7 +6,6 @@
 package com.goldeneye.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -23,35 +22,35 @@ public class WidthTest {
 
     @Test
     public void constructor_initializesAllFields() {
-        Width width = new Width(1, "2mm", 1.10f, 50);
+        Width width = new Width(1, 2, 1.10f, 50);
 
-        assertEquals(1, width.getwidthId());
-        assertEquals("2mm", width.getwidthName());
+        assertEquals(1, width.getWidthId());
+        assertEquals(2, width.getWidth());
         assertEquals(1.10f, width.getMultiplier(), 0.0001f);
-        assertEquals(50, width.getInventory());
+        assertEquals(50, width.getMaterialUse());
     }
 
     @Test
-    public void setwidthId_updatesValue() {
-        Width width = new Width(1, "2mm", 1.10f, 50);
+    public void setWidthId_updatesValue() {
+        Width width = new Width(1, 4, 1.10f, 50);
 
-        width.setwidthId(2);
+        width.setWidthId(2);
 
-        assertEquals(2, width.getwidthId());
+        assertEquals(2, width.getWidthId());
     }
 
     @Test
-    public void setwidthName_updatesValue() {
-        Width width = new Width(1, "2mm", 1.10f, 50);
+    public void setWidthName_updatesValue() {
+        Width width = new Width(1, 2, 1.10f, 50);
 
-        width.setwidthName("4mm");
+        width.setWidth(4);
 
-        assertEquals("4mm", width.getwidthName());
+        assertEquals(4, width.getWidth());
     }
 
     @Test
     public void setMultiplier_updatesValue() {
-        Width width = new Width(1, "2mm", 1.10f, 50);
+        Width width = new Width(1, 2, 1.10f, 50);
 
         width.setMultiplier(1.25f);
 
@@ -59,20 +58,11 @@ public class WidthTest {
     }
 
     @Test
-    public void setInventory_updatesValue() {
-        Width width = new Width(1, "2mm", 1.10f, 50);
+    public void setMaterialUse_updatesValue() {
+        Width width = new Width(1, 2, 1.10f, 50);
 
-        width.setInventory(75);
+        width.setMaterialUse(75);
 
-        assertEquals(75, width.getInventory());
-    }
-
-    @Test
-    public void setwidthName_allowsNull() {
-        Width width = new Width(1, "2mm", 1.10f, 50);
-
-        width.setwidthName(null);
-
-        assertNull(width.getwidthName());
+        assertEquals(75, width.getMaterialUse());
     }
 }

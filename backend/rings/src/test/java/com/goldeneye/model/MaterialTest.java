@@ -23,7 +23,7 @@ public class MaterialTest {
 
     @Test
     public void constructor_initializesAllFields() {
-        Material material = new Material(1, "Gold", 1.20f, 100);
+        Material material = new Material(1, "Gold", 100, 1.20f);
 
         assertEquals(1, material.getMaterialId());
         assertEquals("Gold", material.getMaterialName());
@@ -33,7 +33,7 @@ public class MaterialTest {
 
     @Test
     public void setMaterialId_updatesValue() {
-        Material material = new Material(1, "Gold", 1.20f, 100);
+        Material material = new Material(1, "Gold", 100, 1.20f);
 
         material.setMaterialId(2);
 
@@ -42,7 +42,7 @@ public class MaterialTest {
 
     @Test
     public void setMaterialName_updatesValue() {
-        Material material = new Material(1, "Gold", 1.20f, 100);
+        Material material = new Material(1, "Gold", 100, 1.20f);
 
         material.setMaterialName("Platinum");
 
@@ -51,7 +51,7 @@ public class MaterialTest {
 
     @Test
     public void setMultiplier_updatesValue() {
-        Material material = new Material(1, "Gold", 1.20f, 100);
+        Material material = new Material(1, "Gold", 100, 1.20f);
 
         material.setMultiplier(1.35f);
 
@@ -60,7 +60,7 @@ public class MaterialTest {
 
     @Test
     public void setInventory_updatesValue() {
-        Material material = new Material(1, "Gold", 1.20f, 100);
+        Material material = new Material(1, "Gold", 100, 1.20f);
 
         material.setInventory(125);
 
@@ -69,7 +69,7 @@ public class MaterialTest {
 
     @Test
     public void setMaterialName_allowsNull() {
-        Material material = new Material(1, "Gold", 1.20f, 100);
+        Material material = new Material(1, "Gold", 100, 1.20f);
 
         material.setMaterialName(null);
 

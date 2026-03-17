@@ -5,45 +5,52 @@
 
 package com.goldeneye.model;
 
+import java.math.BigDecimal;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
+
 /**
  *
- * @author scanales
+ * @author dshelby
  */
+@Table("TBSTONE")
 public class Stone {
+    @Id
+    @Column("STONEID")
     private int stoneId;
-    private String stoneName;
-    private float multiplier;
-    private int inventory;
 
-    public Stone(int stoneId, String stoneName, float multiplier, int inventory) {
+    @Column("NAME")
+    private String stoneName;
+
+    @Column("INVENTORY")
+    private int inventory;
+    
+    @Column("PRICE")
+    private BigDecimal price;
+
+    public Stone(int stoneId, String stoneName, int inventory, BigDecimal price) {
         this.stoneId = stoneId;
         this.stoneName = stoneName;
-        this.multiplier = multiplier;
         this.inventory = inventory;
+        this.price = price;
     }
 
-    public int getstoneId() {
+    public int getStoneId() {
         return stoneId;
     }
 
-    public void setstoneId(int stoneId) {
+    public void setStoneId(int stoneId) {
         this.stoneId = stoneId;
     }
 
-    public String getstoneName() {
+    public String getStoneName() {
         return stoneName;
     }
 
-    public void setstoneName(String stoneName) {
+    public void setStoneName(String stoneName) {
         this.stoneName = stoneName;
-    }
-
-    public float getMultiplier() {
-        return multiplier;
-    }
-
-    public void setMultiplier(float multiplier) {
-        this.multiplier = multiplier;
     }
 
     public int getInventory() {
@@ -53,4 +60,13 @@ public class Stone {
     public void setInventory(int inventory) {
         this.inventory = inventory;
     }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
 }
