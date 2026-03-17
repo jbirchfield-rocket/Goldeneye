@@ -22,7 +22,7 @@ interface Products {
 }
 
 interface Stones {
-  id: number;
+  stoneId: number;
   name: string;
   multiplier: number;
   Inventory: number;
@@ -50,14 +50,21 @@ const widths = ref<Width[]>([]);
 const stones = ref<Stones[]>([]);
 
 const selectedOptions = ref<Record<number, {
-  materialType: string;
+  materialType: number;
   bandWidth: number;
-  ringStone: string;
+  ringStone: number;
   quantity: number;
   proposedPrice: number;
 }>>({});
 
 const { addToCart: addItemToCart } = useCart();
+
+// Helper function to get ring image path
+const getRingImagePath = (prodId: number): string => {
+  // Returns the path to the image in the public folder
+  // Files in public/ are served at the root, so /rings/ring-1.png
+  return `/rings/ring-${prodId}.png`;
+};
 
 //find what material is low and store it to be displayed in UI
 const lowmaterial = ref<string>('');
@@ -109,10 +116,10 @@ const fetchStones = async () => {
     console.error('Error fetching stones:', error);
     // Mock data
     stones.value = [
-      { id: 1, name: 'Cubic Zirconia', multiplier: 1, Inventory: 100, price: 0 },
-      { id: 2, name: 'Semi-precious', multiplier: 1.5, Inventory: 50, price: 20 },
-      { id: 3, name: 'Lab-Grown Diamond', multiplier: 2, Inventory: 20, price: 40 },
-      { id: 4, name: 'Natural Diamond', multiplier: 3, Inventory: 10, price: 80 }
+      { stoneId: 1, name: 'Cubic Zirconia', multiplier: 1, Inventory: 100, price: 0 },
+      { stoneId: 2, name: 'Semi-precious', multiplier: 1.5, Inventory: 50, price: 20 },
+      { stoneId: 3, name: 'Lab-Grown Diamond', multiplier: 2, Inventory: 20, price: 40 },
+      { stoneId: 4, name: 'Natural Diamond', multiplier: 3, Inventory: 10, price: 80 }
     ];
     console.log('Using mock stones:', stones.value);
   }
@@ -159,6 +166,7 @@ const fetchRings = async () => {
     fetchProducts();
     rings.value = response.data.map((product: Products) => ({
       ...product,
+      image: getRingImagePath(product.prodId),
       materialTypes: materials.value,
       bandWidths: widths.value,
       ringStones: stones.value
@@ -166,9 +174,9 @@ const fetchRings = async () => {
     
     rings.value.forEach(ring => {
       selectedOptions.value[ring.prodId] = {
-        materialType: ring.materialTypes[0]?.name || '',
-        bandWidth: ring.bandWidths[0]?.width || 0,
-        ringStone: ring.ringStones[0]?.name || '',
+        materialType: ring.materialTypes[0]?.materialId || 0,
+        bandWidth: ring.bandWidths[0]?.widthId || 0,
+        ringStone: ring.ringStones[0]?.stoneId || 0,
         quantity: 1,
         proposedPrice: ring.basePrice || 0
       };
@@ -281,9 +289,9 @@ const fetchRings = async () => {
     
     rings.value.forEach(ring => {
       selectedOptions.value[ring.prodId] = {
-        materialType: ring.materialTypes[0]?.name || '',
-        bandWidth: ring.bandWidths[0]?.width || 0,
-        ringStone: ring.ringStones[0]?.name || '',
+        materialType: ring.materialTypes[0]?.materialId || 0,
+        bandWidth: ring.bandWidths[0]?.widthId || 0,
+        ringStone: ring.ringStones[0]?.stoneId || 0,
         quantity: 1,
         proposedPrice: ring.basePrice
       };
@@ -300,9 +308,9 @@ const updatePrice = (ringId: number) => {
     // use fetched values for attributes to calc price
     const selectedWidth = ring.bandWidths.find(m => m.width === options.bandWidth);
     console.log('Selected Width:', selectedWidth);
-    const selectedMaterial = ring.materialTypes.find(m => m.name === options.materialType);
+    const selectedMaterial = ring.materialTypes.find(m => m.materialId === options.materialType);
     console.log('Selected Material:', selectedMaterial);
-    const selectedStone = ring.ringStones.find(m => m.name === options.ringStone);
+    const selectedStone = ring.ringStones.find(m => m.stoneId === options.ringStone);
     console.log('Selected Stone:', selectedStone);
 
     if (selectedWidth) price *= selectedWidth.multiplier;
@@ -376,7 +384,7 @@ onMounted(async () => {
                 @change="updatePrice(ring.prodId)"
                 class="option-select"
               >
-                <option v-for="name in ring.materialTypes" :key="name.name" :value="name.name">
+                <option v-for="name in ring.materialTypes" :key="name.name" :value="name.materialId">
                   {{ name.name }}
                 </option>
               </select>
@@ -389,7 +397,7 @@ onMounted(async () => {
                 @change="updatePrice(ring.prodId)"
                 class="option-select"
               >
-                <option v-for="width in ring.bandWidths" :key="width.width" :value="width.width">
+                <option v-for="width in ring.bandWidths" :key="width.width" :value="width.widthId">
                   {{ width.width }}
                 </option>
               </select>
@@ -398,11 +406,11 @@ onMounted(async () => {
             <div class="option-group">
               <label>Select Ring Stone</label>
               <select 
-                v-model="selectedOptions[ring.prodId]!.ringStone"
+                v-model.number="selectedOptions[ring.prodId]!.ringStone"
                 @change="updatePrice(ring.prodId)"
                 class="option-select"
               >
-                <option v-for="stone in ring.ringStones" :key="stone.name" :value="stone.name">
+                <option v-for="stone in ring.ringStones" :key="stone.name" :value="stone.stoneId">
                   {{ stone.name }}
                 </option>
               </select>
@@ -437,156 +445,5 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.purchase-container {
-  padding: 20px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.rings-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 30px;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.ring-card {
-  background-color: rgba(0, 0, 0, 0.3);
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-}
-
-.ring-image-container {
-  width: 100%;
-  height: 250px;
-  background-color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.ring-image {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-
-.warning-text {
-  color: #ff4d4d;
-  font-weight: bold;
-  text-align: center;
-  margin: 5px 0;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-}
-
-.ring-options {
-  padding: 15px;
-}
-
-.option-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.option-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.option-group label {
-  color: white;
-  font-size: 12px;
-  margin-bottom: 5px;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-}
-
-.option-select {
-  background-color: rgba(209, 209, 209, 0.9);
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 8px;
-  font-size: 14px;
-  cursor: pointer;
-  color: #333;
-}
-
-.option-select:focus {
-  outline: none;
-  border-color: #baaa51;
-}
-
-.bottom-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1.5fr;
-  gap: 10px;
-  align-items: end;
-}
-
-.quantity-group {
-  min-width: 80px;
-}
-
-.price-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.price-display {
-  background-color: rgba(209, 209, 209, 0.9);
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 8px;
-  font-size: 14px;
-  font-weight: bold;
-  color: #333;
-  text-align: center;
-}
-
-.add-to-cart-btn {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  height: 38px;
-}
-
-.add-to-cart-btn:hover {
-  background-color: #45a049;
-}
-
-.add-to-cart-btn:active {
-  transform: scale(0.98);
-}
-
-@media (max-width: 1200px) {
-  .rings-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-}
-
-@media (max-width: 768px) {
-  .option-row {
-    grid-template-columns: 1fr;
-  }
-  
-  .bottom-row {
-    grid-template-columns: 1fr;
-  }
-  
-  .add-to-cart-btn {
-    width: 100%;
-  }
-}
+@import '../styles/purchase_rings_styles.css';
 </style>
