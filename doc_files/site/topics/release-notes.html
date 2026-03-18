@@ -6,13 +6,19 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+        <meta name="description" content="GoldenEye Exquisite Rings v1.0 is a web-based ring customization and order management system that integrates Vue.js frontend with Spring Boot backend and IBM Db2 for z/OS database processing.">
+      
       
         <meta name="author" content="Team GoldenEye">
       
       
-        <link rel="canonical" href="https://GoldenEyeExquisiteRings.com/topics/DB-doc.html">
+        <link rel="canonical" href="https://GoldenEyeExquisiteRings.com/topics/release-notes.html">
       
       
+        <link rel="prev" href="../index.html">
+      
+      
+        <link rel="next" href="db-schema.html">
       
       
         
@@ -23,7 +29,7 @@
     
     
       
-        <title>Database Documentation - GoldenEye Exquisite Rings</title>
+        <title>Release Notes - GoldenEye Exquisite Rings</title>
       
     
     
@@ -113,6 +119,10 @@
       
     
     
+      <link rel="stylesheet" href="../css/print-site.css">
+    
+      <link rel="stylesheet" href="../css/print-site-material.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -131,7 +141,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#database-documentation" class="md-skip">
+        <a href="#goldeneye-exquisite-rings-release-notes-version-10" class="md-skip">
           Skip to content
         </a>
       
@@ -147,7 +157,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="GoldenEye Exquisite Rings" class="md-header__button md-logo" aria-label="GoldenEye Exquisite Rings" data-md-component="logo">
+    <a href="../index.html" title="GoldenEye Exquisite Rings" class="md-header__button md-logo" aria-label="GoldenEye Exquisite Rings" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -167,7 +177,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Database Documentation
+              Release Notes
             
           </span>
         </div>
@@ -245,7 +255,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="GoldenEye Exquisite Rings" class="md-nav__button md-logo" aria-label="GoldenEye Exquisite Rings" data-md-component="logo">
+    <a href="../index.html" title="GoldenEye Exquisite Rings" class="md-nav__button md-logo" aria-label="GoldenEye Exquisite Rings" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -263,7 +273,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../doc_files/docs/index.md" class="md-nav__link">
+      <a href="../index.html" class="md-nav__link">
         
   
   
@@ -279,6 +289,363 @@
   
 
       </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Release Notes
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="release-notes.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Release Notes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-new" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's New
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What&#39;s New">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#technical-enhancements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Technical Enhancements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#system-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        System Requirements
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="System Requirements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#frontend-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Frontend Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backend-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backend Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#database-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Database Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API Endpoints
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API Endpoints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-endpoints-v10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available Endpoints (v1.0)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Known Limitations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resources
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Resources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#external-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        External Documentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DBA Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    DBA Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="db-schema.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DB Schema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="db2-connections.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DB2 Connections
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -303,6 +670,181 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-new" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's New
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What&#39;s New">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#technical-enhancements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Technical Enhancements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#system-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        System Requirements
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="System Requirements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#frontend-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Frontend Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backend-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backend Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#database-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Database Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API Endpoints
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API Endpoints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-endpoints-v10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available Endpoints (v1.0)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Known Limitations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resources
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Resources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#external-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        External Documentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -318,7 +860,168 @@
 
 
 
-<h1 id="database-documentation">Database Documentation</h1>
+<h1 id="goldeneye-exquisite-rings-release-notes-version-10">GoldenEye Exquisite Rings Release Notes Version 1.0</h1>
+<h2 id="overview">Overview</h2>
+<p><strong>Product:</strong> GoldenEye Exquisite Rings<br />
+<strong>Version:</strong> 1.0<br />
+<strong>Release Date:</strong> March 23rd, 2026</p>
+<p>GoldenEye Exquisite Rings is a system that combines modern web technologies with enterprise mainframe systems. This initial release provides core ring customization and order management functionality with integration to IBM Db2 for z/OS, enabling customers to browse products, configure custom rings, and place orders while leveraging existing mainframe infrastructure.</p>
+<h2 id="whats-new">What's New</h2>
+<h3 id="new-features">New Features</h3>
+<ul>
+<li>
+<p><strong>Web-Based Ring Customization Interface</strong> — A responsive, Vue.js-powered user interface that enables customers to browse ring products, select customization options (materials, widths, stones), and complete orders from any modern web browser.</p>
+</li>
+<li>
+<p><strong>Multi-Attribute Product Selection</strong> — Support for ring products with multiple configurable attributes (product type, material, width, and gemstone) where attribute combinations influence final product pricing.</p>
+</li>
+<li>
+<p><strong>Product Catalog API</strong> — RESTful endpoints providing access to:</p>
+</li>
+<li>Ring product listings with base prices and descriptions</li>
+<li>Available materials with pricing components</li>
+<li>Ring width options with sizing multipliers</li>
+<li>Gemstone inventory with per-unit pricing</li>
+<li>
+<p>Customer location management</p>
+</li>
+<li>
+<p><strong>Order Management</strong> — Core order processing with support for:</p>
+</li>
+<li>Creating orders linked to customers and delivery locations</li>
+<li>Managing multiple line items per order with unique customization combinations</li>
+<li>
+<p>Automatic unit price calculation based on product, material, width, and stone selections</p>
+</li>
+<li>
+<p><strong>Mainframe Db2 Integration</strong> — Direct integration with IBM Db2 for z/OS via Spring Boot application and JDBC, enabling secure, scalable transaction processing on the mainframe.</p>
+</li>
+<li>
+<p><strong>Customer and Location Management</strong> — Retrieve customer information and manage multiple delivery addresses per customer.</p>
+</li>
+</ul>
+<h3 id="technical-enhancements">Technical Enhancements</h3>
+<ul>
+<li>Spring Boot 4.0.3 framework for REST API development</li>
+<li>Maven-based build management with automated dependency resolution</li>
+<li>Vite build tooling for optimized frontend development and production builds</li>
+<li>Component-based Vue.js architecture for maintainability</li>
+<li>Spring Data JDBC for database abstraction</li>
+</ul>
+<h2 id="system-requirements">System Requirements</h2>
+<h3 id="frontend-requirements">Frontend Requirements</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Web Browser</td>
+<td>Chrome, Firefox, Safari, or Edge (latest stable versions)</td>
+</tr>
+<tr>
+<td>Network</td>
+<td>HTTPS connection to backend API</td>
+</tr>
+<tr>
+<td>Node.js (Development)</td>
+<td>Node.js 20.19.0 or later</td>
+</tr>
+<tr>
+<td>Runtime</td>
+<td>Vite-built static assets</td>
+</tr>
+</tbody>
+</table>
+<h3 id="backend-requirements">Backend Requirements</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Java Runtime Environment</td>
+<td>Java 25 or later</td>
+</tr>
+<tr>
+<td>Spring Boot</td>
+<td>Spring Boot 4.0.3</td>
+</tr>
+<tr>
+<td>Build Tool</td>
+<td>Apache Maven 3.6.0 or later</td>
+</tr>
+<tr>
+<td>Database Driver</td>
+<td>IBM Db2 JDBC Driver (db2jcc4.jar) and license file (db2jcc_license_cisuz.jar)</td>
+</tr>
+<tr>
+<td>Operating System</td>
+<td>Linux, Windows, or macOS</td>
+</tr>
+</tbody>
+</table>
+<h3 id="database-requirements">Database Requirements</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Database</td>
+<td>IBM Db2 for z/OS</td>
+</tr>
+<tr>
+<td>Connectivity</td>
+<td>IBM Db2 Connect gateway or direct connection to mainframe Db2</td>
+</tr>
+<tr>
+<td>Schema</td>
+<td>Customer, Location, Product, Material, Stone, Width, Order, and OrderItem tables</td>
+</tr>
+</tbody>
+</table>
+<h2 id="api-endpoints">API Endpoints</h2>
+<h3 id="available-endpoints-v10">Available Endpoints (v1.0)</h3>
+<ul>
+<li><code>GET /api/customers</code> — Retrieve all customers</li>
+<li><code>GET /api/locations/{custId}</code> — Retrieve delivery locations for a specific customer</li>
+<li><code>GET /api/products</code> — Retrieve all ring products with descriptions and base prices</li>
+<li><code>GET /api/materials</code> — Retrieve available materials with pricing information</li>
+<li><code>GET /api/widths</code> — Retrieve available ring widths with size multipliers</li>
+<li><code>GET /api/stones</code> — Retrieve available gemstones with inventory and pricing</li>
+</ul>
+<p><strong>Note:</strong> Order creation, modification, and history endpoints are planned for future releases.</p>
+<h2 id="known-limitations">Known Limitations</h2>
+<ul>
+<li>
+<p><strong>No User Authentication</strong> — Version 1.0 does not include user authentication or authorization. All API endpoints are publicly accessible. Implement API gateway authentication or reverse proxy authentication in your deployment environment.</p>
+</li>
+<li>
+<p><strong>No Payment Processing</strong> — Payment orchestration and payment gateway integration are not included in this release.</p>
+</li>
+<li>
+<p><strong>Inventory Management</strong> — Stone inventory is tracked in the database, but decrement operations on order fulfillment are not automated in this release.</p>
+</li>
+</ul>
+<h2 id="resources">Resources</h2>
+<h3 id="external-documentation">External Documentation</h3>
+<ul>
+<li><a href="https://www.ibm.com/support/pages/getting-started-ibm-data-server-drivers">IBM Data Server Drivers Documentation</a> — Db2 JDBC driver installation and configuration</li>
+<li><a href="https://www.ibm.com/docs/en/db2/12.1.x?topic=jdbc-dbconnjava-connect-disconnect-from-database">IBM Db2 JDBC API Documentation</a> — Java database connectivity samples</li>
+<li><a href="https://vuejs.org">Vue.js Documentation</a> — Frontend framework reference</li>
+<li><a href="https://spring.io/projects/spring-boot">Spring Boot Documentation</a> — Backend framework reference</li>
+<li><a href="https://vitejs.dev">Vite Documentation</a> — Build tool reference</li>
+</ul>
 
 
 
@@ -375,6 +1078,8 @@
     
     
       <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../js/print-site.js"></script>
       
     
   </body>
