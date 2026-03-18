@@ -109,6 +109,12 @@ public class GoldeneyeController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/order/{orderId}")
+    public ResponseEntity<Void> updateOrder(@PathVariable int orderId, @RequestBody OrderDTO order) {
+        orderService.updateOrder(orderId, order);
+        return ResponseEntity.noContent().build();
+    }
+
     @DeleteMapping("/orderitem/{ordItmId}")
     public ResponseEntity<Void> deleteOrderItem(@PathVariable int ordItmId) {
         orderService.deleteOrderItem(ordItmId);
