@@ -382,6 +382,7 @@ onMounted(async () => {
               <select 
                 v-model="selectedOptions[ring.prodId]!.materialType"
                 @change="updatePrice(ring.prodId)"
+                id="material-select"
                 class="option-select"
               >
                 <option v-for="name in ring.materialTypes" :key="name.name" :value="name.materialId">
@@ -396,6 +397,7 @@ onMounted(async () => {
                 v-model="selectedOptions[ring.prodId]!.bandWidth"
                 @change="updatePrice(ring.prodId)"
                 class="option-select"
+                id="width-select"
               >
                 <option v-for="width in ring.bandWidths" :key="width.width" :value="width.widthId">
                   {{ width.width }}
@@ -409,6 +411,7 @@ onMounted(async () => {
                 v-model.number="selectedOptions[ring.prodId]!.ringStone"
                 @change="updatePrice(ring.prodId)"
                 class="option-select"
+                id="stone-select"
               >
                 <option v-for="stone in ring.ringStones" :key="stone.name" :value="stone.stoneId">
                   {{ stone.name }}
@@ -424,6 +427,7 @@ onMounted(async () => {
                 v-model.number="selectedOptions[ring.prodId]!.quantity"
                 @change="updatePrice(ring.prodId)"
                 class="option-select"
+                id="quantity-select"
               >
                 <option v-for="n in 10" :key="n" :value="n">{{ n }}</option>
               </select>

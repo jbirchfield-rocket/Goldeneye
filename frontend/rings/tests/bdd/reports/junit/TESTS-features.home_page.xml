@@ -1,0 +1,37 @@
+<testsuite name="features.home_page.Customer dropdown" tests="3" errors="0" failures="0" skipped="0" time="3.640231" timestamp="2026-03-17T14:44:29.704589" hostname="RS-2HT3CB4"><testcase classname="features.home_page.Customer dropdown" name="Default option shows &quot;Select Customer&quot;" status="passed" time="2.22755"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Default option shows "Select Customer"
+    Given the app is running ... passed in 0.000s
+    When I open the home page ... passed in 2.034s
+    Then the customer dropdown default is "Select Customer" ... passed in 0.193s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="features.home_page.Customer dropdown" name="Customer dropdown is rendered and functional" status="passed" time="0.624075"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Customer dropdown is rendered and functional
+    Given I am on the home page ... passed in 0.346s
+    When I click the customer dropdown ... passed in 0.190s
+    Then the dropdown should be visible and contain options ... passed in 0.088s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="features.home_page.Customer dropdown" name="Customer dropdown is populated from API and selection persists" status="passed" time="0.788606"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @api
+  Scenario: Customer dropdown is populated from API and selection persists
+    Given I am on the home page ... passed in 0.166s
+    When I wait for the customer dropdown to be populated from the API ... passed in 0.275s
+    And I select the first available customer ... passed in 0.316s
+    Then the selected customer remains selected in the dropdown ... passed in 0.032s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase></testsuite>
