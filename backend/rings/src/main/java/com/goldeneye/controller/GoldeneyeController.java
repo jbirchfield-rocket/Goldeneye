@@ -9,9 +9,11 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +22,7 @@ import com.goldeneye.dto.CustomerDTO;
 import com.goldeneye.dto.LocationDTO;
 import com.goldeneye.dto.MaterialDTO;
 import com.goldeneye.dto.OrderDTO;
+import com.goldeneye.dto.OrderItemDTO;
 import com.goldeneye.dto.ProductDTO;
 import com.goldeneye.dto.StoneDTO;
 import com.goldeneye.dto.WidthDTO;
@@ -98,6 +101,24 @@ public class GoldeneyeController {
     @GetMapping("/orders/{custId}")
     public ResponseEntity<List<OrderSummaryDTO>> getOrdersByCustId(@PathVariable int custId) {
         return ResponseEntity.ok(orderService.getOrdersByCustId(custId));
+    }
+
+    @DeleteMapping("/order/{orderId}")
+    public ResponseEntity<Void> deleteOrderByOrderId(@PathVariable int orderId) {
+        orderService.deleteOrderByOrderId(orderId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/orderitem/{ordItmId}")
+    public ResponseEntity<Void> deleteOrderItem(@PathVariable int ordItmId) {
+        orderService.deleteOrderItem(ordItmId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/orderitem/{ordItmId}")
+    public ResponseEntity<Void> updateOrderItem(@PathVariable int ordItmId, @RequestBody OrderItemDTO orderItem) {
+        orderService.updateOrderItem(ordItmId, orderItem);
+        return ResponseEntity.noContent().build();
     }
 
 }
