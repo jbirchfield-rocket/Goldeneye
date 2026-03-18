@@ -158,10 +158,11 @@ const fetchLocations = async () => {
 const addLocation = (newLocation: Omit<Locations, 'custID' | 'locID'>) => {
   // function to add a new delivery location for the current customer
   const customerId = getCurrentCustomerId() || 3; // Default to 3 if no customer ID is found
-  const locationToAdd = { ...newLocation, custID: customerId, locID: 0 };
+  const locationToAdd = { ...newLocation};
   
   try {
-    axios.post(`${import.meta.env.VITE_API_URL}/customers/${customerId}/locations`, locationToAdd)
+    console.log('Adding new location:', locationToAdd);
+    axios.post(`${import.meta.env.VITE_API_URL}/locations/${customerId}`, locationToAdd)
       .then(response => {
         console.log('Location added successfully:', response.data);
         locations.value.push(response.data); // Add the new location to the list

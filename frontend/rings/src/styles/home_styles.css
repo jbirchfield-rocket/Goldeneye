@@ -104,6 +104,32 @@ h1 {
   color: #333;
 }
 
+/* New customer section styles */
+
+.new-customer-input {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #baaa51;
+  background-color: rgba(0, 0, 0, 0.95);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: bold;
+  box-sizing: border-box;
+  margin-right: 5px;
+}
+
+.add-customer-button {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: none;
+  background-color: #baaa51;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .customer-selector-wrapper {
@@ -111,6 +137,8 @@ h1 {
     margin-bottom: 20px;
     width: 100%;
     max-width: 300px;
+    display: flex;
+    flex-direction: column;
   }
   
   .logo-image {
@@ -123,5 +151,23 @@ h1 {
   
   .description {
     font-size: 1em;
+  }
+
+  /* responsive customer add section */
+  .new-customer-input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .add-customer-button {
+    width: 100%;
+  }
+
+  .new-customer-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
   }
 }
