@@ -80,6 +80,7 @@ public class OrderService {
                 List<OrderItemSummaryDTO> itemSummaries = orderItemRepo.findOrderItemSummariesByOrderId(order.getOrderId())
                     .stream()
                     .map(item -> new OrderItemSummaryDTO(
+                        item.getOrderItemId(),
                         item.getProdName(),
                         item.getMattName(),
                         item.getWidth(),
@@ -104,6 +105,28 @@ public class OrderService {
     public void deleteOrderByOrderId(int orderId) {
         orderItemRepo.deleteByOrderId(orderId);
         orderRepo.deleteByOrderId(orderId);
+    }
+
+    public void updateOrder(int orderId, OrderDTO orderDTO) {
+        orderRepo.updateOrder(orderDTO.getCustId(), orderDTO.getLocationId(), orderId);
+
+        for (OrderItemDTO orderItem : orderDTO.getOrderItems()) {
+            if (orderItem.getOrderItemId() != null) {
+            updateOrderItem(orderItem.getOrderItemId(), orderItem);
+        } else {
+            BigDecimal unitPrice = calculateUnitPrice(orderItem.getProductId(), orderItem.getMaterialId(), orderItem.getWidthId(), orderItem.getStoneId(), orderItem.getQuantity());
+            orderItemRepo.insertOrderItem(
+                orderId,
+                orderItem.getProductId(),
+                orderItem.getMaterialId(),
+                orderItem.getWidthId(),
+                orderItem.getStoneId(),
+                unitPrice,
+                orderItem.getQuantity()
+            );
+        }
+        }
+
     }
 
     public void deleteOrderItem(int ordItmId) {

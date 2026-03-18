@@ -30,4 +30,8 @@ public interface OrderRepo extends ListCrudRepository<Order, Integer> {
     @Query("DELETE FROM GLDEYE.TBORDER WHERE ORDERID = :orderId")
     void deleteByOrderId(@Param("orderId") int orderId);
 
+    @Modifying
+    @Query("UPDATE GLDEYE.TBORDER SET CUSTID = :custId, LOCID = :locationId WHERE ORDERID = :orderId")
+    void updateOrder(@Param("custId") int custId, @Param("locationId") int locationId, @Param("orderId") int orderId);
+
 }

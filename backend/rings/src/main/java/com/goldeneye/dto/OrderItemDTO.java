@@ -10,6 +10,7 @@ import static com.goldeneye.constants.AppConstants.PRICESCALE;
  * @author dshelby
  */
 public class OrderItemDTO {
+    private Integer orderItemId;
     private int productId;
     private int materialId;
     private int widthId;
@@ -19,7 +20,8 @@ public class OrderItemDTO {
     public OrderItemDTO() {
     }
 
-    public OrderItemDTO(int productId, int materialId, int widthId, int stoneId, int quantity) {
+    public OrderItemDTO(Integer orderItemId, int productId, int materialId, int widthId, int stoneId, int quantity) {
+        this.orderItemId = orderItemId;
         this.productId = productId;
         this.materialId = materialId;
         this.widthId = widthId;
@@ -27,6 +29,8 @@ public class OrderItemDTO {
         this.quantity = quantity;
     }
 
+    public Integer getOrderItemId() { return orderItemId; }
+    public void setOrderItemId(Integer orderItemId) { this.orderItemId = orderItemId; }
 
     public int getProductId() { return productId; }
     public void setProductId(int productId) { this.productId = productId; }
