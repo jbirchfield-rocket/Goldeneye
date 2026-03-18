@@ -38,6 +38,9 @@ public class LocationService {
             .orElseThrow(() -> new RuntimeException("Location not found: " + locId));
     }
 
+    public void deleteLocation(int locId) {
+        locationRepo.deleteByLocId(locId);
+      
     public void addLocation(LocationDTO location) {
         locationRepo.insertLocation(location.getCustID(), location.getStreet(), location.getCity(), location.getState(), location.getZip());
     }
