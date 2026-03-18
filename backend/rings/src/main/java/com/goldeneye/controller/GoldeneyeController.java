@@ -76,8 +76,9 @@ public class GoldeneyeController {
         return ResponseEntity.noContent().build();
     }
       
-    @PostMapping("/locations")
-    public ResponseEntity<Integer> addLocation(@RequestBody LocationDTO location) {
+    @PostMapping("/locations/{custId}")
+    public ResponseEntity<Integer> addLocation(@PathVariable int custId, @RequestBody LocationDTO location) {
+        location.setCustId(custId);
         int newLocationId = locationService.addLocation(location);
         return ResponseEntity.ok(newLocationId);
     }

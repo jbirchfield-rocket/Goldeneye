@@ -8,6 +8,7 @@ package com.goldeneye.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.goldeneye.dto.LocationDTO;
 import com.goldeneye.repo.LocationRepo;
@@ -42,8 +43,13 @@ public class LocationService {
         locationRepo.deleteByLocId(locId);
     }
       
+    @Transactional
     public int addLocation(LocationDTO location) {
-        locationRepo.insertLocation(location.getCustID(), location.getStreet(), location.getCity(), location.getState(), location.getZip());
+        if (location.getCustId() == null || location.getCustId() < 1) {
+            throw new IllegalArgumentException("Invalid customer ID: " + location.getCustId());
+        }
+
+        locationRepo.insertLocation(location.getCustId(), location.getStreet(), location.getCity(), location.getState(), location.getZip());
         return locationRepo.getLastGeneratedId();
     }
 }
