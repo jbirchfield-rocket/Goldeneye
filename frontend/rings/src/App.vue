@@ -51,6 +51,7 @@ const closeMenu = () => {
         <router-view />
       </div>
       <footer class="site-footer">
+        <p>&copy; 2026 Goldeneye. All rights reserved.</p>
         <a href="http://localhost:8000" target="_blank" rel="noopener noreferrer">Documentation</a>
       </footer>
     </div>

@@ -21,6 +21,7 @@ interface Order {
   orderDate?: string;
   status?: string;
   locationId: number;
+  billingLocationId: number;
 }
 
 interface OrderRing {
@@ -73,6 +74,7 @@ const handleCheckout = () => {
   const order: Order = {
     custId: customerId, //require customer ID
     locationId: Number(selectedLocation.value) || 0,
+    billingLocationId: Number(selectedBillingLocation.value) || 0,
     orderItems: cartItems.value.map(item => ({
       productId: item.ringId,
       materialId: item.materialType,
@@ -175,6 +177,7 @@ const addLocation = (newLocation: Omit<Locations, 'custId' | 'locId'>) => {
 
 const showNewLocationSection = ref(false);
 const selectedLocation = ref('');
+const selectedBillingLocation = ref('');
 
 const handleAddLocation = () => {
   addLocation(newLocation.value);
@@ -273,13 +276,24 @@ onMounted(() => {
           <span>${{ cartTotal.toFixed(2) }}</span>
         </div>
         
-        <select class="delivery-select" @click="fetchLocations"  @change="handleLocationChange" v-model="selectedLocation">
+        <h3>Choose Delivery Location:</h3>
+        <select class="location-select" @click="fetchLocations"  @change="handleLocationChange" v-model="selectedLocation">
           <option disabled value="">Select Delivery Location</option>
           <option v-for="location in locations" :key="`${location.custId}-${location.locId}`" :value="`${location.locId}`"> 
             {{ location.street }}, {{ location.city }}, {{ location.state }} {{ location.zip }}
           </option>
           <option value="ADD_NEW">Add New Location</option>
         </select>
+
+        <h3>Choose Billing Location:</h3>
+        <select class="location-select" @click="fetchLocations" v-model="selectedBillingLocation">
+          <option disabled value="">Select Billing Location</option>
+          <option v-for="location in locations" :key="`billing-${location.custId}-${location.locId}`" :value="`${location.locId}`"> 
+            {{ location.street }}, {{ location.city }}, {{ location.state }} {{ location.zip }}
+          </option>
+          <option value="ADD_NEW">Add New Location</option>
+        </select>
+
         <div class="no-location" v-show="showNewLocationSection">
           <h3>Location not found? Add a new one!</h3>
           <form @submit.prevent="handleAddLocation">
