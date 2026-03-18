@@ -81,7 +81,7 @@ The GoldenEye Exquisite Rings database schema enables customers to configure rin
 | ST | Char | Not Null, up to 2 characters allowed |
 | Zip | Char | Not Null, up to 10 characters allowed |
 
-**Description:** The Location table stores delivery and billing addresses for customers, supporting multiple addresses per customer (e.g., home, work, alternate locations). Orders reference specific locations to ensure accurate delivery.
+**Description:** The Location table stores delivery and billing addresses for customers, supporting multiple business addresses per customer. Orders reference specific locations to ensure accurate delivery.
 
 **Business Logic:**
 
