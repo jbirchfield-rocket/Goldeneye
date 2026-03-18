@@ -44,4 +44,16 @@ public interface OrderItemRepo extends ListCrudRepository<OrderItem, Integer> {
     @Modifying
     @Query("DELETE FROM GLDEYE.TBORDITM WHERE ORDITMID = :orderItemId")
     void deleteByOrderItemId(@Param("orderItemId") int orderItemId);
+
+    @Modifying
+    @Query("UPDATE GLDEYE.TBORDITM SET PRODID = :prodId, MATTID = :mattId, WID = :wid, STONEID = :stoneId, UNITPRICE = :unitPrice, QTY = :qty WHERE ORDITMID = :orderItemId")
+    void updateOrderItem(
+        @Param("orderItemId") int orderItemId,
+        @Param("prodId") int productId,
+        @Param("mattId") int materialId,
+        @Param("wid") int widthId,
+        @Param("stoneId") int stoneId,
+        @Param("unitPrice") BigDecimal unitPrice,
+        @Param("qty") int quantity
+    );
 }
