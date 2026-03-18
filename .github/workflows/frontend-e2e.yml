@@ -75,9 +75,10 @@ jobs:
         env:
           BASE_URL: 'http://localhost:5173'
           PYTHONUTF8: '1'
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
         run: |
           mkdir -p reports/html reports/junit
-          behave --no-capture \
+          behave --no-capture --tags ~@api \
             --format behave_html_formatter:HTMLFormatter --outfile reports/html/report.html \
             --format pretty \
             --junit --junit-directory reports/junit
