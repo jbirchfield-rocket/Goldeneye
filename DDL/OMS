@@ -1,43 +1,34 @@
 ------------------------------------------------------------------------
--- Item-Level Order Summary with Aggregated Quantities
--- Aggregates order items with identical product and attribute combinations
--- Combines quantities for same product/material/width/stone combinations
+-- Order History Summary by Day and Customer
+-- Groups orders by date and customer with totals
 ------------------------------------------------------------------------
 
-SELECT 
-    P.PRODID,
-    P.NAME AS PRODUCT_NAME,
-    M.MATTID,
-    M.NAME AS MATERIAL_NAME,
-    W.WID,
-    W.WIDTH AS BAND_WIDTH,
-    S.STONEID,
-    S.NAME AS STONE_NAME,
-    SUM(OI.QTY) AS TOTAL_QUANTITY,
-    AVG(OI.UNITPRICE) AS AVG_UNIT_PRICE,
-    SUM(OI.UNITPRICE * OI.QTY) AS TOTAL_VALUE,
-    COUNT(DISTINCT OI.ORDERID) AS ORDER_COUNT
-FROM 
-    GLDEYE.TBORDITM OI
-    INNER JOIN GLDEYE.TBPROD P 
-        ON OI.PRODID = P.PRODID
-    INNER JOIN GLDEYE.TBMATT M 
-        ON OI.MATTID = M.MATTID
-    INNER JOIN GLDEYE.TBWIDTH W 
-        ON OI.WID = W.WID
-    INNER JOIN GLDEYE.TBSTONE S 
-        ON OI.STONEID = S.STONEID
-GROUP BY 
-    P.PRODID,
-    P.NAME,
-    M.MATTID,
-    M.NAME,
-    W.WID,
-    W.WIDTH,
-    S.STONEID,
-    S.NAME
-ORDER BY 
-    TOTAL_QUANTITY DESC,
-    P.NAME ASC;
+SELECT
+    O.ORDERDATE,
+    C.CUSTID,
+    C.NAME AS CUSTOMER_NAME,
+    COUNT(DISTINCT O.ORDERID) AS TOTAL_ORDERS,
+    SUM(OI.UNITPRICE) AS TOTAL_AMOUNT,
+    SUM(OI.QTY) AS TOTAL_ITEMS
+FROM
+    GLDEYE.TBORDER O
+    INNER JOIN GLDEYE.TBCUST C
+        ON O.CUSTID = C.CUSTID
+    INNER JOIN GLDEYE.TBORDITM OI
+        ON O.ORDERID = OI.ORDERID
+GROUP BY
+    O.ORDERDATE,
+    C.CUSTID,
+    C.NAME
+ORDER BY
+    O.ORDERDATE DESC,
+    C.NAME ASC;
 
 COMMIT;
+
+
+
+------------------------------------------------------------------------
+-- Order History Summary by Day and Customer
+-- Groups orders by date and customer with totals
+----------------------------------------------------------------------
