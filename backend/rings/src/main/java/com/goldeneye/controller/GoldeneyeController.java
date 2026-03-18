@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,10 +21,10 @@ import com.goldeneye.dto.CustomerDTO;
 import com.goldeneye.dto.LocationDTO;
 import com.goldeneye.dto.MaterialDTO;
 import com.goldeneye.dto.OrderDTO;
+import com.goldeneye.dto.OrderSummaryDTO;
 import com.goldeneye.dto.ProductDTO;
 import com.goldeneye.dto.StoneDTO;
 import com.goldeneye.dto.WidthDTO;
-import com.goldeneye.dto.OrderSummaryDTO;
 import com.goldeneye.service.CustomerService;
 import com.goldeneye.service.LocationService;
 import com.goldeneye.service.MaterialService;
@@ -67,6 +68,12 @@ public class GoldeneyeController {
     @GetMapping("/locations/{custId}")
     public ResponseEntity<List<LocationDTO>> getLocationsByCustId(@PathVariable int custId) {
         return ResponseEntity.ok(locationService.getLocationsByCustId(custId));
+    }
+
+    @DeleteMapping("/locations/{locId}")
+    public ResponseEntity<Void> deleteLocation(@PathVariable int locId) {
+        locationService.deleteLocation(locId);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/products")
