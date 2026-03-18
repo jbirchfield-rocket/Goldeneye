@@ -4,6 +4,7 @@ import axios from 'axios';
 import { getCurrentCustomerId } from '@/services/customerService';
 
 interface OrderRing {
+  orderItemId?: number;
   productName: string;
   materialName: string;
   width: number;
@@ -26,8 +27,8 @@ interface Order {
   customerName: string;
   orderDate?: string;
   location: Location;
+  billLocation?: Location;
   orderItems: OrderRing[];
-  
   status?: string;
   
 }
@@ -254,6 +255,7 @@ onMounted(() => {
 
           <div class="additional-info">
             <div class="order-location">Delivery Location: {{ order.location.street }}, {{ order.location.city }}, {{ order.location.state }} {{ order.location.zip }}</div>
+            <div class="order-location" v-if="order.billLocation">Billing Location: {{ order.billLocation.street }}, {{ order.billLocation.city }}, {{ order.billLocation.state }} {{ order.billLocation.zip }}</div>
             <div v-if="order.orderDate" class="order-date">Date: {{ order.orderDate }}</div>
             <!-- display order total -->
             <div class="order-total">Total: ${{ getOrderTotal(order).toFixed(2) }}</div>
