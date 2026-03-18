@@ -19,6 +19,75 @@ Feature: Customer dropdown # features/home_page.feature:1
     And I select the first available customer                               # None
     Then the selected customer remains selected in the dropdown             # None
 
+Feature: Manage Orders page # features/manage_orders.feature:1
+  As a user on the Manage Orders page
+  I want to view my order history
+  So that I can track my purchases
+  Background:   # features/manage_orders.feature:6
+
+  Scenario: Manage Orders page displays the correct heading  # features/manage_orders.feature:12
+    Given the app is running                                 # steps/home_steps.py:81
+    And I am on the home page                                # steps/home_steps.py:85
+    And I select the first customer from the dropdown        # steps/purchase_rings_steps.py:65
+    And I navigate to "Manage Orders"                        # steps/navigation_steps.py:71
+    Then the manage orders heading should be visible         # steps/manage_orders_steps.py:7
+
+  Scenario: Empty state is shown when no orders are available  # features/manage_orders.feature:15
+    Given the app is running                                   # steps/home_steps.py:81
+    And I am on the home page                                  # steps/home_steps.py:85
+    And I select the first customer from the dropdown          # steps/purchase_rings_steps.py:65
+    And I navigate to "Manage Orders"                          # steps/navigation_steps.py:71
+    Then the empty orders message should be visible            # steps/manage_orders_steps.py:18
+
+  Scenario: Empty state has a link that navigates to Purchase Rings  # features/manage_orders.feature:18
+    Given the app is running                                         # steps/home_steps.py:81
+    And I am on the home page                                        # steps/home_steps.py:85
+    And I select the first customer from the dropdown                # steps/purchase_rings_steps.py:65
+    And I navigate to "Manage Orders"                                # steps/navigation_steps.py:71
+    Given the empty orders message is visible                        # steps/manage_orders_steps.py:29
+    When I click the Start Shopping link                             # steps/manage_orders_steps.py:37
+    Then I should be on the "Purchase Rings" page                    # steps/navigation_steps.py:99
+
+  @api
+  Scenario: Order cards are displayed when the API returns data  # features/manage_orders.feature:24
+    Given the app is running                                     # None
+    And I am on the home page                                    # None
+    And I select the first customer from the dropdown            # None
+    And I navigate to "Manage Orders"                            # None
+    Then at least one order card should be visible               # None
+
+  @api
+  Scenario: Each order card shows the order ID           # features/manage_orders.feature:28
+    Given the app is running                             # None
+    And I am on the home page                            # None
+    And I select the first customer from the dropdown    # None
+    And I navigate to "Manage Orders"                    # None
+    Then the first order card should display an order ID # None
+
+  @api
+  Scenario: Each order card shows ring details                                           # features/manage_orders.feature:32
+    Given the app is running                                                             # None
+    And I am on the home page                                                            # None
+    And I select the first customer from the dropdown                                    # None
+    And I navigate to "Manage Orders"                                                    # None
+    Then the first order card should display ring type material width stone and quantity # None
+
+  @api
+  Scenario: Each order card shows the delivery location          # features/manage_orders.feature:36
+    Given the app is running                                     # None
+    And I am on the home page                                    # None
+    And I select the first customer from the dropdown            # None
+    And I navigate to "Manage Orders"                            # None
+    Then the first order card should display a delivery location # None
+
+  @api
+  Scenario: Each order card shows an order total            # features/manage_orders.feature:40
+    Given the app is running                                # None
+    And I am on the home page                               # None
+    And I select the first customer from the dropdown       # None
+    And I navigate to "Manage Orders"                       # None
+    Then the first order card should display an order total # None
+
 Feature: Primary navigation from Home # features/navigation.feature:1
   As a user
   I want to move between core pages from the Home page
@@ -91,32 +160,35 @@ Feature: Purchase Rings page # features/purchase_rings.feature:1
     And the first cart item should show the selected material value            # None
     And the first cart item should show the selected stone value               # None
 
-  Scenario: Multiple ring cards are displayed on the page                      # features/purchase_rings.feature:31
-    Given the app is running                                                   # steps/home_steps.py:81
-    And I am on the home page                                                  # steps/home_steps.py:85
-    And I select the first customer from the dropdown                          # steps/purchase_rings_steps.py:65
-    And I navigate to "Purchase Rings"                                         # steps/navigation_steps.py:71
-    Given the purchase rings page has loaded                                   # steps/purchase_rings_steps.py:92
-    Then at least 2 ring cards should be visible                               # steps/purchase_rings_steps.py:144
-    And each ring card should have material width stone and quantity dropdowns # steps/purchase_rings_steps.py:151
+  @api
+  Scenario: Multiple ring cards are displayed on the page                      # features/purchase_rings.feature:32
+    Given the app is running                                                   # None
+    And I am on the home page                                                  # None
+    And I select the first customer from the dropdown                          # None
+    And I navigate to "Purchase Rings"                                         # None
+    Given the purchase rings page has loaded                                   # None
+    Then at least 2 ring cards should be visible                               # None
+    And each ring card should have material width stone and quantity dropdowns # None
 
-  Scenario: Proposed price updates when quantity is changed       # features/purchase_rings.feature:36
-    Given the app is running                                      # steps/home_steps.py:81
-    And I am on the home page                                     # steps/home_steps.py:85
-    And I select the first customer from the dropdown             # steps/purchase_rings_steps.py:65
-    And I navigate to "Purchase Rings"                            # steps/navigation_steps.py:71
-    Given the purchase rings page has loaded                      # steps/purchase_rings_steps.py:92
-    When I note the proposed price of the first ring              # steps/purchase_rings_steps.py:163
-    And I change the quantity to 3 on the first ring              # steps/purchase_rings_steps.py:172
-    Then the proposed price of the first ring should have changed # steps/purchase_rings_steps.py:177
+  @api
+  Scenario: Proposed price updates when quantity is changed       # features/purchase_rings.feature:37
+    Given the app is running                                      # None
+    And I am on the home page                                     # None
+    And I select the first customer from the dropdown             # None
+    And I navigate to "Purchase Rings"                            # None
+    Given the purchase rings page has loaded                      # None
+    When I note the proposed price of the first ring              # None
+    And I change the quantity to 3 on the first ring              # None
+    Then the proposed price of the first ring should have changed # None
 
-  Scenario: Proposed price updates when stone type is changed              # features/purchase_rings.feature:42
-    Given the app is running                                               # steps/home_steps.py:81
-    And I am on the home page                                              # steps/home_steps.py:85
-    And I select the first customer from the dropdown                      # steps/purchase_rings_steps.py:65
-    And I navigate to "Purchase Rings"                                     # steps/navigation_steps.py:71
-    Given the purchase rings page has loaded                               # steps/purchase_rings_steps.py:92
-    When I note the proposed price of the first ring                       # steps/purchase_rings_steps.py:163
-    And I select the second option in the stone dropdown on the first ring # steps/purchase_rings_steps.py:112
-    Then the proposed price of the first ring should have changed          # steps/purchase_rings_steps.py:177
+  @api
+  Scenario: Proposed price updates when stone type is changed              # features/purchase_rings.feature:43
+    Given the app is running                                               # None
+    And I am on the home page                                              # None
+    And I select the first customer from the dropdown                      # None
+    And I navigate to "Purchase Rings"                                     # None
+    Given the purchase rings page has loaded                               # None
+    When I note the proposed price of the first ring                       # None
+    And I select the second option in the stone dropdown on the first ring # None
+    Then the proposed price of the first ring should have changed          # None
 
