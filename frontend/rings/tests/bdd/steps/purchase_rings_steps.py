@@ -117,7 +117,6 @@ def step_select_stone(context):
 
 @when("I set the quantity to 2 on the first ring")
 def step_set_quantity(context):
-    # quantity options are 1-10 by index; index 1 = value "2"
     _select_nth_option_in(context.driver, "quantity-select", 1)
     context.selected_quantity = 2
 
@@ -139,6 +138,51 @@ def step_alert_message(context, expected_message):
     alert.accept()
     assert actual == expected_message, (
         f'Expected alert message "{expected_message}", got "{actual}"'
+    )
+
+
+@then("at least 2 ring cards should be visible")
+def step_multiple_ring_cards(context):
+    d = context.driver
+    cards = d.find_elements(By.CSS_SELECTOR, ".ring-card")
+    assert len(cards) >= 2, f"Expected at least 2 ring cards, found {len(cards)}"
+
+
+@then("each ring card should have material width stone and quantity dropdowns")
+def step_each_card_has_dropdowns(context):
+    d = context.driver
+    cards = d.find_elements(By.CSS_SELECTOR, ".ring-card")
+    for i, card in enumerate(cards):
+        for select_id in ("material-select", "width-select", "stone-select", "quantity-select"):
+            selects = card.find_elements(By.ID, select_id)
+            assert len(selects) >= 1, (
+                f"Ring card {i + 1} is missing the #{select_id} dropdown"
+            )
+
+
+@when("I note the proposed price of the first ring")
+def step_note_price(context):
+    d = context.driver
+    price_el = WebDriverWait(d, 10).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, ".ring-card:first-child .price-display"))
+    )
+    context.initial_price = price_el.text.strip()
+
+
+@when("I change the quantity to 3 on the first ring")
+def step_set_quantity_3(context):
+    _select_nth_option_in(context.driver, "quantity-select", 2)
+
+
+@then("the proposed price of the first ring should have changed")
+def step_price_changed(context):
+    d = context.driver
+    initial = getattr(context, "initial_price", None)
+    assert initial is not None, "No initial price was recorded — did the 'When I note...' step run?"
+    price_el = d.find_element(By.CSS_SELECTOR, ".ring-card:first-child .price-display")
+    current = price_el.text.strip()
+    assert current != initial, (
+        f"Expected proposed price to change from '{initial}', but it is still '{current}'"
     )
 
 

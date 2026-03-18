@@ -75,7 +75,6 @@ def step_navigate_to(context, page_name):
     assert page_name in PAGES, f"Unknown page name {page_name!r}. Add it to PAGES."
     meta = PAGES[page_name]
 
-    # Use a CSS selector override when the link text isn't stable (e.g. cart badge changes it)
     if "link_selector" in meta:
         link_el = _wait_visible_clickable(d, (By.CSS_SELECTOR, meta["link_selector"]))
     else:
@@ -103,5 +102,39 @@ def step_on_page(context, page_name):
     meta = PAGES[page_name]
 
     _assert_url_path_is(context, meta["path"])
-    # _assert_page_heading_contains(context, meta["heading"])
-    
+
+
+@when("I click the site logo")
+def step_click_logo(context):
+    d = context.driver
+    logo_link = _wait_visible_clickable(d, (By.CSS_SELECTOR, "nav a[href='/'] img.logo"))
+    logo_link.click()
+
+
+@given("the purchase rings page is ready")
+def step_purchase_rings_ready(context):
+    d = context.driver
+    WebDriverWait(d, 15).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, ".ring-card"))
+    )
+
+
+@when("I add the first ring to the cart")
+def step_add_first_ring(context):
+    d = context.driver
+    btn = WebDriverWait(d, 10).until(
+        EC.element_to_be_clickable((By.CSS_SELECTOR, ".ring-card:first-child .add-to-cart-btn"))
+    )
+    btn.click()
+    WebDriverWait(d, 5).until(EC.alert_is_present()).accept()
+
+
+@then("the cart badge should show 1")
+def step_cart_badge_shows_1(context):
+    d = context.driver
+    badge = WebDriverWait(d, 10).until(
+        EC.visibility_of_element_located((By.CSS_SELECTOR, ".cart-badge"))
+    )
+    assert badge.text.strip() == "1", (
+        f"Expected cart badge to show '1', got '{badge.text.strip()}'"
+    )

@@ -5,6 +5,7 @@
 
 package com.goldeneye.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -44,6 +45,16 @@ class ProductServiceTests {
        assertTrue(products.stream().allMatch(p -> p instanceof ProductDTO));
        assertEquals(4, products.size());
        assertTrue(products.stream().anyMatch(p -> p.getProdId() == 1 && p.getName().equals("Standard Fit Grooved Band")));
+    }
+
+    @Test
+    void getProductByIdReturnsCorrectProduct() {
+        ProductDTO product = productService.getProductById(1);
+        assertNotNull(product);
+        assertEquals(1, product.getProdId());
+        assertEquals("Standard Fit Grooved Band", product.getName());
+        assertEquals("A classic band with a center groove for a clean look.", product.getDescription());
+        assertEquals(0, product.getBasePrice().compareTo(BigDecimal.valueOf(120)));
     }
 
     // @Test

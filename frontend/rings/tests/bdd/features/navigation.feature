@@ -16,3 +16,18 @@ Feature: Primary navigation from Home
 
     When I navigate to "About Us"
     Then I should be on the "About Us" page
+
+  Scenario: Cart nav link navigates to the cart page
+    When I navigate to "Cart"
+    Then I should be on the "Cart" page
+
+  Scenario: Logo click navigates back to the home page
+    Given I navigate to "Purchase Rings"
+    When I click the site logo
+    Then I should be on the "Home" page
+
+  Scenario: Cart badge shows the number of items in the cart
+    Given I navigate to "Purchase Rings"
+    And the purchase rings page is ready
+    When I add the first ring to the cart
+    Then the cart badge should show 1
