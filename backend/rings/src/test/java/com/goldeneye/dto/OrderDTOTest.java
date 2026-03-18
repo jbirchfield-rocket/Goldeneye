@@ -29,8 +29,8 @@ public class OrderDTOTest {
     void constructorInitializesAllFields() {
         // OrderItem DTO: productId, materialId, widthId, stoneId, unitPrice, quantity
         // Order DTO: orderId, custId, locationId, date, List of orderItems
-        OrderItemDTO orderItemDto1 = new OrderItemDTO(1, 2, 3,4, BigDecimal.valueOf(9.99), 6);
-        OrderItemDTO orderItemDto2 = new OrderItemDTO(2, 3, 4, 5, BigDecimal.valueOf(10.99), 7);
+        OrderItemDTO orderItemDto1 = new OrderItemDTO(1, 2, 3, 4, 5, 6);
+        OrderItemDTO orderItemDto2 = new OrderItemDTO(2, 3, 4, 5, 6, 7);
         OrderDTO orderDto = new OrderDTO(
             1, 
             1, 
