@@ -29,11 +29,32 @@ Feature: Primary navigation from Home # features/navigation.feature:1
     Given the app is running                                                   # steps/home_steps.py:81
     And I open the home page                                                   # steps/navigation_steps.py:65
     When I navigate to "Purchase Rings"                                        # steps/navigation_steps.py:71
-    Then I should be on the "Purchase Rings" page                              # steps/navigation_steps.py:100
+    Then I should be on the "Purchase Rings" page                              # steps/navigation_steps.py:99
     When I navigate to "Manage Orders"                                         # steps/navigation_steps.py:71
-    Then I should be on the "Manage Orders" page                               # steps/navigation_steps.py:100
+    Then I should be on the "Manage Orders" page                               # steps/navigation_steps.py:99
     When I navigate to "About Us"                                              # steps/navigation_steps.py:71
-    Then I should be on the "About Us" page                                    # steps/navigation_steps.py:100
+    Then I should be on the "About Us" page                                    # steps/navigation_steps.py:99
+
+  Scenario: Cart nav link navigates to the cart page  # features/navigation.feature:20
+    Given the app is running                          # steps/home_steps.py:81
+    And I open the home page                          # steps/navigation_steps.py:65
+    When I navigate to "Cart"                         # steps/navigation_steps.py:71
+    Then I should be on the "Cart" page               # steps/navigation_steps.py:99
+
+  Scenario: Logo click navigates back to the home page  # features/navigation.feature:24
+    Given the app is running                            # steps/home_steps.py:81
+    And I open the home page                            # steps/navigation_steps.py:65
+    Given I navigate to "Purchase Rings"                # steps/navigation_steps.py:71
+    When I click the site logo                          # steps/navigation_steps.py:107
+    Then I should be on the "Home" page                 # steps/navigation_steps.py:99
+
+  Scenario: Cart badge shows the number of items in the cart  # features/navigation.feature:29
+    Given the app is running                                  # steps/home_steps.py:81
+    And I open the home page                                  # steps/navigation_steps.py:65
+    Given I navigate to "Purchase Rings"                      # steps/navigation_steps.py:71
+    And the purchase rings page is ready                      # steps/navigation_steps.py:114
+    When I add the first ring to the cart                     # steps/navigation_steps.py:122
+    Then the cart badge should show 1                         # steps/navigation_steps.py:132
 
 Feature: Purchase Rings page # features/purchase_rings.feature:1
   As a user on the Purchase Rings page
@@ -48,9 +69,10 @@ Feature: Purchase Rings page # features/purchase_rings.feature:1
     And I select the first customer from the dropdown                       # steps/purchase_rings_steps.py:65
     And I navigate to "Purchase Rings"                                      # steps/navigation_steps.py:71
     Given the purchase rings page has loaded                                # steps/purchase_rings_steps.py:92
-    When I click the Add to Cart button on the first ring                   # steps/purchase_rings_steps.py:125
-    Then an alert should appear with the message "Added 1 ring(s) to cart!" # steps/purchase_rings_steps.py:134
+    When I click the Add to Cart button on the first ring                   # steps/purchase_rings_steps.py:124
+    Then an alert should appear with the message "Added 1 ring(s) to cart!" # steps/purchase_rings_steps.py:133
 
+  @api
   Scenario: Configure all ring options and verify the cart item matches        # features/purchase_rings.feature:17
     Given the app is running                                                   # steps/home_steps.py:81
     And I am on the home page                                                  # steps/home_steps.py:85
@@ -61,11 +83,40 @@ Feature: Purchase Rings page # features/purchase_rings.feature:1
     And I select the second option in the width dropdown on the first ring     # steps/purchase_rings_steps.py:106
     And I select the second option in the stone dropdown on the first ring     # steps/purchase_rings_steps.py:112
     And I set the quantity to 2 on the first ring                              # steps/purchase_rings_steps.py:118
-    And I click the Add to Cart button on the first ring                       # steps/purchase_rings_steps.py:125
-    Then an alert should appear with the message "Added 2 ring(s) to cart!"    # steps/purchase_rings_steps.py:134
+    And I click the Add to Cart button on the first ring                       # steps/purchase_rings_steps.py:124
+    Then an alert should appear with the message "Added 2 ring(s) to cart!"    # steps/purchase_rings_steps.py:133
     When I navigate to "Cart"                                                  # steps/navigation_steps.py:71
-    Then the cart should contain at least 1 item                               # steps/purchase_rings_steps.py:145
-    And the first cart item should show quantity 2                             # steps/purchase_rings_steps.py:155
-    And the first cart item should show the selected material value            # steps/purchase_rings_steps.py:166
-    And the first cart item should show the selected stone value               # steps/purchase_rings_steps.py:178
+    Then the cart should contain at least 1 item                               # steps/purchase_rings_steps.py:189
+    And the first cart item should show quantity 2                             # steps/purchase_rings_steps.py:199
+    And the first cart item should show the selected material value            # steps/purchase_rings_steps.py:210
+    And the first cart item should show the selected stone value               # steps/purchase_rings_steps.py:222
+
+  Scenario: Multiple ring cards are displayed on the page                      # features/purchase_rings.feature:31
+    Given the app is running                                                   # steps/home_steps.py:81
+    And I am on the home page                                                  # steps/home_steps.py:85
+    And I select the first customer from the dropdown                          # steps/purchase_rings_steps.py:65
+    And I navigate to "Purchase Rings"                                         # steps/navigation_steps.py:71
+    Given the purchase rings page has loaded                                   # steps/purchase_rings_steps.py:92
+    Then at least 2 ring cards should be visible                               # steps/purchase_rings_steps.py:144
+    And each ring card should have material width stone and quantity dropdowns # steps/purchase_rings_steps.py:151
+
+  Scenario: Proposed price updates when quantity is changed       # features/purchase_rings.feature:36
+    Given the app is running                                      # steps/home_steps.py:81
+    And I am on the home page                                     # steps/home_steps.py:85
+    And I select the first customer from the dropdown             # steps/purchase_rings_steps.py:65
+    And I navigate to "Purchase Rings"                            # steps/navigation_steps.py:71
+    Given the purchase rings page has loaded                      # steps/purchase_rings_steps.py:92
+    When I note the proposed price of the first ring              # steps/purchase_rings_steps.py:163
+    And I change the quantity to 3 on the first ring              # steps/purchase_rings_steps.py:172
+    Then the proposed price of the first ring should have changed # steps/purchase_rings_steps.py:177
+
+  Scenario: Proposed price updates when stone type is changed              # features/purchase_rings.feature:42
+    Given the app is running                                               # steps/home_steps.py:81
+    And I am on the home page                                              # steps/home_steps.py:85
+    And I select the first customer from the dropdown                      # steps/purchase_rings_steps.py:65
+    And I navigate to "Purchase Rings"                                     # steps/navigation_steps.py:71
+    Given the purchase rings page has loaded                               # steps/purchase_rings_steps.py:92
+    When I note the proposed price of the first ring                       # steps/purchase_rings_steps.py:163
+    And I select the second option in the stone dropdown on the first ring # steps/purchase_rings_steps.py:112
+    Then the proposed price of the first ring should have changed          # steps/purchase_rings_steps.py:177
 
