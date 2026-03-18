@@ -32,6 +32,7 @@ public class CustomerService {
             .toList();
     }
 
-
-
+    public void updateCustomer(int custId, CustomerDTO customer) {
+        customerRepo.updateCustomer(custId, customer.getName());
+    }
 }
