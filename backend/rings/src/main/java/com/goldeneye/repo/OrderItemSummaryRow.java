@@ -7,6 +7,7 @@ import java.math.BigDecimal;
  * @author dshelby
  */
 public class OrderItemSummaryRow {
+    private Integer orditmid;
     private String prodname;
     private String mattname;
     private int width;
@@ -17,14 +18,23 @@ public class OrderItemSummaryRow {
     public OrderItemSummaryRow() {
     }
 
-    public OrderItemSummaryRow(String prodname, String mattname, int width, String stonename, BigDecimal unitprice,
+    public OrderItemSummaryRow(Integer orditmid, String prodname, String mattname, int width, String stonename, BigDecimal unitprice,
             int qty) {
+        this.orditmid = orditmid;
         this.prodname = prodname;
         this.mattname = mattname;
         this.width = width;
         this.stonename = stonename;
         this.unitprice = unitprice;
         this.qty = qty;
+    }
+
+    public Integer getOrderItemId() {
+        return orditmid;
+    }
+
+    public void setOrderItemId(Integer orditmid) {
+        this.orditmid = orditmid;
     }
 
     public String getProdName() {
