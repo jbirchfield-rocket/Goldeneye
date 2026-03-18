@@ -32,6 +32,7 @@ public class CustomerService {
             .toList();
     }
 
-
-
+    public void createCustomer(CustomerDTO customer) {
+        customerRepo.insertCustomer(customer.getName());
+    }
 }

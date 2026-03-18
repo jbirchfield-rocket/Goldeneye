@@ -20,4 +20,7 @@ import com.goldeneye.model.Customer;
 public interface CustomerRepo extends ListCrudRepository<Customer, Integer> {
     @Query("SELECT CUSTID, NAME FROM GLDEYE.TBCUST")
     List<Customer> findAll();
+
+    @Query("INSERT INTO GLDEYE.TBCUST (NAME) VALUES (:name)")
+    void insertCustomer(String name);
 }
