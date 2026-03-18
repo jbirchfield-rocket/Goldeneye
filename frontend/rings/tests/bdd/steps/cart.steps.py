@@ -45,7 +45,7 @@ def step_click_empty_cart_continue(context):
 def step_select_add_new_location(context):
     d = context.driver
     delivery_sel_el = _wait(d).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, ".delivery-select"))
+        EC.presence_of_element_located((By.CSS_SELECTOR, ".location-select"))
     )
     sel = Select(delivery_sel_el)
     sel.select_by_value("ADD_NEW")
@@ -96,7 +96,7 @@ def step_click_summary_continue(context):
 def step_select_first_delivery_location(context):
     d = context.driver
     delivery_sel_el = _wait(d).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, ".delivery-select"))
+        EC.presence_of_element_located((By.CSS_SELECTOR, ".location-select"))
     )
     sel = Select(delivery_sel_el)
     for opt in sel.options:
@@ -154,7 +154,7 @@ def step_order_summary_visible(context):
 def step_delivery_dropdown_present(context):
     d = context.driver
     _wait(d).until(
-        EC.visibility_of_element_located((By.CSS_SELECTOR, ".delivery-select"))
+        EC.visibility_of_element_located((By.CSS_SELECTOR, ".location-select"))
     )
 
 
@@ -162,12 +162,12 @@ def step_delivery_dropdown_present(context):
 def step_delivery_dropdown_has_options(context):
     d = context.driver
     delivery_sel_el = _wait(d).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, ".delivery-select"))
+        EC.presence_of_element_located((By.CSS_SELECTOR, ".location-select"))
     )
 
     def _has_real_option(drv):
         try:
-            opts = drv.find_element(By.CSS_SELECTOR, ".delivery-select") \
+            opts = drv.find_element(By.CSS_SELECTOR, ".location-select") \
                        .find_elements(By.CSS_SELECTOR, "option")
             return any(
                 not o.get_attribute("disabled")
