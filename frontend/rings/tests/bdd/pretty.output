@@ -32,14 +32,16 @@ Feature: Manage Orders page # features/manage_orders.feature:1
     And I navigate to "Manage Orders"                        # steps/navigation_steps.py:71
     Then the manage orders heading should be visible         # steps/manage_orders_steps.py:55
 
-  Scenario: Empty state is shown when no orders are available  # features/manage_orders.feature:15
+  @api
+  Scenario: Empty state is shown when no orders are available  # features/manage_orders.feature:16
     Given the app is running                                   # steps/home_steps.py:81
     And I am on the home page                                  # steps/home_steps.py:85
     Given I select the first customer from the dropdown        # steps/purchase_rings_steps.py:65
     And I navigate to "Manage Orders"                          # steps/navigation_steps.py:71
     Then the empty orders message should be visible            # steps/manage_orders_steps.py:66
 
-  Scenario: Empty state has a link that navigates to Purchase Rings  # features/manage_orders.feature:20
+  @api
+  Scenario: Empty state has a link that navigates to Purchase Rings  # features/manage_orders.feature:22
     Given the app is running                                         # steps/home_steps.py:81
     And I am on the home page                                        # steps/home_steps.py:85
     Given I select the first customer from the dropdown              # steps/purchase_rings_steps.py:65
@@ -49,7 +51,7 @@ Feature: Manage Orders page # features/manage_orders.feature:1
     Then I should be on the "Purchase Rings" page                    # steps/navigation_steps.py:99
 
   @api
-  Scenario: Order cards are displayed when the API returns data  # features/manage_orders.feature:28
+  Scenario: Order cards are displayed when the API returns data  # features/manage_orders.feature:30
     Given the app is running                                     # steps/home_steps.py:81
     And I am on the home page                                    # steps/home_steps.py:85
     Given I select the second customer from the dropdown         # steps/manage_orders_steps.py:29
@@ -57,7 +59,7 @@ Feature: Manage Orders page # features/manage_orders.feature:1
     Then at least one order card should be visible               # steps/manage_orders_steps.py:94
 
   @api
-  Scenario: Each order card shows the order ID           # features/manage_orders.feature:34
+  Scenario: Each order card shows the order ID           # features/manage_orders.feature:36
     Given the app is running                             # steps/home_steps.py:81
     And I am on the home page                            # steps/home_steps.py:85
     Given I select the second customer from the dropdown # steps/manage_orders_steps.py:29
@@ -65,7 +67,7 @@ Feature: Manage Orders page # features/manage_orders.feature:1
     Then the first order card should display an order ID # steps/manage_orders_steps.py:104
 
   @api
-  Scenario: Each order card shows ring details                                           # features/manage_orders.feature:40
+  Scenario: Each order card shows ring details                                           # features/manage_orders.feature:42
     Given the app is running                                                             # steps/home_steps.py:81
     And I am on the home page                                                            # steps/home_steps.py:85
     Given I select the second customer from the dropdown                                 # steps/manage_orders_steps.py:29
@@ -73,7 +75,7 @@ Feature: Manage Orders page # features/manage_orders.feature:1
     Then the first order card should display ring type material width stone and quantity # steps/manage_orders_steps.py:113
 
   @api
-  Scenario: Each order card shows the delivery location          # features/manage_orders.feature:46
+  Scenario: Each order card shows the delivery location          # features/manage_orders.feature:48
     Given the app is running                                     # steps/home_steps.py:81
     And I am on the home page                                    # steps/home_steps.py:85
     Given I select the second customer from the dropdown         # steps/manage_orders_steps.py:29
@@ -81,7 +83,7 @@ Feature: Manage Orders page # features/manage_orders.feature:1
     Then the first order card should display a delivery location # steps/manage_orders_steps.py:127
 
   @api
-  Scenario: Each order card shows an order total            # features/manage_orders.feature:52
+  Scenario: Each order card shows an order total            # features/manage_orders.feature:54
     Given the app is running                                # steps/home_steps.py:81
     And I am on the home page                               # steps/home_steps.py:85
     Given I select the second customer from the dropdown    # steps/manage_orders_steps.py:29
