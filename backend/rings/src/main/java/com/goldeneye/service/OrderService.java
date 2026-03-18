@@ -100,6 +100,15 @@ public class OrderService {
             .toList();
     }
 
+    public void deleteOrderItem(int ordItmId) {
+        orderItemRepo.deleteByOrderItemId(ordItmId);
+    }
+
+    public void updateOrderItem(int ordItmId, OrderItemDTO orderItem) {
+        BigDecimal newUnitPrice = calculateUnitPrice(orderItem.getProductId(), orderItem.getMaterialId(), orderItem.getWidthId(), orderItem.getStoneId(), orderItem.getQuantity());
+        orderItemRepo.updateOrderItem(ordItmId, orderItem.getProductId(), orderItem.getMaterialId(), orderItem.getWidthId(), orderItem.getStoneId(), newUnitPrice, orderItem.getQuantity());
+    }
+
     public BigDecimal calculateUnitPrice(int productId, int materialId, int widthId, int stoneId, int quantity) {
         // get base price from product
         ProductDTO product = productService.getProductById(productId);
