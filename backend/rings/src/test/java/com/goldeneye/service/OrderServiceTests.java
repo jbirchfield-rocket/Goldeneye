@@ -42,7 +42,7 @@ public class OrderServiceTests {
 
     @BeforeAll
     void initializeTestOrderDTO() {
-        OrderItemDTO item = new OrderItemDTO(1, 1, 1, 1, BigDecimal.valueOf(324), 3);
+        OrderItemDTO item = new OrderItemDTO(1, 1, 1, 1, 1, 3);
     
 
         testOrderDTO = new OrderDTO(1, 2, 1, LocalDate.of(2026, 3, 11), List.of(item));
