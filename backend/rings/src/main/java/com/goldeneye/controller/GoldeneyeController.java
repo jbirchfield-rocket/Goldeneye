@@ -20,10 +20,10 @@ import com.goldeneye.dto.CustomerDTO;
 import com.goldeneye.dto.LocationDTO;
 import com.goldeneye.dto.MaterialDTO;
 import com.goldeneye.dto.OrderDTO;
+import com.goldeneye.dto.OrderSummaryDTO;
 import com.goldeneye.dto.ProductDTO;
 import com.goldeneye.dto.StoneDTO;
 import com.goldeneye.dto.WidthDTO;
-import com.goldeneye.dto.OrderSummaryDTO;
 import com.goldeneye.service.CustomerService;
 import com.goldeneye.service.LocationService;
 import com.goldeneye.service.MaterialService;
@@ -64,10 +64,10 @@ public class GoldeneyeController {
         return ResponseEntity.ok(customerService.getAllCustomers());
     }
 
-    @PostMapping("/customers/new")
-    public ResponseEntity<Void> createCustomer(@RequestBody CustomerDTO customer) {
-        customerService.createCustomer(customer);
-        return ResponseEntity.noContent().build();
+    @PostMapping("/customers")
+    public ResponseEntity<Integer> createCustomer(@RequestBody CustomerDTO customer) {
+        int newCustId = customerService.createCustomer(customer);
+        return ResponseEntity.ok(newCustId);
     }
 
     @GetMapping("/locations/{custId}")

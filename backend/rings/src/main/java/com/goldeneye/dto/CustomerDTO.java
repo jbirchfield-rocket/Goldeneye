@@ -6,22 +6,30 @@ package com.goldeneye.dto;
  */
 
 public class CustomerDTO {
-    private int custId;
+    private Integer custId;
     private String name;
 
     public CustomerDTO() {
     }
 
-    public CustomerDTO(int custId, String name) {
+    public CustomerDTO(Integer custId, String name) {
         this.custId = custId;
         this.name = name;
     }
 
-    public int getCustId() { 
+    public Integer getCustId() { 
         return custId; 
+    }
+
+    public void setCustId(Integer custId) {
+        this.custId = custId;
     }
 
     public String getName() { 
         return name; 
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
