@@ -25,4 +25,8 @@ public interface OrderRepo extends ListCrudRepository<Order, Integer> {
 
      @Query("SELECT O.ORDERID, C.NAME, O.ORDERDATE, O.LOCID AS LOCID FROM GLDEYE.TBORDER O JOIN GLDEYE.TBCUST C ON C.CUSTID = O.CUSTID WHERE O.CUSTID = :custId")
     List<OrderSummaryRow> findOrderSummariesByCustId(@Param("custId") int custId);
+
+    @Query("DELETE FROM GLDEYE.TBORDER WHERE ORDERID = :orderId")
+    void deleteByOrderId(@Param("orderId") int orderId);
+
 }

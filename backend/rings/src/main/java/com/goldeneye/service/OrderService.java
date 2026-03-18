@@ -100,6 +100,14 @@ public class OrderService {
             .toList();
     }
 
+
+    public void deleteOrderByOrderId(int orderId) {
+
+        orderItemRepo.deleteByOrderId(orderId);
+        orderRepo.deleteByOrderId(orderId);
+
+    }
+
     public BigDecimal calculateUnitPrice(int productId, int materialId, int widthId, int stoneId, int quantity) {
         // get base price from product
         ProductDTO product = productService.getProductById(productId);

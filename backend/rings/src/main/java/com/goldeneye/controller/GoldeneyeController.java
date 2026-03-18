@@ -100,4 +100,9 @@ public class GoldeneyeController {
         return ResponseEntity.ok(orderService.getOrdersByCustId(custId));
     }
 
+    @DeleteMapping("/order/{orderId}")
+    public ResponseEntity<Integer> deleteOrderByOrderId(@PathVariable int orderId) {
+        return ResponseEntity.ok(orderService.deleteOrderByOrderId(orderId));
+    }
+
 }
