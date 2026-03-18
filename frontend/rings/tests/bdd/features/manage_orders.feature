@@ -7,7 +7,7 @@ Feature: Manage Orders page
     Given the app is running
     And I am on the home page
 
-  
+  @api
   Scenario: Manage Orders page displays the correct heading
     Given I select the first customer from the dropdown
     And I navigate to "Manage Orders"
