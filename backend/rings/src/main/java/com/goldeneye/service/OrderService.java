@@ -1,12 +1,13 @@
 package com.goldeneye.service;
 
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
-import java.math.BigDecimal;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.goldeneye.constants.AppConstants.PRICESCALE;
 import com.goldeneye.dto.LocationDTO;
 import com.goldeneye.dto.MaterialDTO;
 import com.goldeneye.dto.OrderDTO;
@@ -16,11 +17,9 @@ import com.goldeneye.dto.OrderSummaryDTO;
 import com.goldeneye.dto.ProductDTO;
 import com.goldeneye.dto.StoneDTO;
 import com.goldeneye.dto.WidthDTO;
+import com.goldeneye.exception.InvalidOrderException;
 import com.goldeneye.repo.OrderItemRepo;
 import com.goldeneye.repo.OrderRepo;
-import com.goldeneye.exception.InvalidOrderException;
-
-import static com.goldeneye.constants.AppConstants.PRICESCALE;
 
 
 /**
@@ -124,5 +123,9 @@ public class OrderService {
         BigDecimal totalPrice = individualPrice.multiply(BigDecimal.valueOf(quantity)).setScale(PRICESCALE, RoundingMode.HALF_UP);
         
         return totalPrice;
+    }
+
+    public void deleteAllOrderItems(int orderId) {
+        orderItemRepo.deleteByOrderId(orderId);
     }
 }
