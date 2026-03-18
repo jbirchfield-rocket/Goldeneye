@@ -38,4 +38,8 @@ public class CustomerService {
         customerRepo.insertCustomer(customer.getName());
         return customerRepo.getLastGeneratedId();
     }
+  
+    public void updateCustomer(int custId, CustomerDTO customer) {
+        customerRepo.updateCustomer(custId, customer.getName());
+    }
 }

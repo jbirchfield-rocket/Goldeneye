@@ -29,4 +29,8 @@ public interface CustomerRepo extends ListCrudRepository<Customer, Integer> {
     @Modifying
     @Query("INSERT INTO GLDEYE.TBCUST (NAME) VALUES (:name)")
     void insertCustomer(@Param("name") String name);
+  
+    @Modifying
+    @Query("UPDATE GLDEYE.TBCUST SET NAME = :name WHERE CUSTID = :custId")
+    void updateCustomer(int custId, String name);
 }
