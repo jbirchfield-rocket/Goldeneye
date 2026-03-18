@@ -8,6 +8,7 @@ package com.goldeneye.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.goldeneye.dto.CustomerDTO;
 import com.goldeneye.repo.CustomerRepo;
@@ -32,6 +33,9 @@ public class CustomerService {
             .toList();
     }
 
-
-
+    @Transactional
+    public int createCustomer(CustomerDTO customer) {
+        customerRepo.insertCustomer(customer.getName());
+        return customerRepo.getLastGeneratedId();
+    }
 }

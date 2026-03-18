@@ -18,21 +18,21 @@ import org.springframework.data.relational.core.mapping.Table;
 public class Customer {
     @Id
     @Column("CUSTID")
-    private int custId;
+    private Integer custId;
 
     @Column("NAME")
     private String name;
 
-    public Customer(int custId, String name) {
+    public Customer(Integer custId, String name) {
         this.custId = custId;
         this.name = name;
     }
 
-    public int getCustId() {
+    public Integer getCustId() {
         return custId;
     }
 
-    public void setCustId(int custId) {
+    public void setCustId(Integer custId) {
         this.custId = custId;
     }
 
