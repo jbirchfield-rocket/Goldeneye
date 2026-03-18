@@ -6,7 +6,6 @@ Feature: Shopping Cart
   Background:
     Given the app is running
     And I am on the home page
-    And I select the first customer from the dropdown
 
   Scenario: Cart page shows the Shopping Cart heading
     When I navigate to "Cart"
@@ -49,24 +48,7 @@ Feature: Shopping Cart
     And I navigate to "Cart"
     Then the delivery location dropdown should have at least one selectable location
 
-  @api
-  Scenario: Selecting Add New Location reveals the location form
-    Given I navigate to "Purchase Rings"
-    And the purchase rings page is ready
-    When I add the first ring to the cart
-    And I navigate to "Cart"
-    When I select Add New Location from the delivery dropdown
-    Then the add new location form should be visible
-
-  Scenario: Checkout without a delivery location shows an alert
-    Given I navigate to "Purchase Rings"
-    And the purchase rings page is ready
-    When I add the first ring to the cart
-    And I navigate to "Cart"
-    When I click the Checkout button
-    Then an alert should appear with the message "Please select a delivery location before checking out."
-
-  Scenario: Remove button removes an item from the cart
+Scenario: Remove button removes an item from the cart
     Given I navigate to "Purchase Rings"
     And the purchase rings page is ready
     When I add the first ring to the cart
@@ -82,6 +64,27 @@ Feature: Shopping Cart
     When I click the summary Continue Shopping button
     Then I should be on the "Purchase Rings" page
 
+  @api
+  Scenario: Selecting Add New Location reveals the location form
+    Given I am on the home page
+    And I select the first customer from the dropdown
+    And I navigate to "Purchase Rings"
+    And the purchase rings page is ready
+    When I add the first ring to the cart
+    And I navigate to "Cart"
+    When I select Add New Location from the delivery dropdown
+    Then the add new location form should be visible
+
+  @api
+  Scenario: Checkout without a delivery location shows an alert
+    Given I am on the home page
+    And I select the first customer from the dropdown
+    And I navigate to "Purchase Rings"
+    And the purchase rings page is ready
+    When I add the first ring to the cart
+    And I navigate to "Cart"
+    When I click the Checkout button
+    Then an alert should appear with the message "Please select a delivery location before checking out."
 
   Scenario: Clear Cart button empties the cart
     Given I navigate to "Purchase Rings"
