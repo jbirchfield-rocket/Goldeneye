@@ -28,7 +28,7 @@ nav:
 - Introduction: index.md
 - Release Notes: topics/release-notes.md
 - DBA Guide:
-  - DB2 Configuration: topics/db-configuration.md
+  - DB Schema: topics/db-schema.md
   - DB2 Connections: topics/db2-connections.md
 
 markdown_extensions:
@@ -46,11 +46,12 @@ markdown_extensions:
   - meta  
   - attr_list
   - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
       
 plugins:
   - offline
   - search:
       lang:
         - en
+  - print-site

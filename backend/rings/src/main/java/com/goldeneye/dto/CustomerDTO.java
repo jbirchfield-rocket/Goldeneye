@@ -9,6 +9,9 @@ public class CustomerDTO {
     private int custId;
     private String name;
 
+    public CustomerDTO() {
+    }
+
     public CustomerDTO(int custId, String name) {
         this.custId = custId;
         this.name = name;
