@@ -34,4 +34,14 @@ public interface OrderItemRepo extends ListCrudRepository<OrderItem, Integer> {
 
     @Query("SELECT OI.ORDITMID, OI.ORDERID, P.NAME AS PRODNAME, M.NAME AS MATTNAME, W.WIDTH, S.NAME AS STONENAME, OI.UNITPRICE, OI.QTY FROM GLDEYE.TBORDITM OI JOIN GLDEYE.TBPROD P ON P.PRODID = OI.PRODID JOIN GLDEYE.TBMATT M ON M.MATTID = OI.MATTID JOIN GLDEYE.TBWIDTH W ON W.WID = OI.WID JOIN GLDEYE.TBSTONE S ON S.STONEID = OI.STONEID WHERE OI.ORDERID = :orderId")
     List<OrderItemSummaryRow> findOrderItemSummariesByOrderId(@Param("orderId") int orderId);
+
+    // Delete all order items associated with a specific order ID
+    @Modifying
+    @Query("DELETE FROM GLDEYE.TBORDITM WHERE ORDERID = :orderId")
+    void deleteByOrderId(@Param("orderId") int orderId);
+
+    // Delete a specific order item by its ID
+    @Modifying
+    @Query("DELETE FROM GLDEYE.TBORDITM WHERE ORDITMID = :orderItemId")
+    void deleteByOrderItemId(@Param("orderItemId") int orderItemId);
 }
