@@ -69,6 +69,12 @@ public class GoldeneyeController {
         return ResponseEntity.ok(locationService.getLocationsByCustId(custId));
     }
 
+    @PostMapping("/locations")
+    public ResponseEntity<Integer> addLocation(@RequestBody LocationDTO location) {
+        int newLocationId = locationService.addLocation(location);
+        return ResponseEntity.ok(newLocationId);
+    }
+
     @GetMapping("/products")
     public ResponseEntity<List<ProductDTO>> getProductsByCustId() {
         return ResponseEntity.ok(productService.getAllProducts());
