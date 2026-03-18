@@ -32,6 +32,12 @@ public class LocationService {
             .toList();
     }
 
+    public LocationDTO getLocationById(int locId) {
+        return locationRepo.findByLocId(locId)
+            .map(l -> new LocationDTO(l.getLocationId(), l.getCustId(), l.getStreet(), l.getCity(), l.getState(), l.getZip()))
+            .orElseThrow(() -> new RuntimeException("Location not found: " + locId));
+    }
+
 
 
 }

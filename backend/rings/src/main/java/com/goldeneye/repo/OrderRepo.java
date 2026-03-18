@@ -1,6 +1,7 @@
 package com.goldeneye.repo;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
@@ -21,4 +22,7 @@ public interface OrderRepo extends ListCrudRepository<Order, Integer> {
 
     @Query("SELECT INTEGER(IDENTITY_VAL_LOCAL()) FROM SYSIBM.SYSDUMMY1")
     int getLastGeneratedId();
+
+     @Query("SELECT O.ORDERID, C.NAME, O.ORDERDATE, O.LOCID AS LOCID FROM GLDEYE.TBORDER O JOIN GLDEYE.TBCUST C ON C.CUSTID = O.CUSTID WHERE O.CUSTID = :custId")
+    List<OrderSummaryRow> findOrderSummariesByCustId(@Param("custId") int custId);
 }
