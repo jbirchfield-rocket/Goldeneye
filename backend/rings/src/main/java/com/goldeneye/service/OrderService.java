@@ -1,12 +1,13 @@
 package com.goldeneye.service;
 
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
-import java.math.BigDecimal;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.goldeneye.constants.AppConstants.PRICESCALE;
 import com.goldeneye.dto.LocationDTO;
 import com.goldeneye.dto.MaterialDTO;
 import com.goldeneye.dto.OrderDTO;
@@ -16,11 +17,9 @@ import com.goldeneye.dto.OrderSummaryDTO;
 import com.goldeneye.dto.ProductDTO;
 import com.goldeneye.dto.StoneDTO;
 import com.goldeneye.dto.WidthDTO;
+import com.goldeneye.exception.InvalidOrderException;
 import com.goldeneye.repo.OrderItemRepo;
 import com.goldeneye.repo.OrderRepo;
-import com.goldeneye.exception.InvalidOrderException;
-
-import static com.goldeneye.constants.AppConstants.PRICESCALE;
 
 
 /**
@@ -81,6 +80,7 @@ public class OrderService {
                 List<OrderItemSummaryDTO> itemSummaries = orderItemRepo.findOrderItemSummariesByOrderId(order.getOrderId())
                     .stream()
                     .map(item -> new OrderItemSummaryDTO(
+                        item.getOrderItemId(),
                         item.getProdName(),
                         item.getMattName(),
                         item.getWidth(),
@@ -99,6 +99,43 @@ public class OrderService {
                 );
             })
             .toList();
+    }
+
+    @Transactional
+    public void deleteOrderByOrderId(int orderId) {
+        orderItemRepo.deleteByOrderId(orderId);
+        orderRepo.deleteByOrderId(orderId);
+    }
+
+    public void updateOrder(int orderId, OrderDTO orderDTO) {
+        orderRepo.updateOrder(orderDTO.getCustId(), orderDTO.getLocationId(), orderId);
+
+        for (OrderItemDTO orderItem : orderDTO.getOrderItems()) {
+            if (orderItem.getOrderItemId() != null) {
+            updateOrderItem(orderItem.getOrderItemId(), orderItem);
+        } else {
+            BigDecimal unitPrice = calculateUnitPrice(orderItem.getProductId(), orderItem.getMaterialId(), orderItem.getWidthId(), orderItem.getStoneId(), orderItem.getQuantity());
+            orderItemRepo.insertOrderItem(
+                orderId,
+                orderItem.getProductId(),
+                orderItem.getMaterialId(),
+                orderItem.getWidthId(),
+                orderItem.getStoneId(),
+                unitPrice,
+                orderItem.getQuantity()
+            );
+        }
+        }
+
+    }
+
+    public void deleteOrderItem(int ordItmId) {
+        orderItemRepo.deleteByOrderItemId(ordItmId);
+    }
+
+    public void updateOrderItem(int ordItmId, OrderItemDTO orderItem) {
+        BigDecimal newUnitPrice = calculateUnitPrice(orderItem.getProductId(), orderItem.getMaterialId(), orderItem.getWidthId(), orderItem.getStoneId(), orderItem.getQuantity());
+        orderItemRepo.updateOrderItem(ordItmId, orderItem.getProductId(), orderItem.getMaterialId(), orderItem.getWidthId(), orderItem.getStoneId(), newUnitPrice, orderItem.getQuantity());
     }
 
     public BigDecimal calculateUnitPrice(int productId, int materialId, int widthId, int stoneId, int quantity) {
@@ -124,5 +161,9 @@ public class OrderService {
         BigDecimal totalPrice = individualPrice.multiply(BigDecimal.valueOf(quantity)).setScale(PRICESCALE, RoundingMode.HALF_UP);
         
         return totalPrice;
+    }
+
+    public void deleteAllOrderItems(int orderId) {
+        orderItemRepo.deleteByOrderId(orderId);
     }
 }
