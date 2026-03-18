@@ -47,4 +47,14 @@ public class WidthServiceTests {
         assertTrue(widths.stream().anyMatch(w -> w.getWidthId() == 1 && w.getWidth() == 2));
         assertTrue(widths.stream().anyMatch(w -> w.getWidthId() == 4 && w.getWidth() == 8));
     }
+
+    @Test
+    void getWidthByIdReturnsCorrectWidthDTO() {
+        WidthDTO width = widthService.getWidthById(1);
+        assertNotNull(width);
+        assertEquals(1, width.getWidthId());
+        assertEquals(2, width.getWidth());
+        assertEquals(0.9f, width.getMultiplier());
+        assertEquals(1, width.getMaterialUse());
+    }
 }

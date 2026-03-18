@@ -38,23 +38,23 @@ As mentioned in the prerequisites, TAF will need to be installed. Once TAF is in
 
     ```json
     {
-	    "version": "0.2.0",
-	    "configurations": [
-	        {
-	            "type": "java",
-	            "name": "RingsApplication",
-	            "request": "launch",
-	            "mainClass": "com.goldeneye.rings.RingsApplication",
-	            "projectName": "rings",
-	            "env": {
-	                "DB2_HOST": "192.168.54.250",
-	                "DB2_PORT": "3600",
-	                "DB2_DATABASE": "HL02HL2D",
-	                "DB2_USERNAME": "<user>",
-	                "DB2_PASSWORD": "<password>"
-	            }
-	        }
-	    ]
+        "version": "0.2.0",
+        "configurations": [
+           {
+                "type": "java",
+                "name": "RingsApplication",
+                "request": "launch",
+                "mainClass": "com.goldeneye.rings.RingsApplication",
+                "projectName": "rings",
+                "env": {
+                    "DB2_HOST": "192.168.54.250",
+                    "DB2_PORT": "3600",
+                    "DB2_DATABASE": "HL02HL2D",
+                    "DB2_USERNAME": "<user>",
+                    "DB2_PASSWORD": "<password>"
+                }
+            }
+        ]
     }
 
     ```

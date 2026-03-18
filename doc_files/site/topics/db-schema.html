@@ -6,13 +6,19 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+        <meta name="description" content="The GoldenEye Exquisite Rings database schema enables customers to configure rings by selecting from available products, materials, widths, and stones, with automatic price calculations based on customization choices.">
+      
       
         <meta name="author" content="Team GoldenEye">
       
       
-        <link rel="canonical" href="https://GoldenEyeExquisiteRings.com/topics/db2-configuration.html">
+        <link rel="canonical" href="https://GoldenEyeExquisiteRings.com/topics/db-schema.html">
       
       
+        <link rel="prev" href="release-notes.html">
+      
+      
+        <link rel="next" href="db2-connections.html">
       
       
         
@@ -23,7 +29,7 @@
     
     
       
-        <title>DB2 Configuration - GoldenEye Exquisite Rings</title>
+        <title>DB Schema - GoldenEye Exquisite Rings</title>
       
     
     
@@ -113,6 +119,10 @@
       
     
     
+      <link rel="stylesheet" href="../css/print-site.css">
+    
+      <link rel="stylesheet" href="../css/print-site-material.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -131,7 +141,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#db2-configuration" class="md-skip">
+        <a href="#database-schema" class="md-skip">
           Skip to content
         </a>
       
@@ -147,7 +157,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="GoldenEye Exquisite Rings" class="md-header__button md-logo" aria-label="GoldenEye Exquisite Rings" data-md-component="logo">
+    <a href="../index.html" title="GoldenEye Exquisite Rings" class="md-header__button md-logo" aria-label="GoldenEye Exquisite Rings" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -167,7 +177,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              DB2 Configuration
+              DB Schema
             
           </span>
         </div>
@@ -245,7 +255,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="GoldenEye Exquisite Rings" class="md-nav__button md-logo" aria-label="GoldenEye Exquisite Rings" data-md-component="logo">
+    <a href="../index.html" title="GoldenEye Exquisite Rings" class="md-nav__button md-logo" aria-label="GoldenEye Exquisite Rings" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -263,7 +273,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../doc_files/docs/index.md" class="md-nav__link">
+      <a href="../index.html" class="md-nav__link">
         
   
   
@@ -279,6 +289,259 @@
   
 
       </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="release-notes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Release Notes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DBA Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    DBA Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DB Schema
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="db-schema.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DB Schema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entity-relationship-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entity-Relationship Diagram
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#database-objects-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Database Objects &amp; Schema
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Database Objects &amp; Schema">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relationships" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relationships
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="db2-connections.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DB2 Connections
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -303,6 +566,75 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entity-relationship-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entity-Relationship Diagram
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#database-objects-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Database Objects &amp; Schema
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Database Objects &amp; Schema">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relationships" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relationships
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -318,7 +650,361 @@
 
 
 
-<h1 id="db2-configuration">DB2 Configuration</h1>
+<h1 id="database-schema">Database Schema</h1>
+<h2 id="overview">Overview</h2>
+<p>The GoldenEye Exquisite Rings database schema enables customers to configure rings by selecting from available products, materials, widths, and stones, with automatic price calculations based on customization choices. It manages the complete order lifecycle—from customer and product information through order entry, customization specifications, and inventory tracking.</p>
+<h2 id="entity-relationship-diagram">Entity-Relationship Diagram</h2>
+<p><img alt="Database ERD" src="../assets/ERD.png" /></p>
+<h2 id="database-objects-schema">Database Objects &amp; Schema</h2>
+<h3 id="tables">Tables</h3>
+<h4 id="order">Order</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OrderID</td>
+<td>Integer</td>
+<td>Not Null, Positive, Starts with one, Increments by 1, Caches at 100, PK</td>
+</tr>
+<tr>
+<td>CustID</td>
+<td>Integer</td>
+<td>Not Null, FK from Customer</td>
+</tr>
+<tr>
+<td>LocID</td>
+<td>Integer</td>
+<td>Not Null, FK from Location</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Description:</strong> The Order table serves as the primary transaction record. Orders serve as the parent record for OrderItem entries, allowing customers to order multiple customized rings in a single transaction. Each order is tied to a specific customer and delivery location.</p>
+<p><strong>Business Logic:</strong></p>
+<ul>
+<li>Each order must be associated with an existing customer and a valid delivery location</li>
+<li>Orders can contain multiple line items (OrderItems), each representing a different ring customization</li>
+<li>LocID links orders to a specific delivery address for fulfillment</li>
+<li>The order acts as the primary grouping mechanism for fulfillment and billing purposes</li>
+</ul>
+<h4 id="orderitem">OrderItem</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OrdItmID</td>
+<td>Integer</td>
+<td>Not Null, Positive, Starts with one, Increments by 1, Caches at 100, PK</td>
+</tr>
+<tr>
+<td>OrderID</td>
+<td>Integer</td>
+<td>Not Null, Positive, FK from Order</td>
+</tr>
+<tr>
+<td>ProdID</td>
+<td>Integer</td>
+<td>Not Null, Positive, FK from Product</td>
+</tr>
+<tr>
+<td>MattID</td>
+<td>Integer</td>
+<td>Not Null, Positive, FK from Material</td>
+</tr>
+<tr>
+<td>WID</td>
+<td>Integer</td>
+<td>Not Null, Positive, FK from Width</td>
+</tr>
+<tr>
+<td>StoneID</td>
+<td>Integer</td>
+<td>Not Null, Positive, FK from Stone</td>
+</tr>
+<tr>
+<td>UnitPrice</td>
+<td>Decimal</td>
+<td>Not Null, Positive</td>
+</tr>
+<tr>
+<td>Qty</td>
+<td>Integer</td>
+<td>Not Null, Positive</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Description:</strong> The OrderItem table represents individual line items within an order. Each record details a specific ring customization including the product type, material, width, and stone selection. This enables customers to order multiple customized ring variations in a single order.</p>
+<p><strong>Business Logic:</strong></p>
+<ul>
+<li>Each order item captures a complete ring specification combining product, material, width, and stone selections</li>
+<li>UnitPrice is the calculated price for the ring with these specific customizations</li>
+<li>Qty allows customers to order multiple rings with identical specifications</li>
+<li>The total line item value is: UnitPrice × Qty</li>
+<li>Multiple OrderItems can reference the same Order, Product, Material, Width, or Stone</li>
+</ul>
+<h4 id="customer">Customer</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CustID</td>
+<td>Integer</td>
+<td>Not Null, Positive, Starts with one, Increments by 1, Caches at 50, PK</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>Varchar</td>
+<td>Not Null, up to 120 characters</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Description:</strong> The Customer table maintains core customer information for the ring sales system, serving as the foundation for all orders and associated delivery locations.</p>
+<p><strong>Business Logic:</strong></p>
+<ul>
+<li>Each customer is uniquely identified by CustID</li>
+<li>Customer names support up to 120 characters</li>
+<li>One-to-many relationships: A customer can have multiple locations and place multiple orders</li>
+</ul>
+<h4 id="location">Location</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LocID</td>
+<td>Integer</td>
+<td>Not Null, Positive, Starts with one, Increments by 1, Caches at 50, PK</td>
+</tr>
+<tr>
+<td>CustID</td>
+<td>Integer</td>
+<td>Not Null, FK from Customer</td>
+</tr>
+<tr>
+<td>Str</td>
+<td>Varchar</td>
+<td>Not Null, up to 200 characters allowed</td>
+</tr>
+<tr>
+<td>City</td>
+<td>Varchar</td>
+<td>Not Null, up to 120 characters allowed</td>
+</tr>
+<tr>
+<td>ST</td>
+<td>Char</td>
+<td>Not Null, up to 2 characters allowed</td>
+</tr>
+<tr>
+<td>Zip</td>
+<td>Char</td>
+<td>Not Null, up to 10 characters allowed</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Description:</strong> The Location table stores delivery and billing addresses for customers, supporting multiple addresses per customer (e.g., home, work, alternate locations). Orders reference specific locations to ensure accurate delivery.</p>
+<p><strong>Business Logic:</strong></p>
+<ul>
+<li>Each location is tied to a specific customer via CustID</li>
+<li>Street field accommodates up to 200 characters for detailed addresses</li>
+<li>State stored as 2-character abbreviation (e.g., "NY", "CA")</li>
+<li>Zip code field accommodates extended ZIP+4 format (up to 10 characters)</li>
+<li>Multiple orders from the same customer can be delivered to the same location</li>
+</ul>
+<h4 id="product">Product</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ProdID</td>
+<td>Integer</td>
+<td>Not Null, Positive, Starts with one, Increments by 1, Caches at 50, PK</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>Varchar</td>
+<td>Not Null, up to 120 characters allowed</td>
+</tr>
+<tr>
+<td>Dscrp</td>
+<td>Varchar</td>
+<td>Not Null, up to 512 characters allowed</td>
+</tr>
+<tr>
+<td>BasePrice</td>
+<td>Decimal</td>
+<td>Not Null, positive</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Description:</strong> The Product table defines available ring product types offered by the business. Each product represents a base ring style that can be further customized with different materials, stones, and widths. BasePrice provides the starting price before customization adjustments.</p>
+<p><strong>Business Logic:</strong></p>
+<ul>
+<li>Each product defines a distinct ring style or category (e.g., "Classic Engagement Ring", "Wedding Band")</li>
+<li>BasePrice serves as the foundation price for unit price calculation</li>
+<li>Product descriptions support up to 512 characters for detailed specifications</li>
+<li>Multiple OrderItems can reference the same product</li>
+</ul>
+<h4 id="material">Material</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MattID</td>
+<td>Integer</td>
+<td>Not Null, Positive, Starts with one, Increments by 1, Caches at 50, PK</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>Varchar</td>
+<td>Not Null, up to 120 characters allowed</td>
+</tr>
+<tr>
+<td>Dscrp</td>
+<td>Varchar</td>
+<td>Not Null, up to 512 characters allowed</td>
+</tr>
+<tr>
+<td>BasePrice</td>
+<td>Decimal</td>
+<td>Not Null, positive</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Description:</strong> The Material table catalogs available metal and material options for ring customization. Each material option represents a different metal type or composition. BasePrice functions as a price component applied to the order item's unit price calculation.</p>
+<p><strong>Business Logic:</strong></p>
+<ul>
+<li>Each material represents a distinct choice (e.g., "Gold 14K", "Platinum", "Sterling Silver")</li>
+<li>Material descriptions detail composition and characteristics (up to 512 characters)</li>
+<li>BasePrice represents a pricing component used in unit price calculation</li>
+<li>Multiple OrderItems can reference the same material for identical material selections</li>
+</ul>
+<h4 id="stone">Stone</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>StoneID</td>
+<td>Integer</td>
+<td>Not Null, Positive, Starts with one, Increments by 1, Caches at 50, PK</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>Varchar</td>
+<td>Not Null, up to 120 characters allowed</td>
+</tr>
+<tr>
+<td>Inventory</td>
+<td>Integer</td>
+<td>Not Null, default 0</td>
+</tr>
+<tr>
+<td>Price</td>
+<td>Decimal</td>
+<td>Not Null, default 1.0000</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Description:</strong> The Stone table maintains inventory and pricing information for gemstones and decorative stones used in ring customization. Each stone type tracks available inventory and unit pricing for accurate order cost calculations.</p>
+<p><strong>Business Logic:</strong></p>
+<ul>
+<li>Each stone represents a distinct gemstone or decorative option (e.g., "Diamond", "Sapphire", "Ruby")</li>
+<li>Inventory field tracks current stock quantity; defaults to 0 for out-of-stock items</li>
+<li>Price field represents per-unit cost; defaults to 1.0000</li>
+<li>Inventory should be decremented when orders are fulfilled to maintain accurate stock levels</li>
+<li>Multiple OrderItems can reference the same stone, drawing from shared inventory</li>
+</ul>
+<h4 id="width">Width</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WID</td>
+<td>Integer</td>
+<td>Not Null, Positive, Starts with one, Increments by 1, Caches at 50, PK</td>
+</tr>
+<tr>
+<td>Width</td>
+<td>Integer</td>
+<td>Not Null, measured in millimeters for example</td>
+</tr>
+<tr>
+<td>Multiplier</td>
+<td>Decimal</td>
+<td>Not Null, default 1.0000, positive</td>
+</tr>
+<tr>
+<td>MattUse</td>
+<td>Integer</td>
+<td>Not Null, positive</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Description:</strong> The Width table defines available ring width/size options and their associated pricing multipliers and material consumption rates. Width specifications enable precise control over pricing variations based on ring size and material requirements for production planning.</p>
+<p><strong>Business Logic:</strong></p>
+<ul>
+<li>Each width specification represents an available ring size measured in millimeters (e.g., 2mm, 4mm, 6mm, 8mm)</li>
+<li>Multiplier represents a price adjustment factor applied during unit price calculation (e.g., 1.0, 1.25, 1.5)</li>
+<li>MattUse tracks the quantity of material required for manufacturing rings of this width specification</li>
+<li>Multiple OrderItems can reference the same width for different ring customizations in the same size</li>
+</ul>
+<h3 id="relationships">Relationships</h3>
+<ul>
+<li><strong>Order</strong> → <strong>Customer</strong>: CustID (Foreign Key)</li>
+<li><strong>Order</strong> → <strong>Location</strong>: LocID (Foreign Key)</li>
+<li><strong>OrderItem</strong> → <strong>Order</strong>: OrderID (Foreign Key)</li>
+<li><strong>OrderItem</strong> → <strong>Product</strong>: ProdID (Foreign Key)</li>
+<li><strong>OrderItem</strong> → <strong>Material</strong>: MattID (Foreign Key)</li>
+<li><strong>OrderItem</strong> → <strong>Width</strong>: WID (Foreign Key)</li>
+<li><strong>OrderItem</strong> → <strong>Stone</strong>: StoneID (Foreign Key)</li>
+<li><strong>Location</strong> → <strong>Customer</strong>: CustID (Foreign Key)</li>
+</ul>
 
 
 
@@ -375,6 +1061,8 @@
     
     
       <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../js/print-site.js"></script>
       
     
   </body>

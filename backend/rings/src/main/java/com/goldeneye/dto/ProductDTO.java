@@ -13,6 +13,8 @@ public class ProductDTO {
     private String description;
     private BigDecimal basePrice;
 
+    public ProductDTO() {}
+
     public ProductDTO(int prodId, String name, String description, BigDecimal basePrice) {
         this.prodId = prodId;
         this.name = name;

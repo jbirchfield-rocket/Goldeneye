@@ -4,16 +4,16 @@ import axios from 'axios';
 import { getCurrentCustomerId } from '@/services/customerService';
 
 interface OrderRing {
-  ringType: string;
-  material: string;
+  productName: string;
+  materialName: string;
   width: number;
-  stone: string;
+  stoneName: string;
   quantity: number;
-  price: number;
+  unitPrice: number;
 }
 
 interface Location {
-  customerid: number;
+  custId: number;
   street: string;
   city: string;
   state: string;
@@ -23,11 +23,13 @@ interface Location {
 
 interface Order {
   orderId: string;
-  customerId: number;
-  rings: OrderRing[];
+  customerName: string;
   orderDate?: string;
-  status?: string;
   location: Location;
+  orderItems: OrderRing[];
+  
+  status?: string;
+  
 }
 
 const orders = ref<Order[]>([]);
@@ -49,115 +51,127 @@ const fetchOrders = async () => {
     console.error('Error fetching orders:', err);
     // error.value = 'Failed to load orders';
     // Mock data 
-    const mockOrders = [
+    const mockOrders: Order[] = [
       {
         orderId: '12345',
-        customerId: 1,
-        rings: [
+        customerName: 'John Doe',
+        orderDate: '2024-06-10',
+        orderItems: [
           {
-            ringType: 'Classic Band',
-            material: 'Gold',
-            width: '4mm',
-            stone: 'Cubic Zirconia',
+            productName: 'Classic Band',
+            materialName: 'Gold',
+            width: 4,
+            stoneName: 'Cubic Zirconia',
             quantity: 2,
-            price: 599.98
+            unitPrice: 599.98
           }
         ],
-          location: {
-            customerid: 1,
-            street: '123 Main St',
-            city: 'Anytown',
-            state: 'CA',
-            zip: '90210',
-            locID: 1
-          }
-      },
-      {
-        orderId: '12346',
-        customerId: 1,
-        rings: [
-          {
-            ringType: 'Classic Band',
-            material: 'Silver',
-            width: '4mm',
-            stone: 'Natural Diamond',
-            quantity: 1,
-            price: 449.99
-          },
-          {
-            ringType: 'Etched Band',
-            material: 'Platinum',
-            width: '6mm',
-            stone: 'Lab-Grown Diamond',
-            quantity: 1,
-            price: 899.99
-          }
-        ],
-        orderDate: '2024-06-15',
         location: {
-          customerid: 1,
+          custId: 1,
           street: '123 Main St',
           city: 'Anytown',
           state: 'CA',
           zip: '90210',
           locID: 1
-        }
+        },
+        status: 'Shipped'
+      },
+      {
+        orderId: '12346',
+        customerName: 'John Doe',
+        orderDate: '2024-06-15',
+        orderItems: [
+          {
+            productName: 'Classic Band',
+            materialName: 'Silver',
+            width: 4,
+            stoneName: 'Natural Diamond',
+            quantity: 1,
+            unitPrice: 449.99
+          },
+          {
+            productName: 'Etched Band',
+            materialName: 'Platinum',
+            width: 6,
+            stoneName: 'Lab-Grown Diamond',
+            quantity: 1,
+            unitPrice: 899.99
+          }
+        ],
+        location: {
+          custId: 1,
+          street: '123 Main St',
+          city: 'Anytown',
+          state: 'CA',
+          zip: '90210',
+          locID: 1
+        },
+        status: 'Delivered'
       },
       {
         orderId: '12347',
-        customerId: 2,
-        rings: [
+        customerName: 'Jane Smith',
+        orderDate: '2024-06-18',
+        orderItems: [
           {
-            ringType: 'Modern Band',
-            material: 'Gold',
-            width: '2mm',
-            stone: 'Semi-precious',
+            productName: 'Modern Band',
+            materialName: 'Gold',
+            width: 2,
+            stoneName: 'Semi-precious',
             quantity: 3,
-            price: 1299.97
+            unitPrice: 433.32
           }
         ],
-          location: {
-            customerid: 2,
-            street: '456 Oak Ave',
-            city: 'Sometown',
-            state: 'NY',
-            zip: '10001',
-            locID: 2
-          }
+        location: {
+          custId: 2,
+          street: '456 Oak Ave',
+          city: 'Sometown',
+          state: 'NY',
+          zip: '10001',
+          locID: 2
+        },
+        status: 'Processing'
       },
       {
         orderId: '12348',
-        customerId: 3,
-        rings: [
+        customerName: 'Bob Johnson',
+        orderDate: '2024-06-20',
+        orderItems: [
           {
-            ringType: 'Classic Band',
-            material: 'Silver',
-            width: '4mm',
-            stone: 'Lab-Grown Diamond',
+            productName: 'Classic Band',
+            materialName: 'Silver',
+            width: 4,
+            stoneName: 'Lab-Grown Diamond',
             quantity: 1,
-            price: 349.99
+            unitPrice: 349.99
           }
         ],
-          location: {
-            customerid: 3,
-            street: '789 Pine Rd',
-            city: 'Yourtown',
-            state: 'TX',
-            zip: '75001',
-            locID: 3
-          }
+        location: {
+          custId: 3,
+          street: '789 Pine Rd',
+          city: 'Yourtown',
+          state: 'TX',
+          zip: '75001',
+          locID: 3
+        },
+        status: 'Pending'
       }
     ];
     
     // Filter mock data by customer ID
-    // orders.value = mockOrders.filter(order => order.customerId === customerId);
+    orders.value = mockOrders.filter(order => order.location.custId === customerId);
+    
   } finally {
     loading.value = false;
   }
 };
 
 const getOrderTotal = (order: Order): number => {
-  return order.rings.reduce((total, ring) => total + ring.price, 0);
+  // Safety check: return 0 if orderItems is undefined or empty
+  if (!order.orderItems || order.orderItems.length === 0) {
+    return 0;
+  }
+  return order.orderItems.reduce((total, ring) => total + ring.unitPrice, 0);
 };
 
 onMounted(() => {
@@ -189,33 +203,55 @@ onMounted(() => {
       <div class="order-card" v-for="order in orders" :key="order.orderId">
         <!-- Header Row -->
         <div class="order-header">
-          <div class="header-item">Order #:</div>
-          <div class="header-item">Ring Type:</div>
-          <div class="header-item">Material:</div>
-          <div class="header-item">Width:</div>
-          <div class="header-item">Stone:</div>
-          <div class="header-item">Quantity:</div>
-          <div class="header-item">Price:</div>
+          <div class="header-item">Order #</div>
+          <div class="header-item">Ring Type</div>
+          <div class="header-item">Material</div>
+          <div class="header-item">Width</div>
+          <div class="header-item">Stone</div>
+          <div class="header-item">Quantity</div>
+          <div class="header-item">Price</div>
         </div>
         
         <!-- Order Rows -->
         <div class="order-body">
-          <div 
-            v-for="(ring, index) in order.rings" 
+          <div class="narrow-view">
+            <div 
+              v-for="(ring, index) in order.orderItems" 
+              :key="index" 
+              class="order-row"
+              :class="{ 'first-row': index === 0 }"
+            >
+              <div class="order-cell order-id">
+                <span v-if="index === 0">Order #: {{ order.orderId }}</span>
+              </div>
+              <div class="order-cell">Ring Type: {{ ring.productName }}</div>
+              <div class="order-cell">Material: {{ ring.materialName }}</div>
+              <div class="order-cell">Width: {{ ring.width }} mm</div>
+              <div class="order-cell">Stone: {{ ring.stoneName }}</div>
+              <div class="order-cell">Quantity: {{ ring.quantity }}</div>
+              <div class="order-cell">Price: ${{ ring.unitPrice.toFixed(2) }}</div>
+          </div>
+        </div>
+
+          <div class="wide-view">
+            <div 
+            v-for="(ring, index) in order.orderItems" 
             :key="index" 
             class="order-row"
             :class="{ 'first-row': index === 0 }"
-          >
+            >
             <div class="order-cell order-id">
-              <span v-if="index === 0">Order #: {{ order.orderId }}</span>
+              <span v-if="index === 0">{{ order.orderId }}</span>
             </div>
-            <div class="order-cell">Ring Type: {{ ring.ringType }}</div>
-            <div class="order-cell">Material: {{ ring.material }}</div>
-            <div class="order-cell">Width: {{ ring.width }}</div>
-            <div class="order-cell">Stone: {{ ring.stone }}</div>
-            <div class="order-cell">Quantity: {{ ring.quantity }}</div>
-            <div class="order-cell">Price: ${{ ring.price.toFixed(2) }}</div>
+            <div class="order-cell">{{ ring.productName }}</div>
+            <div class="order-cell">{{ ring.materialName }}</div>
+            <div class="order-cell">{{ ring.width }} mm</div>
+            <div class="order-cell">{{ ring.stoneName }}</div>
+            <div class="order-cell">{{ ring.quantity }}</div>
+            <div class="order-cell">${{ ring.unitPrice.toFixed(2) }}</div>
           </div>
+          </div>
+
           <div class="additional-info">
             <div class="order-location">Delivery Location: {{ order.location.street }}, {{ order.location.city }}, {{ order.location.state }} {{ order.location.zip }}</div>
             <div v-if="order.orderDate" class="order-date">Date: {{ order.orderDate }}</div>
