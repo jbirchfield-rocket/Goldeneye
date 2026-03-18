@@ -77,7 +77,7 @@ jobs:
           PYTHONUTF8: '1'
         run: |
           mkdir -p reports/html reports/junit
-          behave --no-capture --tags ~@api \
+          behave --no-capture \
             --format behave_html_formatter:HTMLFormatter --outfile reports/html/report.html \
             --format pretty \
             --junit --junit-directory reports/junit
