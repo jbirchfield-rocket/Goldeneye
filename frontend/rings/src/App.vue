@@ -50,8 +50,14 @@ const closeMenu = () => {
       <div class="foreground-content">
         <router-view />
       </div>
+      <footer class="site-footer">
+        <a href="http://localhost:8000" target="_blank" rel="noopener noreferrer">Documentation</a>
+      </footer>
     </div>
   </div>
+
+
+
 </template>
 
 <style>
@@ -69,6 +75,16 @@ body {
 #app {
   margin: 0;
   padding: 0;
+}
+
+button {
+  font-family: 'Cormorant Garamond', serif;
+  background-color: transparent;
+  border: 2px solid white;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 </style>
 
@@ -175,6 +191,27 @@ nav a:visited:hover {
   display: none;
   width: 30px;
   cursor: pointer;
+}
+
+.site-footer {
+  width: 100%;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.7);
+  text-align: center;
+  box-sizing: border-box;
+  margin-top: auto;
+}
+
+.site-footer a {
+  color: #baaa51;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.site-footer a:hover {
+  color: white;
 }
 
 /* Mobile Styles */

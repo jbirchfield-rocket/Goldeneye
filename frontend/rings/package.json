@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "concurrently \"vite\" \"python -m mkdocs serve --config-file ..\\..\\doc_files\\mkdocs.yml -a localhost:8000\"",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "test:unit": "vitest",
@@ -23,6 +23,7 @@
     "@vitejs/plugin-vue": "^6.0.4",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.8.1",
+    "concurrently": "^9.2.1",
     "jsdom": "^28.1.0",
     "npm-run-all2": "^8.0.4",
     "typescript": "~5.9.3",
