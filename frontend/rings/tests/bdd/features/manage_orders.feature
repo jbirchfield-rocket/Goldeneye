@@ -7,8 +7,9 @@ Feature: Manage Orders page
     Given the app is running
     And I am on the home page
 
+  
   Scenario: Manage Orders page displays the correct heading
-    Given I select the second customer from the dropdown
+    Given I select the first customer from the dropdown
     And I navigate to "Manage Orders"
     Then the manage orders heading should be visible
 
@@ -17,7 +18,7 @@ Feature: Manage Orders page
     Given I select the first customer from the dropdown
     And I navigate to "Manage Orders"
     Then the empty orders message should be visible
-    
+
   @api
   Scenario: Empty state has a link that navigates to Purchase Rings
     Given I select the first customer from the dropdown
