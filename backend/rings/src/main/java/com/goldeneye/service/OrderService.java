@@ -100,9 +100,8 @@ public class OrderService {
             .toList();
     }
 
-
+    @Transactional
     public void deleteOrderByOrderId(int orderId) {
-
         orderItemRepo.deleteByOrderId(orderId);
         orderRepo.deleteByOrderId(orderId);
     }
