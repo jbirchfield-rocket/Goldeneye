@@ -54,6 +54,6 @@ public class LocationServiceTests {
         assertFalse(locations.isEmpty());
         assertTrue(locations.stream().allMatch(l -> l instanceof LocationDTO));
         assertEquals(4, locations.size());
-        assertTrue(locations.stream().anyMatch(l -> l.getLocID() == 1 && l.getCity().equals("Richmond")));
+        assertTrue(locations.stream().anyMatch(l -> l.getLocId() == 1 && l.getCity().equals("Richmond")));
     }
 }
