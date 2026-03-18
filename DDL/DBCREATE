@@ -1,0 +1,729 @@
+------------------------------------------------------------------------
+-- Database=DBGLDEYE   Stogroup=SYSDEFLT
+------------------------------------------------------------------------
+--
+  SET CURRENT SQLID='GLDEYE';
+--
+  CREATE DATABASE DBGLDEYE
+    BUFFERPOOL BP0
+    INDEXBP    BP0
+    CCSID      EBCDIC
+    STOGROUP   SYSDEFLT;
+--
+  COMMIT;
+--
+------------------------------------------------------------------------
+-- Database=DBGLDEYE   Stogroup=DB2EA (for partition 1)
+-- Table space=DBGLDEYE.TSPROD
+------------------------------------------------------------------------
+--
+  CREATE TABLESPACE TSPROD
+    IN DBGLDEYE
+    USING STOGROUP DB2EA
+    PRIQTY 32 SECQTY 32
+    ERASE  NO
+    FREEPAGE 0 PCTFREE 5 FOR UPDATE 0
+    GBPCACHE CHANGED
+    TRACKMOD YES
+    MAXPARTITIONS 4
+    LOGGED
+    DSSIZE 1 G
+    SEGSIZE 32
+    MEMBER CLUSTER
+    BUFFERPOOL BP0
+    LOCKSIZE ANY
+    LOCKMAX SYSTEM
+    CLOSE NO
+    COMPRESS NO
+    CCSID      EBCDIC
+    DEFINE YES
+    MAXROWS 100
+    INSERT ALGORITHM 2;
+--
+  COMMIT;
+--
+------------------------------------------------------------------------
+--    Table=GLDEYE.TBPROD In DBGLDEYE.TSPROD
+------------------------------------------------------------------------
+--
+--
+  CREATE TABLE GLDEYE.TBPROD
+     (PRODID      INTEGER GENERATED ALWAYS AS IDENTITY
+                  (START WITH 1, INCREMENT BY 1, CACHE 50, NO CYCLE),
+    NAME          VARCHAR(120) NOT NULL,
+    DSCRP         VARCHAR(512),
+    BASEPRICE     DECIMAL(11,2) NOT NULL,
+    CONSTRAINT    PK_PRODUCT PRIMARY KEY (PRODID),
+    CONSTRAINT    CHK_PRODUCT_PRICE_P  CHECK (BASEPRICE >= 0)
+)
+    IN DBGLDEYE.TSPROD
+    PARTITION BY SIZE
+    AUDIT NONE
+    DATA CAPTURE NONE
+    CCSID      EBCDIC
+    NOT VOLATILE
+    APPEND NO  ;
+--
+  COMMIT;
+--
+
+--
+
+  CREATE UNIQUE INDEX GLDEYE.IXPROD
+    ON GLDEYE.TBPROD
+     (PRODID               ASC)
+    USING STOGROUP DB2EA
+    PRIQTY 64 SECQTY 64
+    ERASE  NO
+    FREEPAGE 0 PCTFREE 10
+    GBPCACHE CHANGED
+    CLUSTER
+    COMPRESS NO
+    INCLUDE NULL KEYS
+    BUFFERPOOL BP1
+    CLOSE YES
+    COPY NO
+    DEFER NO
+    DEFINE YES
+    PIECESIZE 4 G;
+--
+  COMMIT;
+--
+
+------------------------------------------------------------------------
+-- Database=DBGLDEYE   Stogroup=DB2EA (for partition 1)
+-- Table space=DBGLDEYE.TSMATT
+------------------------------------------------------------------------
+--
+  CREATE TABLESPACE TSMATT
+    IN DBGLDEYE
+    USING STOGROUP DB2EA
+    PRIQTY 32 SECQTY 32
+    ERASE  NO
+    FREEPAGE 0 PCTFREE 5 FOR UPDATE 0
+    GBPCACHE CHANGED
+    TRACKMOD YES
+    MAXPARTITIONS 4
+    LOGGED
+    DSSIZE 1 G
+    SEGSIZE 32
+    MEMBER CLUSTER
+    BUFFERPOOL BP0
+    LOCKSIZE ANY
+    LOCKMAX SYSTEM
+    CLOSE NO
+    COMPRESS NO
+    CCSID      EBCDIC
+    DEFINE YES
+    MAXROWS 100
+    INSERT ALGORITHM 2;
+--
+  COMMIT;
+--
+------------------------------------------------------------------------
+--    Table=GLDEYE.TBMATT In DBGLDEYE.TSMATT
+------------------------------------------------------------------------
+--
+--
+  CREATE TABLE GLDEYE.TBMATT
+     (MATTID      INTEGER GENERATED ALWAYS AS IDENTITY
+                  (START WITH 1, INCREMENT BY 1, CACHE 50, NO CYCLE),
+    NAME          VARCHAR(120) NOT NULL,
+    INVENTORY     INTEGER NOT NULL WITH DEFAULT 0,
+    MULTIPLIER    DECIMAL(8,4) NOT NULL WITH DEFAULT 1.0000,
+    CONSTRAINT    PK_MATERIAL PRIMARY KEY (MATTID),
+    CONSTRAINT    UQ_MATERIAL_NAME UNIQUE (NAME),
+    CONSTRAINT    CHK_MATERIAL_INV_NONNEG CHECK (INVENTORY >= 0),
+    CONSTRAINT    CHK_MATERIAL_MULT_POS CHECK (MULTIPLIER > 0)
+)
+    IN DBGLDEYE.TSMATT
+    PARTITION BY SIZE
+    AUDIT NONE
+    DATA CAPTURE NONE
+    CCSID      EBCDIC
+    NOT VOLATILE
+    APPEND NO  ;
+--
+  COMMIT;
+--
+
+--
+
+  CREATE UNIQUE INDEX GLDEYE.IXMATT
+    ON GLDEYE.TBMATT
+     (MATTID               ASC)
+    USING STOGROUP DB2EA
+    PRIQTY 64 SECQTY 64
+    ERASE  NO
+    FREEPAGE 0 PCTFREE 10
+    GBPCACHE CHANGED
+    CLUSTER
+    COMPRESS NO
+    INCLUDE NULL KEYS
+    BUFFERPOOL BP1
+    CLOSE YES
+    COPY NO
+    DEFER NO
+    DEFINE YES
+    PIECESIZE 4 G;
+--
+  COMMIT;
+--
+
+-- Index for UQ_MATT_NAME (NAME)
+CREATE UNIQUE INDEX GLDEYE.IXMATTNAME
+    ON GLDEYE.TBMATT
+    (NAME                  ASC)
+    USING STOGROUP DB2EA
+    PRIQTY 64 SECQTY 64
+    BUFFERPOOL BP1
+    CLOSE YES
+    DEFER NO
+    DEFINE YES;
+COMMIT;
+
+------------------------------------------------------------------------
+-- Database=DBGLDEYE   Stogroup=DB2EA (for partition 1)
+-- Table space=DBGLDEYE.TSWIDTH
+------------------------------------------------------------------------
+--
+  CREATE TABLESPACE TSWIDTH
+    IN DBGLDEYE
+    USING STOGROUP DB2EA
+    PRIQTY 32 SECQTY 32
+    ERASE  NO
+    FREEPAGE 0 PCTFREE 5 FOR UPDATE 0
+    GBPCACHE CHANGED
+    TRACKMOD YES
+    MAXPARTITIONS 4
+    LOGGED
+    DSSIZE 1 G
+    SEGSIZE 32
+    MEMBER CLUSTER
+    BUFFERPOOL BP0
+    LOCKSIZE ANY
+    LOCKMAX SYSTEM
+    CLOSE NO
+    COMPRESS NO
+    CCSID      EBCDIC
+    DEFINE YES
+    MAXROWS 100
+    INSERT ALGORITHM 2;
+--
+  COMMIT;
+--
+------------------------------------------------------------------------
+--    Table=GLDEYE.TBWIDTH In DBGLDEYE.TSWIDTH
+------------------------------------------------------------------------
+--
+--
+  CREATE TABLE GLDEYE.TBWIDTH
+     (WID         INTEGER GENERATED ALWAYS AS IDENTITY
+                  (START WITH 1, INCREMENT BY 1, CACHE 50, NO CYCLE),
+    WIDTH         INTEGER NOT NULL,   -- e.g., millimeters
+    MULTIPLIER    DECIMAL(8,4) NOT NULL WITH DEFAULT 1.0000,
+    MATTUSE       INTEGER NOT NULL,
+    CONSTRAINT    PK_WIDTH PRIMARY KEY (WID),
+    CONSTRAINT    UQ_WIDTH_WIDTH UNIQUE (WIDTH),
+    CONSTRAINT    CHK_WIDTH_VAL_POS CHECK (WIDTH > 0),
+    CONSTRAINT    CHK_WIDTH_MULT_POS CHECK (MULTIPLIER > 0),
+    CONSTRAINT    CHK_WIDTH_MATUSE_POS CHECK (MATTUSE > 0)
+)
+    IN DBGLDEYE.TSWIDTH
+    PARTITION BY SIZE
+    AUDIT NONE
+    DATA CAPTURE NONE
+    CCSID      EBCDIC
+    NOT VOLATILE
+    APPEND NO  ;
+--
+  COMMIT;
+--
+
+--
+
+  CREATE UNIQUE INDEX GLDEYE.IXWIDTH
+    ON GLDEYE.TBWIDTH
+     (WID               ASC)
+    USING STOGROUP DB2EA
+    PRIQTY 64 SECQTY 64
+    ERASE  NO
+    FREEPAGE 0 PCTFREE 10
+    GBPCACHE CHANGED
+    CLUSTER
+    COMPRESS NO
+    INCLUDE NULL KEYS
+    BUFFERPOOL BP1
+    CLOSE YES
+    COPY NO
+    DEFER NO
+    DEFINE YES
+    PIECESIZE 4 G;
+--
+  COMMIT;
+--
+
+-- Index for UQ_WIDTH_NAME (WIDTH)
+CREATE UNIQUE INDEX GLDEYE.IXWIDTHNAME
+    ON GLDEYE.TBWIDTH
+    (WIDTH                  ASC)
+    USING STOGROUP DB2EA
+    PRIQTY 64 SECQTY 64
+    BUFFERPOOL BP1
+    CLOSE YES
+    DEFER NO
+    DEFINE YES;
+COMMIT;
+
+
+------------------------------------------------------------------------
+-- Database=DBGLDEYE   Stogroup=DB2EA (for partition 1)
+-- Table space=DBGLDEYE.TSSTONE
+------------------------------------------------------------------------
+--
+  CREATE TABLESPACE TSSTONE
+    IN DBGLDEYE
+    USING STOGROUP DB2EA
+    PRIQTY 32 SECQTY 32
+    ERASE  NO
+    FREEPAGE 0 PCTFREE 5 FOR UPDATE 0
+    GBPCACHE CHANGED
+    TRACKMOD YES
+    MAXPARTITIONS 4
+    LOGGED
+    DSSIZE 1 G
+    SEGSIZE 32
+    MEMBER CLUSTER
+    BUFFERPOOL BP0
+    LOCKSIZE ANY
+    LOCKMAX SYSTEM
+    CLOSE NO
+    COMPRESS NO
+    CCSID      EBCDIC
+    DEFINE YES
+    MAXROWS 100
+    INSERT ALGORITHM 2;
+--
+  COMMIT;
+--
+------------------------------------------------------------------------
+--    Table=GLDEYE.TBSTONE In DBGLDEYE.TSSTONE
+------------------------------------------------------------------------
+--
+--
+  CREATE TABLE GLDEYE.TBSTONE
+     (STONEID     INTEGER GENERATED ALWAYS AS IDENTITY
+                  (START WITH 1, INCREMENT BY 1, CACHE 50, NO CYCLE),
+    NAME          VARCHAR(120) NOT NULL,
+    INVENTORY     INTEGER NOT NULL WITH DEFAULT 0,
+    PRICE         DECIMAL(8,4) NOT NULL WITH DEFAULT 1.0000,
+    CONSTRAINT    PK_STONE PRIMARY KEY (STONEID),
+    CONSTRAINT    UQ_STONE_NAME UNIQUE (NAME),
+    CONSTRAINT    CHK_STONE_INV_NONNEG CHECK (INVENTORY >= 0),
+    CONSTRAINT    CHK_STONE_MULT_POS CHECK (PRICE >= 0)
+)
+    IN DBGLDEYE.TSSTONE
+    PARTITION BY SIZE
+    AUDIT NONE
+    DATA CAPTURE NONE
+    CCSID      EBCDIC
+    NOT VOLATILE
+    APPEND NO  ;
+--
+  COMMIT;
+--
+
+--
+
+  CREATE UNIQUE INDEX GLDEYE.IXSTONE
+    ON GLDEYE.TBSTONE
+    (STONEID               ASC)
+    USING STOGROUP DB2EA
+    PRIQTY 64 SECQTY 64
+    ERASE  NO
+    FREEPAGE 0 PCTFREE 10
+    GBPCACHE CHANGED
+    CLUSTER
+    COMPRESS NO
+    INCLUDE NULL KEYS
+    BUFFERPOOL BP1
+    CLOSE YES
+    COPY NO
+    DEFER NO
+    DEFINE YES
+    PIECESIZE 4 G;
+  COMMIT;
+--
+
+-- Index for UQ_STONE_NAME (NAME)
+CREATE UNIQUE INDEX GLDEYE.IXSTONENAME
+    ON GLDEYE.TBSTONE
+    (NAME                  ASC)
+    USING STOGROUP DB2EA
+    PRIQTY 64 SECQTY 64
+    BUFFERPOOL BP1
+    CLOSE YES
+    DEFER NO
+    DEFINE YES;
+COMMIT;
+
+
+------------------------------------------------------------------------
+-- Database=DBGLDEYE   Stogroup=DB2EA (for partition 1)
+-- Table space=DBGLDEYE.TSCUST
+------------------------------------------------------------------------
+--
+  CREATE TABLESPACE TSCUST
+    IN DBGLDEYE
+    USING STOGROUP DB2EA
+    PRIQTY 32 SECQTY 32
+    ERASE  NO
+    FREEPAGE 0 PCTFREE 5 FOR UPDATE 0
+    GBPCACHE CHANGED
+    TRACKMOD YES
+    MAXPARTITIONS 4
+    LOGGED
+    DSSIZE 1 G
+    SEGSIZE 32
+    MEMBER CLUSTER
+    BUFFERPOOL BP0
+    LOCKSIZE ANY
+    LOCKMAX SYSTEM
+    CLOSE NO
+    COMPRESS NO
+    CCSID      EBCDIC
+    DEFINE YES
+    MAXROWS 100
+    INSERT ALGORITHM 2;
+--
+  COMMIT;
+--
+------------------------------------------------------------------------
+--    Table=GLDEYE.TBCUST In DBGLDEYE.TSCUST
+------------------------------------------------------------------------
+--
+--
+  CREATE TABLE GLDEYE.TBCUST
+     (CUSTID      INTEGER GENERATED ALWAYS AS IDENTITY
+                  (START WITH 1, INCREMENT BY 1, CACHE 50, NO CYCLE),
+    NAME          VARCHAR(120) NOT NULL,
+    CONSTRAINT    PK_CUSTOMER PRIMARY KEY (CUSTID)
+)
+    IN DBGLDEYE.TSCUST
+    PARTITION BY SIZE
+    AUDIT NONE
+    DATA CAPTURE NONE
+    CCSID      EBCDIC
+    NOT VOLATILE
+    APPEND NO  ;
+--
+  COMMIT;
+--
+
+  CREATE UNIQUE INDEX GLDEYE.IXCUST
+    ON GLDEYE.TBCUST
+     (CUSTID               ASC)
+    USING STOGROUP DB2EA
+    PRIQTY 64 SECQTY 64
+    ERASE  NO
+    FREEPAGE 0 PCTFREE 10
+    GBPCACHE CHANGED
+    CLUSTER
+    COMPRESS NO
+    INCLUDE NULL KEYS
+    BUFFERPOOL BP1
+    CLOSE YES
+    COPY NO
+    DEFER NO
+    DEFINE YES
+    PIECESIZE 4 G;
+--
+  COMMIT;
+--
+
+
+------------------------------------------------------------------------
+-- Database=DBGLDEYE   Stogroup=DB2EA (for partition 1)
+-- Table space=DBGLDEYE.TSLOC
+------------------------------------------------------------------------
+--
+  CREATE TABLESPACE TSLOC
+    IN DBGLDEYE
+    USING STOGROUP DB2EA
+    PRIQTY 32 SECQTY 32
+    ERASE  NO
+    FREEPAGE 0 PCTFREE 5 FOR UPDATE 0
+    GBPCACHE CHANGED
+    TRACKMOD YES
+    MAXPARTITIONS 4
+    LOGGED
+    DSSIZE 1 G
+    SEGSIZE 32
+    MEMBER CLUSTER
+    BUFFERPOOL BP0
+    LOCKSIZE ANY
+    LOCKMAX SYSTEM
+    CLOSE NO
+    COMPRESS NO
+    CCSID      EBCDIC
+    DEFINE YES
+    MAXROWS 100
+    INSERT ALGORITHM 2;
+--
+  COMMIT;
+--
+------------------------------------------------------------------------
+--    Table=GLDEYE.TBLOC In DBGLDEYE.TSLOC
+------------------------------------------------------------------------
+--
+--
+  CREATE TABLE GLDEYE.TBLOC
+     (LOCID       INTEGER GENERATED ALWAYS AS IDENTITY
+                  (START WITH 1, INCREMENT BY 1, CACHE 50, NO CYCLE),
+    CUSTID        INTEGER NOT NULL,
+    STR           VARCHAR(200) NOT NULL,
+    CITY          VARCHAR(120) NOT NULL,
+    ST            CHAR(2)      NOT NULL,
+    ZIP           CHAR(10)     NOT NULL,
+    CONSTRAINT    PK_LOCATION PRIMARY KEY (LOCID),
+    CONSTRAINT    FK_LOCATION_CUSTOMER
+        FOREIGN KEY (CUSTID)
+        REFERENCES GLDEYE.TBCUST (CUSTID)
+        ON DELETE CASCADE
+)
+    IN DBGLDEYE.TSLOC
+    PARTITION BY SIZE
+    AUDIT NONE
+    DATA CAPTURE NONE
+    CCSID      EBCDIC
+    NOT VOLATILE
+    APPEND NO  ;
+--
+  COMMIT;
+--
+
+------------------------------------------------------------------------
+-- Database=DBGLDEYE
+--    Index=GLDEYE.IXLOC On GLDEYE.TBLOC
+------------------------------------------------------------------------
+--
+
+  CREATE UNIQUE INDEX GLDEYE.IXLOC
+    ON GLDEYE.TBLOC
+    (LOCID               ASC)
+    USING STOGROUP DB2EA
+    PRIQTY 64 SECQTY 64
+    ERASE  NO
+    FREEPAGE 0 PCTFREE 10
+    GBPCACHE CHANGED
+    CLUSTER
+    COMPRESS NO
+    INCLUDE NULL KEYS
+    BUFFERPOOL BP1
+    CLOSE YES
+    COPY NO
+    DEFER NO
+    DEFINE YES
+    PIECESIZE 4 G;
+--
+  COMMIT;
+--
+
+
+------------------------------------------------------------------------
+-- Database=DBGLDEYE   Stogroup=DB2EA (for partition 1)
+-- Table space=DBGLDEYE.TSORDER
+------------------------------------------------------------------------
+--
+  CREATE TABLESPACE TSORDER
+    IN DBGLDEYE
+    USING STOGROUP DB2EA
+    PRIQTY 32 SECQTY 32
+    ERASE  NO
+    FREEPAGE 0 PCTFREE 5 FOR UPDATE 0
+    GBPCACHE CHANGED
+    TRACKMOD YES
+    MAXPARTITIONS 4
+    LOGGED
+    DSSIZE 1 G
+    SEGSIZE 32
+    MEMBER CLUSTER
+    BUFFERPOOL BP0
+    LOCKSIZE ANY
+    LOCKMAX SYSTEM
+    CLOSE NO
+    COMPRESS NO
+    CCSID      EBCDIC
+    DEFINE YES
+    MAXROWS 100
+    INSERT ALGORITHM 2;
+--
+  COMMIT;
+--
+------------------------------------------------------------------------
+--    Table=GLDEYE.TBORDER In DBGLDEYE.TSORDER
+------------------------------------------------------------------------
+--
+--
+  CREATE TABLE GLDEYE.TBORDER
+     (ORDERID   INTEGER GENERATED ALWAYS AS IDENTITY
+                (START WITH 1, INCREMENT BY 1, CACHE 100, NO CYCLE),
+    CUSTID      INTEGER NOT NULL,
+    ORDERDATE   DATE    NOT NULL,
+    CONSTRAINT  PK_ORDER PRIMARY KEY (ORDERID),
+    CONSTRAINT  FK_ORDER_CUSTOMER
+        FOREIGN KEY (CUSTID)
+        REFERENCES GLDEYE.TBCUST (CUSTID)
+        ON DELETE RESTRICT
+)
+    IN DBGLDEYE.TSORDER
+    PARTITION BY SIZE
+    AUDIT NONE
+    DATA CAPTURE NONE
+    CCSID      EBCDIC
+    NOT VOLATILE
+    APPEND NO  ;
+--
+  COMMIT;
+--
+
+------------------------------------------------------------------------
+-- Database=DBGLDEYE
+--    Index=GLDEYE.IXORDER On GLDEYE.TBORDER
+------------------------------------------------------------------------
+--
+
+  CREATE UNIQUE INDEX GLDEYE.IXORDER
+    ON GLDEYE.TBORDER
+     (ORDERID               ASC)
+    USING STOGROUP DB2EA
+    PRIQTY 64 SECQTY 64
+    ERASE  NO
+    FREEPAGE 0 PCTFREE 10
+    GBPCACHE CHANGED
+    CLUSTER
+    COMPRESS NO
+    INCLUDE NULL KEYS
+    BUFFERPOOL BP1
+    CLOSE YES
+    COPY NO
+    DEFER NO
+    DEFINE YES
+    PIECESIZE 4 G;
+--
+  COMMIT;
+--
+
+------------------------------------------------------------------------
+-- Database=DBGLDEYE   Stogroup=DB2EA (for partition 1)
+-- Table space=DBGLDEYE.TSORDITM
+------------------------------------------------------------------------
+--
+  CREATE TABLESPACE TSORDITM
+    IN DBGLDEYE
+    USING STOGROUP DB2EA
+    PRIQTY 32 SECQTY 32
+    ERASE  NO
+    FREEPAGE 0 PCTFREE 5 FOR UPDATE 0
+    GBPCACHE CHANGED
+    TRACKMOD YES
+    MAXPARTITIONS 4
+    LOGGED
+    DSSIZE 1 G
+    SEGSIZE 32
+    MEMBER CLUSTER
+    BUFFERPOOL BP0
+    LOCKSIZE ANY
+    LOCKMAX SYSTEM
+    CLOSE NO
+    COMPRESS NO
+    CCSID      EBCDIC
+    DEFINE YES
+    MAXROWS 100
+    INSERT ALGORITHM 2;
+--
+  COMMIT;
+--
+------------------------------------------------------------------------
+--    Table=GLDEYE.TBORDITM In DBGLDEYE.TSORDITM
+------------------------------------------------------------------------
+--
+--
+  CREATE TABLE GLDEYE.TBORDITM
+     (ORDITMID INTEGER GENERATED ALWAYS AS IDENTITY
+               (START WITH 1, INCREMENT BY 1, CACHE 100, NO CYCLE),
+    ORDERID    INTEGER NOT NULL,
+    PRODID     INTEGER NOT NULL,
+    MATTID      INTEGER NOT NULL,
+    WID        INTEGER NOT NULL,
+    STONEID    INTEGER NOT NULL,
+    UNITPRICE  DECIMAL(12,2) NOT NULL,
+    QTY        INTEGER NOT NULL,
+    CONSTRAINT PK_ORDERITEMID PRIMARY KEY (ORDITMID),
+    CONSTRAINT FK_OI_ORDER
+        FOREIGN KEY (ORDERID)
+        REFERENCES GLDEYE.TBORDER (ORDERID)
+        ON DELETE CASCADE,
+    CONSTRAINT FK_OI_PRODUCT
+        FOREIGN KEY (PRODID)
+        REFERENCES GLDEYE.TBPROD (PRODID)
+        ON DELETE RESTRICT,
+    CONSTRAINT FK_OI_MATERIAL
+        FOREIGN KEY (MATTID)
+        REFERENCES GLDEYE.TBMATT (MATTID)
+        ON DELETE RESTRICT,
+    CONSTRAINT FK_OI_WIDTH
+        FOREIGN KEY (WID)
+        REFERENCES GLDEYE.TBWIDTH (WID)
+        ON DELETE RESTRICT,
+    CONSTRAINT FK_OI_STONE
+        FOREIGN KEY (STONEID)
+        REFERENCES GLDEYE.TBSTONE (STONEID)
+        ON DELETE RESTRICT,
+    CONSTRAINT CHK_OI_QTY_POS CHECK (QTY > 0),
+    CONSTRAINT CHK_OI_PRICE_NONNEG CHECK (UNITPRICE >= 0))
+    IN DBGLDEYE.TSORDITM
+    PARTITION BY SIZE
+    AUDIT NONE
+    DATA CAPTURE NONE
+    CCSID      EBCDIC
+    NOT VOLATILE
+    APPEND NO  ;
+--
+  COMMIT;
+--
+
+------------------------------------------------------------------------
+-- Database=DBGLDEYE
+--    Index=GLDEYE.IXORDER On GLDEYE.TBORDER
+------------------------------------------------------------------------
+--
+
+  CREATE UNIQUE INDEX GLDEYE.IXORDITM
+    ON GLDEYE.TBORDITM
+     (ORDITMID              ASC)
+    USING STOGROUP DB2EA
+    PRIQTY 64 SECQTY 64
+    ERASE  NO
+    FREEPAGE 0 PCTFREE 10
+    GBPCACHE CHANGED
+    CLUSTER
+    COMPRESS NO
+    INCLUDE NULL KEYS
+    BUFFERPOOL BP1
+    CLOSE YES
+    COPY NO
+    DEFER NO
+    DEFINE YES
+    PIECESIZE 4 G;
+--
+  COMMIT;
+--
+
+
+
+
+------------------------------------------------------------------------
+-- ADB2GEN - End of generated DDL                                     --
+------------------------------------------------------------------------
+--
