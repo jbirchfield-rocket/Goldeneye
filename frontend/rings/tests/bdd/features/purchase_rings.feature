@@ -28,17 +28,18 @@ Feature: Purchase Rings page
     And the first cart item should show the selected material value
     And the first cart item should show the selected stone value
 
+  @api
   Scenario: Multiple ring cards are displayed on the page
     Given the purchase rings page has loaded
     Then at least 2 ring cards should be visible
     And each ring card should have material width stone and quantity dropdowns
-
+  @api
   Scenario: Proposed price updates when quantity is changed
     Given the purchase rings page has loaded
     When I note the proposed price of the first ring
     And I change the quantity to 3 on the first ring
     Then the proposed price of the first ring should have changed
-
+  @api
   Scenario: Proposed price updates when stone type is changed
     Given the purchase rings page has loaded
     When I note the proposed price of the first ring
