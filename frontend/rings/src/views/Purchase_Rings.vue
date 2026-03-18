@@ -59,6 +59,13 @@ const selectedOptions = ref<Record<number, {
 
 const { addToCart: addItemToCart } = useCart();
 
+// Helper function to get ring image path
+const getRingImagePath = (prodId: number): string => {
+  // Returns the path to the image in the public folder
+  // Files in public/ are served at the root, so /rings/ring-1.png
+  return `/rings/ring-${prodId}.png`;
+};
+
 //find what material is low and store it to be displayed in UI
 const lowmaterial = ref<string>('');
 const findLowMaterial = () => {
@@ -159,6 +166,7 @@ const fetchRings = async () => {
     fetchProducts();
     rings.value = response.data.map((product: Products) => ({
       ...product,
+      image: getRingImagePath(product.prodId),
       materialTypes: materials.value,
       bandWidths: widths.value,
       ringStones: stones.value
@@ -374,6 +382,7 @@ onMounted(async () => {
               <select 
                 v-model="selectedOptions[ring.prodId]!.materialType"
                 @change="updatePrice(ring.prodId)"
+                id="material-select"
                 class="option-select"
               >
                 <option v-for="name in ring.materialTypes" :key="name.name" :value="name.materialId">
@@ -388,6 +397,7 @@ onMounted(async () => {
                 v-model="selectedOptions[ring.prodId]!.bandWidth"
                 @change="updatePrice(ring.prodId)"
                 class="option-select"
+                id="width-select"
               >
                 <option v-for="width in ring.bandWidths" :key="width.width" :value="width.widthId">
                   {{ width.width }}
@@ -401,6 +411,7 @@ onMounted(async () => {
                 v-model.number="selectedOptions[ring.prodId]!.ringStone"
                 @change="updatePrice(ring.prodId)"
                 class="option-select"
+                id="stone-select"
               >
                 <option v-for="stone in ring.ringStones" :key="stone.name" :value="stone.stoneId">
                   {{ stone.name }}
@@ -416,6 +427,7 @@ onMounted(async () => {
                 v-model.number="selectedOptions[ring.prodId]!.quantity"
                 @change="updatePrice(ring.prodId)"
                 class="option-select"
+                id="quantity-select"
               >
                 <option v-for="n in 10" :key="n" :value="n">{{ n }}</option>
               </select>

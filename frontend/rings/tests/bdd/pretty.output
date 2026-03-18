@@ -1,0 +1,71 @@
+Feature: Customer dropdown # features/home_page.feature:1
+  As a user opening the home page
+  I want to see a customer dropdown
+  So that I can select a customer
+  Scenario: Default option shows "Select Customer"          # features/home_page.feature:6
+    Given the app is running                                # steps/home_steps.py:81
+    When I open the home page                               # steps/home_steps.py:91
+    Then the customer dropdown default is "Select Customer" # steps/home_steps.py:97
+
+  Scenario: Customer dropdown is rendered and functional    # features/home_page.feature:10
+    Given I am on the home page                             # steps/home_steps.py:85
+    When I click the customer dropdown                      # steps/home_steps.py:144
+    Then the dropdown should be visible and contain options # steps/home_steps.py:152
+
+  @api
+  Scenario: Customer dropdown is populated from API and selection persists  # features/home_page.feature:16
+    Given I am on the home page                                             # steps/home_steps.py:85
+    When I wait for the customer dropdown to be populated from the API      # steps/home_steps.py:109
+    And I select the first available customer                               # steps/home_steps.py:114
+    Then the selected customer remains selected in the dropdown             # steps/home_steps.py:136
+
+Feature: Primary navigation from Home # features/navigation.feature:1
+  As a user
+  I want to move between core pages from the Home page
+  So that I can complete key flows
+  Background:   # features/navigation.feature:6
+
+  Scenario: Navigate from Home to Purchase Rings to Manage Orders to About Us  # features/navigation.feature:10
+    Given the app is running                                                   # steps/home_steps.py:81
+    And I open the home page                                                   # steps/navigation_steps.py:65
+    When I navigate to "Purchase Rings"                                        # steps/navigation_steps.py:71
+    Then I should be on the "Purchase Rings" page                              # steps/navigation_steps.py:100
+    When I navigate to "Manage Orders"                                         # steps/navigation_steps.py:71
+    Then I should be on the "Manage Orders" page                               # steps/navigation_steps.py:100
+    When I navigate to "About Us"                                              # steps/navigation_steps.py:71
+    Then I should be on the "About Us" page                                    # steps/navigation_steps.py:100
+
+Feature: Purchase Rings page # features/purchase_rings.feature:1
+  As a user on the Purchase Rings page
+  I want to add rings to my cart
+  So that I can purchase them
+  Background:   # features/purchase_rings.feature:6
+
+  @api
+  Scenario: Add to cart shows a confirmation alert                          # features/purchase_rings.feature:12
+    Given the app is running                                                # steps/home_steps.py:81
+    And I am on the home page                                               # steps/home_steps.py:85
+    And I select the first customer from the dropdown                       # steps/purchase_rings_steps.py:65
+    And I navigate to "Purchase Rings"                                      # steps/navigation_steps.py:71
+    Given the purchase rings page has loaded                                # steps/purchase_rings_steps.py:92
+    When I click the Add to Cart button on the first ring                   # steps/purchase_rings_steps.py:125
+    Then an alert should appear with the message "Added 1 ring(s) to cart!" # steps/purchase_rings_steps.py:134
+
+  Scenario: Configure all ring options and verify the cart item matches        # features/purchase_rings.feature:17
+    Given the app is running                                                   # steps/home_steps.py:81
+    And I am on the home page                                                  # steps/home_steps.py:85
+    And I select the first customer from the dropdown                          # steps/purchase_rings_steps.py:65
+    And I navigate to "Purchase Rings"                                         # steps/navigation_steps.py:71
+    Given the purchase rings page has loaded                                   # steps/purchase_rings_steps.py:92
+    When I select the second option in the material dropdown on the first ring # steps/purchase_rings_steps.py:100
+    And I select the second option in the width dropdown on the first ring     # steps/purchase_rings_steps.py:106
+    And I select the second option in the stone dropdown on the first ring     # steps/purchase_rings_steps.py:112
+    And I set the quantity to 2 on the first ring                              # steps/purchase_rings_steps.py:118
+    And I click the Add to Cart button on the first ring                       # steps/purchase_rings_steps.py:125
+    Then an alert should appear with the message "Added 2 ring(s) to cart!"    # steps/purchase_rings_steps.py:134
+    When I navigate to "Cart"                                                  # steps/navigation_steps.py:71
+    Then the cart should contain at least 1 item                               # steps/purchase_rings_steps.py:145
+    And the first cart item should show quantity 2                             # steps/purchase_rings_steps.py:155
+    And the first cart item should show the selected material value            # steps/purchase_rings_steps.py:166
+    And the first cart item should show the selected stone value               # steps/purchase_rings_steps.py:178
+

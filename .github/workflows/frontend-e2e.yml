@@ -34,6 +34,17 @@ jobs:
       - name: Install Node dependencies
         run: npm ci
 
+      - name: Run unit tests with coverage
+        run: npm run test:coverage
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-coverage
+          path: frontend/rings/coverage/
+          if-no-files-found: ignore
+
       - name: Build Vue App (no TS type-check)
         run: npm run build-only
 
@@ -63,7 +74,22 @@ jobs:
         working-directory: frontend/rings/tests/bdd
         env:
           BASE_URL: 'http://localhost:5173'
-        run: behave --no-capture
+          PYTHONUTF8: '1'
+        run: |
+          mkdir -p reports/html reports/junit
+          behave --no-capture --tags ~@api \
+            --format behave_html_formatter:HTMLFormatter --outfile reports/html/report.html \
+            --format pretty \
+            --junit --junit-directory reports/junit
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bdd-reports
+          path: |
+            frontend/rings/tests/bdd/reports/**
+          if-no-files-found: ignore
 
       - name: Upload Behave artifacts
         if: always()

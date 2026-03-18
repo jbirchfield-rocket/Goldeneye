@@ -1,9 +1,20 @@
-Feature: Customer dropdown default
+Feature: Customer dropdown
   As a user opening the home page
-  I want to see a default placeholder in the customer dropdown
-  So that I know I must select a customer
+  I want to see a customer dropdown
+  So that I can select a customer
 
   Scenario: Default option shows "Select Customer"
     Given the app is running
     When I open the home page
     Then the customer dropdown default is "Select Customer"
+  Scenario: Customer dropdown is rendered and functional
+    Given I am on the home page
+    When I click the customer dropdown
+    Then the dropdown should be visible and contain options
+
+  @api
+  Scenario: Customer dropdown is populated from API and selection persists
+    Given I am on the home page
+    When I wait for the customer dropdown to be populated from the API
+    And I select the first available customer
+    Then the selected customer remains selected in the dropdown
