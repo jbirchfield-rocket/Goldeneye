@@ -74,6 +74,7 @@ public class GoldeneyeController {
     public ResponseEntity<Void> deleteLocation(@PathVariable int locId) {
         locationService.deleteLocation(locId);
         return ResponseEntity.noContent().build();
+    }
       
     @PostMapping("/locations")
     public ResponseEntity<Integer> addLocation(@RequestBody LocationDTO location) {
