@@ -14,10 +14,10 @@ Feature: Customer dropdown # features/home_page.feature:1
 
   @api
   Scenario: Customer dropdown is populated from API and selection persists  # features/home_page.feature:16
-    Given I am on the home page                                             # steps/home_steps.py:85
-    When I wait for the customer dropdown to be populated from the API      # steps/home_steps.py:109
-    And I select the first available customer                               # steps/home_steps.py:114
-    Then the selected customer remains selected in the dropdown             # steps/home_steps.py:136
+    Given I am on the home page                                             # None
+    When I wait for the customer dropdown to be populated from the API      # None
+    And I select the first available customer                               # None
+    Then the selected customer remains selected in the dropdown             # None
 
 Feature: Primary navigation from Home # features/navigation.feature:1
   As a user
@@ -64,32 +64,32 @@ Feature: Purchase Rings page # features/purchase_rings.feature:1
 
   @api
   Scenario: Add to cart shows a confirmation alert                          # features/purchase_rings.feature:12
-    Given the app is running                                                # steps/home_steps.py:81
-    And I am on the home page                                               # steps/home_steps.py:85
-    And I select the first customer from the dropdown                       # steps/purchase_rings_steps.py:65
-    And I navigate to "Purchase Rings"                                      # steps/navigation_steps.py:71
-    Given the purchase rings page has loaded                                # steps/purchase_rings_steps.py:92
-    When I click the Add to Cart button on the first ring                   # steps/purchase_rings_steps.py:124
-    Then an alert should appear with the message "Added 1 ring(s) to cart!" # steps/purchase_rings_steps.py:133
+    Given the app is running                                                # None
+    And I am on the home page                                               # None
+    And I select the first customer from the dropdown                       # None
+    And I navigate to "Purchase Rings"                                      # None
+    Given the purchase rings page has loaded                                # None
+    When I click the Add to Cart button on the first ring                   # None
+    Then an alert should appear with the message "Added 1 ring(s) to cart!" # None
 
   @api
   Scenario: Configure all ring options and verify the cart item matches        # features/purchase_rings.feature:17
-    Given the app is running                                                   # steps/home_steps.py:81
-    And I am on the home page                                                  # steps/home_steps.py:85
-    And I select the first customer from the dropdown                          # steps/purchase_rings_steps.py:65
-    And I navigate to "Purchase Rings"                                         # steps/navigation_steps.py:71
-    Given the purchase rings page has loaded                                   # steps/purchase_rings_steps.py:92
-    When I select the second option in the material dropdown on the first ring # steps/purchase_rings_steps.py:100
-    And I select the second option in the width dropdown on the first ring     # steps/purchase_rings_steps.py:106
-    And I select the second option in the stone dropdown on the first ring     # steps/purchase_rings_steps.py:112
-    And I set the quantity to 2 on the first ring                              # steps/purchase_rings_steps.py:118
-    And I click the Add to Cart button on the first ring                       # steps/purchase_rings_steps.py:124
-    Then an alert should appear with the message "Added 2 ring(s) to cart!"    # steps/purchase_rings_steps.py:133
-    When I navigate to "Cart"                                                  # steps/navigation_steps.py:71
-    Then the cart should contain at least 1 item                               # steps/purchase_rings_steps.py:189
-    And the first cart item should show quantity 2                             # steps/purchase_rings_steps.py:199
-    And the first cart item should show the selected material value            # steps/purchase_rings_steps.py:210
-    And the first cart item should show the selected stone value               # steps/purchase_rings_steps.py:222
+    Given the app is running                                                   # None
+    And I am on the home page                                                  # None
+    And I select the first customer from the dropdown                          # None
+    And I navigate to "Purchase Rings"                                         # None
+    Given the purchase rings page has loaded                                   # None
+    When I select the second option in the material dropdown on the first ring # None
+    And I select the second option in the width dropdown on the first ring     # None
+    And I select the second option in the stone dropdown on the first ring     # None
+    And I set the quantity to 2 on the first ring                              # None
+    And I click the Add to Cart button on the first ring                       # None
+    Then an alert should appear with the message "Added 2 ring(s) to cart!"    # None
+    When I navigate to "Cart"                                                  # None
+    Then the cart should contain at least 1 item                               # None
+    And the first cart item should show quantity 2                             # None
+    And the first cart item should show the selected material value            # None
+    And the first cart item should show the selected stone value               # None
 
   Scenario: Multiple ring cards are displayed on the page                      # features/purchase_rings.feature:31
     Given the app is running                                                   # steps/home_steps.py:81
