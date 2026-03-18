@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.goldeneye.dto.LocationDTO;
+import com.goldeneye.exception.InvalidLocationException;
 import com.goldeneye.repo.LocationRepo;
 
 /**
@@ -46,7 +47,11 @@ public class LocationService {
     @Transactional
     public int addLocation(LocationDTO location) {
         if (location.getCustId() == null || location.getCustId() < 1) {
-            throw new IllegalArgumentException("Invalid customer ID: " + location.getCustId());
+            throw new InvalidLocationException("Invalid customer ID: " + location.getCustId());
+        }
+
+        if (location.getState().length() != 2) {
+            throw new InvalidLocationException("Invalid state code (2 characters expected): " + location.getState());
         }
 
         locationRepo.insertLocation(location.getCustId(), location.getStreet(), location.getCity(), location.getState(), location.getZip());
