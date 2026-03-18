@@ -22,11 +22,11 @@ import com.goldeneye.dto.CustomerDTO;
 import com.goldeneye.dto.LocationDTO;
 import com.goldeneye.dto.MaterialDTO;
 import com.goldeneye.dto.OrderDTO;
+import com.goldeneye.dto.OrderSummaryDTO;
 import com.goldeneye.dto.OrderItemDTO;
 import com.goldeneye.dto.ProductDTO;
 import com.goldeneye.dto.StoneDTO;
 import com.goldeneye.dto.WidthDTO;
-import com.goldeneye.dto.OrderSummaryDTO;
 import com.goldeneye.service.CustomerService;
 import com.goldeneye.service.LocationService;
 import com.goldeneye.service.MaterialService;
@@ -70,6 +70,19 @@ public class GoldeneyeController {
     @GetMapping("/locations/{custId}")
     public ResponseEntity<List<LocationDTO>> getLocationsByCustId(@PathVariable int custId) {
         return ResponseEntity.ok(locationService.getLocationsByCustId(custId));
+    }
+
+    @DeleteMapping("/locations/{locId}")
+    public ResponseEntity<Void> deleteLocation(@PathVariable int locId) {
+        locationService.deleteLocation(locId);
+        return ResponseEntity.noContent().build();
+    }
+      
+    @PostMapping("/locations/{custId}")
+    public ResponseEntity<Integer> addLocation(@PathVariable int custId, @RequestBody LocationDTO location) {
+        location.setCustId(custId);
+        int newLocationId = locationService.addLocation(location);
+        return ResponseEntity.ok(newLocationId);
     }
 
     @GetMapping("/products")

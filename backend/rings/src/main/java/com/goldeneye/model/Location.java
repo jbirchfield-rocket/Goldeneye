@@ -18,7 +18,7 @@ import org.springframework.data.relational.core.mapping.Table;
 public class Location {
     @Id
     @Column("LOCID")
-    private int locationId;
+    private Integer locationId;
 
     @Column("CUSTID")
     private int custId;
@@ -35,7 +35,10 @@ public class Location {
     @Column("ZIP")
     private String zip;
 
-    public Location(int locationId, int custId, String street, String city, String state, String zip) {
+    public Location() {
+    }
+
+    public Location(Integer locationId, int custId, String street, String city, String state, String zip) {
         this.locationId = locationId;
         this.custId = custId;
         this.street = street;
@@ -44,11 +47,11 @@ public class Location {
         this.zip = zip;
     }
 
-    public int getLocationId() {
+    public Integer getLocationId() {
         return locationId;
     }
 
-    public void setLocationId(int locationId) {
+    public void setLocationId(Integer locationId) {
         this.locationId = locationId;
     }
 
