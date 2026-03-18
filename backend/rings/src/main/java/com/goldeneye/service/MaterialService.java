@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.goldeneye.dto.MaterialDTO;
 import com.goldeneye.model.Material;
+import com.goldeneye.exception.ResourceNotFoundException;
 import com.goldeneye.repo.MaterialRepo;
 
 /**
@@ -30,6 +31,9 @@ public class MaterialService {
 
     public MaterialDTO getMaterialById(int id) {
         Material material = materialRepo.findById(id);
+        if (material == null) {
+            throw new ResourceNotFoundException("Material not found with id: " + id);
+        }
         return new MaterialDTO(
             material.getMaterialId(),
             material.getMaterialName(), 

@@ -23,6 +23,7 @@ import com.goldeneye.dto.OrderDTO;
 import com.goldeneye.dto.ProductDTO;
 import com.goldeneye.dto.StoneDTO;
 import com.goldeneye.dto.WidthDTO;
+import com.goldeneye.dto.OrderSummaryDTO;
 import com.goldeneye.service.CustomerService;
 import com.goldeneye.service.LocationService;
 import com.goldeneye.service.MaterialService;
@@ -92,6 +93,11 @@ public class GoldeneyeController {
     public ResponseEntity<Integer> submitOrder(@RequestBody OrderDTO order) {
         int newOrderId = orderService.createOrder(order);
         return ResponseEntity.ok(newOrderId);
+    }
+
+    @GetMapping("/orders/{custId}")
+    public ResponseEntity<List<OrderSummaryDTO>> getOrdersByCustId(@PathVariable int custId) {
+        return ResponseEntity.ok(orderService.getOrdersByCustId(custId));
     }
 
 }
