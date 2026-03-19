@@ -131,6 +131,8 @@ h1 {
   color: #ddd;
   padding-left: 20px;
   font-weight: bold;
+  border-top: #baaa51 1px solid;
+  padding-top: 5px;
 }
 
 .order-location {
