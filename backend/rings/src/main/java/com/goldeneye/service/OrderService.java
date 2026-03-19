@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static com.goldeneye.constants.AppConstants.PRICESCALE;
 import com.goldeneye.dto.LocationDTO;
@@ -29,6 +31,8 @@ import com.goldeneye.repo.OrderRepo;
 @Service
 public class OrderService {
 
+    private static final Logger logger = LoggerFactory.getLogger(OrderService.class);
+
     private final OrderRepo orderRepo;
     private final OrderItemRepo orderItemRepo;
     private final ProductService productService;
@@ -49,12 +53,14 @@ public class OrderService {
 
     @Transactional
     public int createOrder(OrderDTO orderDTO) {
+        logger.info("Creating new order for customer ID: {}", orderDTO.getCustId());
         if (orderDTO.getOrderItems() == null || orderDTO.getOrderItems().isEmpty()) {
+            logger.warn("Order creation failed: no items provided for customer ID: {}", orderDTO.getCustId());
             throw new InvalidOrderException("Order must contain at least one item.");
         }
         orderRepo.insertOrder(orderDTO.getCustId(), orderDTO.getLocationId(), orderDTO.getBillLocId());
         int orderId = orderRepo.getLastGeneratedId();
-
+        logger.debug("Order inserted with ID: {}", orderId);
 
         for (OrderItemDTO dto : orderDTO.getOrderItems()) {
             orderItemRepo.insertOrderItem(
@@ -68,11 +74,13 @@ public class OrderService {
             );
         }
 
+        logger.info("Order ID {} created successfully with {} item(s)", orderId, orderDTO.getOrderItems().size());
         return orderId;
     }
 
     public List<OrderSummaryDTO> getOrdersByCustId(int custId) {
-        return orderRepo.findOrderSummariesByCustId(custId)
+        logger.info("Fetching orders for customer ID: {}", custId);
+        List<OrderSummaryDTO> orders = orderRepo.findOrderSummariesByCustId(custId)
             .stream()
             .map(order -> {
                 LocationDTO location = locationService.getLocationById(order.getLocId());
@@ -101,46 +109,58 @@ public class OrderService {
                 );
             })
             .toList();
+        logger.debug("Retrieved {} orders for customer ID: {}", orders.size(), custId);
+        return orders;
     }
 
     @Transactional
     public void deleteOrderByOrderId(int orderId) {
+        logger.info("Deleting order with ID: {}", orderId);
         orderItemRepo.deleteByOrderId(orderId);
         orderRepo.deleteByOrderId(orderId);
+        logger.debug("Order ID {} and its items deleted successfully", orderId);
     }
 
     public void updateOrder(int orderId, OrderDTO orderDTO) {
+        logger.info("Updating order with ID: {}", orderId);
         orderRepo.updateOrder(orderDTO.getCustId(), orderDTO.getLocationId(), orderDTO.getBillLocId(), orderId);
 
         for (OrderItemDTO orderItem : orderDTO.getOrderItems()) {
             if (orderItem.getOrderItemId() != null) {
-            updateOrderItem(orderItem.getOrderItemId(), orderItem);
-        } else {
-            BigDecimal unitPrice = calculateUnitPrice(orderItem.getProductId(), orderItem.getMaterialId(), orderItem.getWidthId(), orderItem.getStoneId(), orderItem.getQuantity());
-            orderItemRepo.insertOrderItem(
-                orderId,
-                orderItem.getProductId(),
-                orderItem.getMaterialId(),
-                orderItem.getWidthId(),
-                orderItem.getStoneId(),
-                unitPrice,
-                orderItem.getQuantity()
-            );
+                logger.debug("Updating existing order item ID: {}", orderItem.getOrderItemId());
+                updateOrderItem(orderItem.getOrderItemId(), orderItem);
+            } else {
+                logger.debug("Inserting new order item for order ID: {}", orderId);
+                BigDecimal unitPrice = calculateUnitPrice(orderItem.getProductId(), orderItem.getMaterialId(), orderItem.getWidthId(), orderItem.getStoneId(), orderItem.getQuantity());
+                orderItemRepo.insertOrderItem(
+                    orderId,
+                    orderItem.getProductId(),
+                    orderItem.getMaterialId(),
+                    orderItem.getWidthId(),
+                    orderItem.getStoneId(),
+                    unitPrice,
+                    orderItem.getQuantity()
+                );
+            }
         }
-        }
-
+        logger.info("Order ID {} updated successfully", orderId);
     }
 
     public void deleteOrderItem(int ordItmId) {
+        logger.info("Deleting order item with ID: {}", ordItmId);
         orderItemRepo.deleteByOrderItemId(ordItmId);
+        logger.debug("Order item ID {} deleted successfully", ordItmId);
     }
 
     public void updateOrderItem(int ordItmId, OrderItemDTO orderItem) {
+        logger.info("Updating order item with ID: {}", ordItmId);
         BigDecimal newUnitPrice = calculateUnitPrice(orderItem.getProductId(), orderItem.getMaterialId(), orderItem.getWidthId(), orderItem.getStoneId(), orderItem.getQuantity());
         orderItemRepo.updateOrderItem(ordItmId, orderItem.getProductId(), orderItem.getMaterialId(), orderItem.getWidthId(), orderItem.getStoneId(), newUnitPrice, orderItem.getQuantity());
+        logger.debug("Order item ID {} updated with unit price: {}", ordItmId, newUnitPrice);
     }
 
     public BigDecimal calculateUnitPrice(int productId, int materialId, int widthId, int stoneId, int quantity) {
+        logger.debug("Calculating unit price");
         // get base price from product
         ProductDTO product = productService.getProductById(productId);
         BigDecimal basePrice = product.getBasePrice().setScale(PRICESCALE, RoundingMode.HALF_UP);
@@ -162,10 +182,13 @@ public class OrderService {
         BigDecimal individualPrice = stonePrice.add(ringPrice).setScale(PRICESCALE, RoundingMode.HALF_UP);
         BigDecimal totalPrice = individualPrice.multiply(BigDecimal.valueOf(quantity)).setScale(PRICESCALE, RoundingMode.HALF_UP);
         
+        logger.debug("Calculated unit price: {}", totalPrice);
         return totalPrice;
     }
 
     public void deleteAllOrderItems(int orderId) {
+        logger.info("Deleting all order items for order ID: {}", orderId);
         orderItemRepo.deleteByOrderId(orderId);
+        logger.debug("All order items for order ID {} deleted successfully", orderId);
     }
 }
