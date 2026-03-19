@@ -233,9 +233,9 @@ onMounted(() => {
           <div class="item-details">
             <h3>Ring #{{ item.ringId }}</h3>
             <div class="item-specs">
-              <p><strong>Material:</strong> {{ item.materialType }}</p>
-              <p><strong>Band Width:</strong> {{ item.bandWidth }} mm</p>
-              <p><strong>Ring Stone:</strong> {{ item.ringStone }}</p>
+              <p><strong>Material:</strong> {{ item.materialTypeName ?? item.materialType }}</p>
+              <p><strong>Band Width:</strong> {{ item.bandWidthName ?? item.bandWidth + ' mm' }}</p>
+              <p><strong>Ring Stone:</strong> {{ item.ringStoneName ?? item.ringStone }}</p>
             </div>
           </div>
           

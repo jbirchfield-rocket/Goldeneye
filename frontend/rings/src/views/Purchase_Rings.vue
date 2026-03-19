@@ -326,6 +326,10 @@ const addToCart = (ringId: number) => {
   const options = selectedOptions.value[ringId];
   
   if (ring && options) {
+    const selectedMaterial = ring.materialTypes.find(m => m.materialId === options.materialType);
+    const selectedWidth = ring.bandWidths.find(w => w.widthId === options.bandWidth);
+    const selectedStone = ring.ringStones.find(s => s.stoneId === options.ringStone);
+
     addItemToCart({
       ringId: ring.prodId,
       ringImage: ring.image,
@@ -334,7 +338,10 @@ const addToCart = (ringId: number) => {
       ringStone: options.ringStone,
       quantity: options.quantity,
       price: options.proposedPrice,
-      addedAt: Date.now()
+      addedAt: Date.now(),
+      materialTypeName: selectedMaterial?.name,
+      bandWidthName: selectedWidth ? `${selectedWidth.width}mm` : undefined,
+      ringStoneName: selectedStone?.name
     });
     
     alert(`Added ${options.quantity} ring(s) to cart!`);
