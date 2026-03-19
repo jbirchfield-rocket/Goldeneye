@@ -32,6 +32,10 @@ public class MaterialService {
             .stream()
             .map(c -> new MaterialDTO(c.getMaterialId(), c.getMaterialName(), c.getInventory(), c.getMultiplier()))
             .toList();
+        if (materials.isEmpty()) {
+            logger.warn("No materials found");
+            throw new ResourceNotFoundException("No materials found.");
+        }
         logger.debug("Retrieved {} materials", materials.size());
         return materials;
     }

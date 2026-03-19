@@ -32,6 +32,10 @@ public class WidthService {
             .stream()
             .map(c -> new WidthDTO(c.getWidthId(), c.getWidth(), c.getMultiplier(), c.getMaterialUse()))
             .toList();
+        if (widths.isEmpty()) {
+            logger.warn("No widths found");
+            throw new ResourceNotFoundException("No widths found.");
+        }
         logger.debug("Retrieved {} widths", widths.size());
         return widths;
     }
