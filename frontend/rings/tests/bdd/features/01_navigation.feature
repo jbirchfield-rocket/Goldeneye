@@ -26,6 +26,7 @@ Feature: Primary navigation from Home
     When I click the site logo
     Then I should be on the "Home" page
 
+  @api
   Scenario: Cart badge shows the number of items in the cart
     Given I navigate to "Purchase Rings"
     And the purchase rings page is ready

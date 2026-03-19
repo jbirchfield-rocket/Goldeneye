@@ -20,6 +20,7 @@ Feature: Shopping Cart
     When I click the empty cart Continue Shopping link
     Then I should be on the "Purchase Rings" page
 
+  @api
   Scenario: Cart displays items after a ring is added
     Given I navigate to "Purchase Rings"
     And the purchase rings page is ready
@@ -27,6 +28,7 @@ Feature: Shopping Cart
     And I navigate to "Cart"
     Then the cart should contain at least 1 item
 
+  @api
   Scenario: Order summary section is visible in a populated cart
     Given I navigate to "Purchase Rings"
     And the purchase rings page is ready
@@ -34,13 +36,14 @@ Feature: Shopping Cart
     And I navigate to "Cart"
     Then the order summary section should be visible
 
+  @api
   Scenario: Delivery location dropdown is present in the cart
     Given I navigate to "Purchase Rings"
     And the purchase rings page is ready
     When I add the first ring to the cart
     And I navigate to "Cart"
     Then the delivery location dropdown should be present
-
+  @api
 Scenario: Remove button removes an item from the cart
     Given I navigate to "Purchase Rings"
     And the purchase rings page is ready
@@ -49,6 +52,7 @@ Scenario: Remove button removes an item from the cart
     When I click the remove button on the first cart item
     Then the cart item count should have decreased
 
+  @api
   Scenario: Continue Shopping button in the summary navigates to Purchase Rings
     Given I navigate to "Purchase Rings"
     And the purchase rings page is ready
@@ -89,6 +93,7 @@ Scenario: Remove button removes an item from the cart
     When I click the Checkout button
     Then an alert should appear with the message "Please select a delivery location before checking out."
 
+  @api
   Scenario: Clear Cart button empties the cart
     Given I navigate to "Purchase Rings"
     And the purchase rings page is ready

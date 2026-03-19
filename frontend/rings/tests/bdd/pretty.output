@@ -48,7 +48,8 @@ Feature: Primary navigation from Home # features/01_navigation.feature:1
     When I click the site logo                          # steps/navigation_steps.py:107
     Then I should be on the "Home" page                 # steps/navigation_steps.py:99
 
-  Scenario: Cart badge shows the number of items in the cart  # features/01_navigation.feature:29
+  @api
+  Scenario: Cart badge shows the number of items in the cart  # features/01_navigation.feature:30
     Given the app is running                                  # steps/home_steps.py:81
     And I open the home page                                  # steps/navigation_steps.py:65
     Given I navigate to "Purchase Rings"                      # steps/navigation_steps.py:71
@@ -81,7 +82,8 @@ Feature: Shopping Cart # features/02_cart.feature:1
     When I click the empty cart Continue Shopping link                          # steps/cart_steps.py:35
     Then I should be on the "Purchase Rings" page                               # steps/navigation_steps.py:99
 
-  Scenario: Cart displays items after a ring is added  # features/02_cart.feature:23
+  @api
+  Scenario: Cart displays items after a ring is added  # features/02_cart.feature:24
     Given the app is running                           # steps/home_steps.py:81
     And I am on the home page                          # steps/home_steps.py:85
     Given I navigate to "Purchase Rings"               # steps/navigation_steps.py:71
@@ -90,7 +92,8 @@ Feature: Shopping Cart # features/02_cart.feature:1
     And I navigate to "Cart"                           # steps/navigation_steps.py:71
     Then the cart should contain at least 1 item       # steps/purchase_rings_steps.py:189
 
-  Scenario: Order summary section is visible in a populated cart  # features/02_cart.feature:30
+  @api
+  Scenario: Order summary section is visible in a populated cart  # features/02_cart.feature:32
     Given the app is running                                      # steps/home_steps.py:81
     And I am on the home page                                     # steps/home_steps.py:85
     Given I navigate to "Purchase Rings"                          # steps/navigation_steps.py:71
@@ -99,7 +102,8 @@ Feature: Shopping Cart # features/02_cart.feature:1
     And I navigate to "Cart"                                      # steps/navigation_steps.py:71
     Then the order summary section should be visible              # steps/cart_steps.py:146
 
-  Scenario: Delivery location dropdown is present in the cart  # features/02_cart.feature:37
+  @api
+  Scenario: Delivery location dropdown is present in the cart  # features/02_cart.feature:40
     Given the app is running                                   # steps/home_steps.py:81
     And I am on the home page                                  # steps/home_steps.py:85
     Given I navigate to "Purchase Rings"                       # steps/navigation_steps.py:71
@@ -108,7 +112,8 @@ Feature: Shopping Cart # features/02_cart.feature:1
     And I navigate to "Cart"                                   # steps/navigation_steps.py:71
     Then the delivery location dropdown should be present      # steps/cart_steps.py:157
 
-  Scenario: Remove button removes an item from the cart   # features/02_cart.feature:44
+  @api
+  Scenario: Remove button removes an item from the cart   # features/02_cart.feature:47
     Given the app is running                              # steps/home_steps.py:81
     And I am on the home page                             # steps/home_steps.py:85
     Given I navigate to "Purchase Rings"                  # steps/navigation_steps.py:71
@@ -118,7 +123,8 @@ Feature: Shopping Cart # features/02_cart.feature:1
     When I click the remove button on the first cart item # steps/cart_steps.py:80
     Then the cart item count should have decreased        # steps/cart_steps.py:205
 
-  Scenario: Continue Shopping button in the summary navigates to Purchase Rings  # features/02_cart.feature:52
+  @api
+  Scenario: Continue Shopping button in the summary navigates to Purchase Rings  # features/02_cart.feature:56
     Given the app is running                                                     # steps/home_steps.py:81
     And I am on the home page                                                    # steps/home_steps.py:85
     Given I navigate to "Purchase Rings"                                         # steps/navigation_steps.py:71
@@ -129,7 +135,7 @@ Feature: Shopping Cart # features/02_cart.feature:1
     Then I should be on the "Purchase Rings" page                                # steps/navigation_steps.py:99
 
   @api
-  Scenario: Selecting Add New Location reveals the location form  # features/02_cart.feature:61
+  Scenario: Selecting Add New Location reveals the location form  # features/02_cart.feature:65
     Given the app is running                                      # steps/home_steps.py:81
     And I am on the home page                                     # steps/home_steps.py:85
     Given I am on the home page                                   # steps/home_steps.py:85
@@ -142,7 +148,7 @@ Feature: Shopping Cart # features/02_cart.feature:1
     Then the add new location form should be visible              # steps/cart_steps.py:189
 
   @api
-  Scenario: Delivery location dropdown has selectable location options               # features/02_cart.feature:72
+  Scenario: Delivery location dropdown has selectable location options               # features/02_cart.feature:76
     Given the app is running                                                         # steps/home_steps.py:81
     And I am on the home page                                                        # steps/home_steps.py:85
     Given I am on the home page                                                      # steps/home_steps.py:85
@@ -154,7 +160,7 @@ Feature: Shopping Cart # features/02_cart.feature:1
     Then the delivery location dropdown should have at least one selectable location # steps/cart_steps.py:166
 
   @api
-  Scenario: Checkout without a delivery location shows an alert                                           # features/02_cart.feature:82
+  Scenario: Checkout without a delivery location shows an alert                                           # features/02_cart.feature:86
     Given the app is running                                                                              # steps/home_steps.py:81
     And I am on the home page                                                                             # steps/home_steps.py:85
     Given I am on the home page                                                                           # steps/home_steps.py:85
@@ -166,7 +172,8 @@ Feature: Shopping Cart # features/02_cart.feature:1
     When I click the Checkout button                                                                      # steps/cart_steps.py:62
     Then an alert should appear with the message "Please select a delivery location before checking out." # steps/purchase_rings_steps.py:133
 
-  Scenario: Clear Cart button empties the cart    # features/02_cart.feature:92
+  @api
+  Scenario: Clear Cart button empties the cart    # features/02_cart.feature:97
     Given the app is running                      # steps/home_steps.py:81
     And I am on the home page                     # steps/home_steps.py:85
     Given I navigate to "Purchase Rings"          # steps/navigation_steps.py:71
