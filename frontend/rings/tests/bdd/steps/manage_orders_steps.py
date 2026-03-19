@@ -51,6 +51,30 @@ def step_select_second_customer(context):
         select_el
     )
 
+@given("I select the sixth customer from the dropdown")
+def step_select_sixth_customer(context):
+    d = context.driver
+    select_el = _wait_for_customer_options(d, min_count=6)
+    sel = Select(select_el)
+    real_opts = [
+        o for o in sel.options
+        if not o.get_attribute("disabled") and (o.get_attribute("value") or "").strip()
+    ]
+    if len(real_opts) < 6:
+        raise AssertionError(
+            f"Expected at least 6 real customer options, found {len(real_opts)}"
+        )
+    sixth_text = real_opts[5].text.strip()
+    try:
+        sel.select_by_visible_text(sixth_text)
+    except StaleElementReferenceException:
+        select_el = d.find_element(By.CSS_SELECTOR, "#customer-select")
+        sel = Select(select_el)
+        sel.select_by_visible_text(sixth_text)
+    d.execute_script(
+        "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));",
+        select_el
+    )
 
 @then("the manage orders heading should be visible")
 def step_manage_orders_heading(context):
@@ -89,7 +113,6 @@ def step_click_start_shopping(context):
         EC.element_to_be_clickable((By.CSS_SELECTOR, ".empty-orders .shop-link"))
     )
     link.click()
-
 
 @then("at least one order card should be visible")
 def step_at_least_one_order_card(context):

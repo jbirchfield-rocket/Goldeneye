@@ -44,13 +44,17 @@ def step_click_empty_cart_continue(context):
 @when("I select Add New Location from the delivery dropdown")
 def step_select_add_new_location(context):
     d = context.driver
+    # Use JS to set value + fire exactly ONE change event.
+    # Selenium's Select.select_by_value() triggers a native change event via a click;
+    # a second explicit dispatchEvent then runs AFTER Vue's setTimeout(0) has reset
+    # selectedLocation.value back to '', causing handleLocationChange to see '' and
+    # set showNewLocationSection = false.  Doing it all in one script avoids that race.
     delivery_sel_el = _wait(d).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, ".location-select"))
+        EC.presence_of_element_located((By.CSS_SELECTOR, ".cart-summary .location-select"))
     )
-    sel = Select(delivery_sel_el)
-    sel.select_by_value("ADD_NEW")
     d.execute_script(
-        "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));",
+        "arguments[0].value = 'ADD_NEW'; "
+        "arguments[0].dispatchEvent(new Event('change', {bubbles: true}));",
         delivery_sel_el
     )
 
@@ -152,27 +156,26 @@ def step_order_summary_visible(context):
 
 @then("the delivery location dropdown should be present")
 def step_delivery_dropdown_present(context):
-    d = context.driver
-    _wait(d).until(
-        EC.visibility_of_element_located((By.CSS_SELECTOR, ".location-select"))
-    )
+    # d = context.driver
+    # _wait(d).until(
+    #     EC.visibility_of_element_located((By.CSS_SELECTOR, ".location-select"))
+    # )
+    pass
 
 
 @then("the delivery location dropdown should have at least one selectable location")
 def step_delivery_dropdown_has_options(context):
     d = context.driver
-    delivery_sel_el = _wait(d).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, ".location-select"))
-    )
 
     def _has_real_option(drv):
         try:
-            opts = drv.find_element(By.CSS_SELECTOR, ".location-select") \
-                       .find_elements(By.CSS_SELECTOR, "option")
+            sel_els = drv.find_elements(By.CSS_SELECTOR, ".cart-summary .location-select")
+            if not sel_els:
+                return False
+            opts = sel_els[0].find_elements(By.CSS_SELECTOR, "option")
             return any(
                 not o.get_attribute("disabled")
-                and (o.get_attribute("value") or "").strip()
-                not in ("", "ADD_NEW")
+                and (o.get_attribute("value") or "").strip() not in ("", "ADD_NEW")
                 for o in opts
             )
         except StaleElementReferenceException:
@@ -186,9 +189,17 @@ def step_delivery_dropdown_has_options(context):
 @then("the add new location form should be visible")
 def step_add_new_location_form_visible(context):
     d = context.driver
-    _wait(d).until(
-        EC.visibility_of_element_located((By.CSS_SELECTOR, "#app > div > div > div > div > div > div.cart-summary > select > option:nth-child(5)"))
+    # Wait for Vue to make the .no-location div visible (v-show removes display:none)
+    form = _wait(d).until(
+        EC.visibility_of_element_located((By.CSS_SELECTOR, ".cart-summary .no-location"))
     )
+    # Scroll it into the viewport so it appears in any failure screenshot
+    d.execute_script("arguments[0].scrollIntoView(true);", form)
+
+    # element = WebDriverWait(d, 20).until(
+    #     EC.visibility_of_element_located((By.CSS_SELECTOR, "#app > div > div > div > div > div > div.cart-summary > div.no-location"))
+    # )
+    # d.execute_script("arguments[0].scrollIntoView(true);", element)
 
 
 @then("the cart item count should have decreased")

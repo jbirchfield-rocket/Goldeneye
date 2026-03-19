@@ -15,13 +15,13 @@ Feature: Manage Orders page
 
   @api
   Scenario: Empty state is shown when no orders are available
-    Given I select the first customer from the dropdown
+    Given I select the sixth customer from the dropdown
     And I navigate to "Manage Orders"
     Then the empty orders message should be visible
 
   @api
   Scenario: Empty state has a link that navigates to Purchase Rings
-    Given I select the first customer from the dropdown
+    Given I select the sixth customer from the dropdown
     And I navigate to "Manage Orders"
     And the empty orders message is visible
     When I click the Start Shopping link
