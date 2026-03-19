@@ -27,15 +27,21 @@ public class Order {
 
     @Column("LOCID")
     private int locationId;
+
     private LocalDate orderDate;
+
+    @Column("BILLID")
+    private int billingLocationId;
+
 
     public Order() {
     }
 
-    public Order (int orderId, int custId, int locationId, LocalDate orderDate) {
+    public Order (int orderId, int custId, int locationId, int billingLocationId, LocalDate orderDate) {
         this.orderId = orderId;
         this.custId = custId;
         this.locationId = locationId;
+        this.billingLocationId = billingLocationId;
         this.orderDate = orderDate;
     }
 
@@ -56,13 +62,21 @@ public class Order {
     }
 
     
-        public int getLocationId() {
-            return locationId;
-        }
-    
-        public void setLocationId(int locationId) {
-            this.locationId = locationId;
-        }
+    public int getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(int locationId) {
+        this.locationId = locationId;
+    }
+
+        public int getBillLocId() {
+        return billingLocationId;
+    }
+
+    public void setBillLocId(int billingLocationId) {
+        this.billingLocationId = billingLocationId;
+    }
 
     public LocalDate getOrderDate() {
         return orderDate;

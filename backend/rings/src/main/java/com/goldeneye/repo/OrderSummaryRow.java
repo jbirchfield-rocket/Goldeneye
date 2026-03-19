@@ -12,6 +12,7 @@ public class OrderSummaryRow {
     private String name;
     private LocalDate orderdate;
     private int locid;
+    private int billid;
 
     public OrderSummaryRow() {}
 
@@ -47,6 +48,12 @@ public class OrderSummaryRow {
         this.locid = locid;
     }
 
-    
+    public int getBillId() {
+        return billid;
+    }
+
+    public void setBillId(int billid) {
+        this.billid = billid;
+    }
 
 }

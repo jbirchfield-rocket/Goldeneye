@@ -52,7 +52,7 @@ public class OrderService {
         if (orderDTO.getOrderItems() == null || orderDTO.getOrderItems().isEmpty()) {
             throw new InvalidOrderException("Order must contain at least one item.");
         }
-        orderRepo.insertOrder(orderDTO.getCustId(), orderDTO.getLocationId());
+        orderRepo.insertOrder(orderDTO.getCustId(), orderDTO.getLocationId(), orderDTO.getBillLocId());
         int orderId = orderRepo.getLastGeneratedId();
 
 
@@ -76,6 +76,7 @@ public class OrderService {
             .stream()
             .map(order -> {
                 LocationDTO location = locationService.getLocationById(order.getLocId());
+                LocationDTO billingLocation = locationService.getLocationById(order.getBillId());
 
                 List<OrderItemSummaryDTO> itemSummaries = orderItemRepo.findOrderItemSummariesByOrderId(order.getOrderId())
                     .stream()
@@ -95,6 +96,7 @@ public class OrderService {
                     order.getName(),
                     order.getOrderDate(),
                     location,
+                    billingLocation,
                     itemSummaries
                 );
             })
@@ -108,7 +110,7 @@ public class OrderService {
     }
 
     public void updateOrder(int orderId, OrderDTO orderDTO) {
-        orderRepo.updateOrder(orderDTO.getCustId(), orderDTO.getLocationId(), orderId);
+        orderRepo.updateOrder(orderDTO.getCustId(), orderDTO.getLocationId(), orderDTO.getBillLocId(), orderId);
 
         for (OrderItemDTO orderItem : orderDTO.getOrderItems()) {
             if (orderItem.getOrderItemId() != null) {
