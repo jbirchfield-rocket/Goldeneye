@@ -72,19 +72,14 @@ const findLowMaterial = () => {
   lowmaterials.value = materials.value
     .filter(material => material.inventory < 10)
     .map(material => material.name);
-
-    materials.value.forEach(material => {
-      if (material.inventory < 10) {
-        console.log(`Low inventory for material: ${material.name}`);
-      }
-    });
   lowmaterials.value.forEach(name => console.log(`Low inventory for material: ${name}`));
 };
 
 const lowstones = ref<string[]>([]);
 const findLowStone = () => {
+  //exclude the stone if it is none because it is not an actual stone and does not have inventory
   lowstones.value = stones.value
-    .filter(stone => stone.inventory < 10)
+    .filter(stone => stone.inventory < 10 && stone.name !== 'None')
     .map(stone => stone.name);
   lowstones.value.forEach(name => console.log(`Low inventory for stone: ${name}`));
 };
