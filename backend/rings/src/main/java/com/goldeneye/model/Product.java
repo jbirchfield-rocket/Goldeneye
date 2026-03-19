@@ -7,14 +7,27 @@ package com.goldeneye.model;
 
 import java.math.BigDecimal;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
+
 /**
  *
  * @author scanales
  */
+@Table("TBPROD")
 public class Product {
+    @Id
+    @Column("PRODID")
     private int prodId;
+
+    @Column("NAME")
     private String name;
+
+    @Column("DSCRP")
     private String description;
+
+    @Column("BASEPRICE")
     private BigDecimal basePrice;
 
     public Product(int prodId, String name, String description, BigDecimal basePrice) {
