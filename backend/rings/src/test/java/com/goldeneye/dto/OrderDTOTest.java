@@ -5,7 +5,6 @@
 
 package com.goldeneye.dto;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -31,9 +30,10 @@ public class OrderDTOTest {
         // Order DTO: orderId, custId, locationId, date, List of orderItems
         OrderItemDTO orderItemDto1 = new OrderItemDTO(1, 2, 3, 4, 5, 6);
         OrderItemDTO orderItemDto2 = new OrderItemDTO(2, 3, 4, 5, 6, 7);
-        OrderDTO orderDto = new OrderDTO(
+        OrderDTO orderDto = new OrderDTO (
             1, 
             1, 
+            1,
             1,
             LocalDate.of(2026, 3, 17),
             List.of(orderItemDto1, orderItemDto2)
@@ -41,8 +41,9 @@ public class OrderDTOTest {
 
         assertNotNull(orderDto);
         assertEquals(1, orderDto.getOrderId());
-        assertEquals(1, orderDto.getCustId());
+        assertEquals(Integer.valueOf(1), orderDto.getCustId());
         assertEquals(1, orderDto.getLocationId());
+        assertEquals(1, orderDto.getBillLocId());
         assertEquals(LocalDate.of(2026, 3, 17), orderDto.getDate());
         assertNotNull(orderDto.getOrderItems());
         assertEquals(2, orderDto.getOrderItems().size());

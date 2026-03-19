@@ -45,7 +45,7 @@ public class OrderServiceTests {
         OrderItemDTO item = new OrderItemDTO(1, 1, 1, 1, 1, 3);
     
 
-        testOrderDTO = new OrderDTO(1, 2, 1, LocalDate.of(2026, 3, 11), List.of(item));
+        testOrderDTO = new OrderDTO(1, 2, 1, 1, LocalDate.of(2026, 3, 11), List.of(item));
     }
 
     @Test
