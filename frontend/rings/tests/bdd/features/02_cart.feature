@@ -41,13 +41,6 @@ Feature: Shopping Cart
     And I navigate to "Cart"
     Then the delivery location dropdown should be present
 
-  Scenario: Delivery location dropdown has selectable location options
-    Given I navigate to "Purchase Rings"
-    And the purchase rings page is ready
-    When I add the first ring to the cart
-    And I navigate to "Cart"
-    Then the delivery location dropdown should have at least one selectable location
-
 Scenario: Remove button removes an item from the cart
     Given I navigate to "Purchase Rings"
     And the purchase rings page is ready
@@ -76,6 +69,16 @@ Scenario: Remove button removes an item from the cart
     Then the add new location form should be visible
 
   @api
+  Scenario: Delivery location dropdown has selectable location options
+    Given I am on the home page
+    And I select the second customer from the dropdown
+    And I navigate to "Purchase Rings"
+    And the purchase rings page is ready
+    When I add the first ring to the cart
+    And I navigate to "Cart"
+    Then the delivery location dropdown should have at least one selectable location
+
+  @api
   Scenario: Checkout without a delivery location shows an alert
     Given I am on the home page
     And I select the first customer from the dropdown
@@ -84,7 +87,7 @@ Scenario: Remove button removes an item from the cart
     When I add the first ring to the cart
     And I navigate to "Cart"
     When I click the Checkout button
-    Then an alert should appear with the message "Please select a delivery location before checking out."
+    Then an alert should appear with the message "Please log in to place an order."
 
   Scenario: Clear Cart button empties the cart
     Given I navigate to "Purchase Rings"

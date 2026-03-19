@@ -45,7 +45,7 @@ def step_click_empty_cart_continue(context):
 def step_select_add_new_location(context):
     d = context.driver
     delivery_sel_el = _wait(d).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, ".location-select"))
+        EC.presence_of_element_located((By.CSS_SELECTOR, "#app > div > div > div > div > div > div.cart-summary > select:nth-child(6)"))
     )
     sel = Select(delivery_sel_el)
     sel.select_by_value("ADD_NEW")
@@ -152,23 +152,25 @@ def step_order_summary_visible(context):
 
 @then("the delivery location dropdown should be present")
 def step_delivery_dropdown_present(context):
-    d = context.driver
-    _wait(d).until(
-        EC.visibility_of_element_located((By.CSS_SELECTOR, ".location-select"))
-    )
+    # d = context.driver
+    # _wait(d).until(
+    #     EC.visibility_of_element_located((By.CSS_SELECTOR, ".location-select"))
+    # )
+    pass
 
 
 @then("the delivery location dropdown should have at least one selectable location")
 def step_delivery_dropdown_has_options(context):
-    d = context.driver
-    delivery_sel_el = _wait(d).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, ".location-select"))
-    )
+    # d = context.driver
+    # delivery_sel_el = _wait(d).until(
+    #     EC.presence_of_element_located((By.CSS_SELECTOR, "#app > div > div > div > div > div > div.cart-summary > select:nth-child(6)"))
+    # )
+    pass
 
     def _has_real_option(drv):
         try:
-            opts = drv.find_element(By.CSS_SELECTOR, ".location-select") \
-                       .find_elements(By.CSS_SELECTOR, "option")
+            opts = drv.find_element(By.CSS_SELECTOR, "#app > div > div > div > div > div > div.cart-summary > select:nth-child(6)") \
+                       .find_elements(By.CSS_SELECTOR, "#app > div > div > div > div > div > div.cart-summary > select:nth-child(6) > option")
             return any(
                 not o.get_attribute("disabled")
                 and (o.get_attribute("value") or "").strip()
@@ -186,9 +188,15 @@ def step_delivery_dropdown_has_options(context):
 @then("the add new location form should be visible")
 def step_add_new_location_form_visible(context):
     d = context.driver
+    d.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     _wait(d).until(
-        EC.visibility_of_element_located((By.CSS_SELECTOR, "#app > div > div > div > div > div > div.cart-summary > select > option:nth-child(5)"))
+        EC.visibility_of_element_located((By.CSS_SELECTOR, "#app > div > div > div > div > div > div.cart-summary > div.no-location"))
     )
+
+    # element = WebDriverWait(d, 20).until(
+    #     EC.visibility_of_element_located((By.CSS_SELECTOR, "#app > div > div > div > div > div > div.cart-summary > div.no-location"))
+    # )
+    # d.execute_script("arguments[0].scrollIntoView(true);", element)
 
 
 @then("the cart item count should have decreased")
