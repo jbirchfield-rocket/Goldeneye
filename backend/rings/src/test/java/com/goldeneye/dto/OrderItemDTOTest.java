@@ -32,5 +32,34 @@ public class OrderItemDTOTest {
         assertEquals(4, orderItemDto.getWidthId());
         assertEquals(5, orderItemDto.getStoneId());
         assertEquals(6, orderItemDto.getQuantity());
-    } 
+    }
+
+    @Test
+    void noArgConstructorCreatesInstance() {
+        OrderItemDTO orderItemDto = new OrderItemDTO();
+        assertNotNull(orderItemDto);
+        assertEquals(0, orderItemDto.getProductId());
+        assertEquals(0, orderItemDto.getMaterialId());
+        assertEquals(0, orderItemDto.getWidthId());
+        assertEquals(0, orderItemDto.getStoneId());
+        assertEquals(0, orderItemDto.getQuantity());
+    }
+
+    @Test
+    void settersUpdateFields() {
+        OrderItemDTO orderItemDto = new OrderItemDTO();
+        orderItemDto.setOrderItemId(7);
+        orderItemDto.setProductId(8);
+        orderItemDto.setMaterialId(9);
+        orderItemDto.setWidthId(10);
+        orderItemDto.setStoneId(11);
+        orderItemDto.setQuantity(12);
+
+        assertEquals(7, orderItemDto.getOrderItemId());
+        assertEquals(8, orderItemDto.getProductId());
+        assertEquals(9, orderItemDto.getMaterialId());
+        assertEquals(10, orderItemDto.getWidthId());
+        assertEquals(11, orderItemDto.getStoneId());
+        assertEquals(12, orderItemDto.getQuantity());
+    }
 }
