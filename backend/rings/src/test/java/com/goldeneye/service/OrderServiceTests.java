@@ -10,10 +10,14 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.mockito.ArgumentMatchers.any;
@@ -27,6 +31,7 @@ import com.goldeneye.dto.ProductDTO;
 import com.goldeneye.dto.StoneDTO;
 import com.goldeneye.dto.MaterialDTO;
 import com.goldeneye.dto.WidthDTO;
+import com.goldeneye.exception.InvalidOrderException;
 import com.goldeneye.dto.LocationDTO;
 import com.goldeneye.dto.OrderItemDTO;
 import com.goldeneye.repo.OrderItemRepo;
@@ -36,7 +41,8 @@ import com.goldeneye.repo.OrderRepo;
  *
  * @author kwall, scanales
  */
-
+@DisplayName("Order Service Tests")
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @ExtendWith(MockitoExtension.class)
 public class OrderServiceTests {
     @Mock private OrderRepo orderRepo;
@@ -102,11 +108,7 @@ public class OrderServiceTests {
     void createOrderThrowsWhenNoItems() {
         OrderDTO emptyOrderDTO = new OrderDTO(1, 2, 1, 1, LocalDate.of(2026, 3, 11), List.of());
 
-        try {
-            orderService.createOrder(emptyOrderDTO);
-        } catch (Exception e) {
-            assertEquals("Order must contain at least one item.", e.getMessage());
-        }
+        assertThrows(InvalidOrderException.class, () -> orderService.createOrder(emptyOrderDTO));
     }
 
     @Test
