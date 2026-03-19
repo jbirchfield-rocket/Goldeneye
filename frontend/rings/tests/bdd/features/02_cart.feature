@@ -87,7 +87,7 @@ Scenario: Remove button removes an item from the cart
     When I add the first ring to the cart
     And I navigate to "Cart"
     When I click the Checkout button
-    Then an alert should appear with the message "Please log in to place an order."
+    Then an alert should appear with the message "Please select a delivery location before checking out."
 
   Scenario: Clear Cart button empties the cart
     Given I navigate to "Purchase Rings"
