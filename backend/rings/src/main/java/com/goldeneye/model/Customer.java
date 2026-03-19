@@ -23,9 +23,13 @@ public class Customer {
     @Column("NAME")
     private String name;
 
-    public Customer(Integer custId, String name) {
+    @Column("ACTIVE")
+    private int active;
+
+    public Customer(Integer custId, String name, int active) {
         this.custId = custId;
         this.name = name;
+        this.active = active;
     }
 
     public Integer getCustId() {
@@ -43,4 +47,12 @@ public class Customer {
     public void setName(String name) {
         this.name = name;
     } 
+
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
 }
