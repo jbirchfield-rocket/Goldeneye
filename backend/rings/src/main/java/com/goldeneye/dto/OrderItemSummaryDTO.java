@@ -7,6 +7,7 @@ import java.math.BigDecimal;
  * @author dshelby
  */
 public class OrderItemSummaryDTO {
+    private Integer orderItemId;
     private String productName;
     private String materialName;
     private int width;
@@ -16,13 +17,22 @@ public class OrderItemSummaryDTO {
 
     public OrderItemSummaryDTO() {}
 
-    public OrderItemSummaryDTO(String productName, String materialName, int width, String stoneName, BigDecimal unitPrice, int quantity) {
+    public OrderItemSummaryDTO(Integer orderItemId, String productName, String materialName, int width, String stoneName, BigDecimal unitPrice, int quantity) {
+        this.orderItemId = orderItemId;
         this.productName = productName;
         this.materialName = materialName;
         this.width = width;
         this.stoneName = stoneName;
         this.unitPrice = unitPrice;
         this.quantity = quantity;
+    }
+
+    public Integer getOrderItemId() {
+        return orderItemId;
+    }
+
+    public void setOrderItemId(Integer orderItemId) {
+        this.orderItemId = orderItemId;
     }
 
     public String getProductName() { 

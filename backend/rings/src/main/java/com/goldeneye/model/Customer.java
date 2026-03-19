@@ -18,21 +18,25 @@ import org.springframework.data.relational.core.mapping.Table;
 public class Customer {
     @Id
     @Column("CUSTID")
-    private int custId;
+    private Integer custId;
 
     @Column("NAME")
     private String name;
 
-    public Customer(int custId, String name) {
+    @Column("ACTIVE")
+    private int active;
+
+    public Customer(Integer custId, String name, int active) {
         this.custId = custId;
         this.name = name;
+        this.active = active;
     }
 
-    public int getCustId() {
+    public Integer getCustId() {
         return custId;
     }
 
-    public void setCustId(int custId) {
+    public void setCustId(Integer custId) {
         this.custId = custId;
     }
 
@@ -43,4 +47,12 @@ public class Customer {
     public void setName(String name) {
         this.name = name;
     } 
+
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
 }

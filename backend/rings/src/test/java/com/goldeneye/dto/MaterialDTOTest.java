@@ -6,6 +6,8 @@
 package com.goldeneye.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -28,5 +30,15 @@ public class MaterialDTOTest {
         assertEquals("Gold Plated", materialDto.getName());
         assertEquals(100, materialDto.getInventory());
         assertEquals(1.20f, materialDto.getMultiplier(), 0.0001f);
+    }
+
+    @Test
+    void noArgConstructorCreatesInstance() {
+        MaterialDTO materialDto = new MaterialDTO();
+        assertNotNull(materialDto);
+        assertEquals(0, materialDto.getMaterialId());
+        assertNull(materialDto.getName());
+        assertEquals(0, materialDto.getInventory());
+        assertEquals(0.0f, materialDto.getMultiplier(), 0.0001f);
     }
 }

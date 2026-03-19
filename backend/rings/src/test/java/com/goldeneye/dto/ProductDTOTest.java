@@ -8,6 +8,8 @@ package com.goldeneye.dto;
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -30,5 +32,15 @@ public class ProductDTOTest {
         assertEquals("Test Product", productDto.getName());
         assertEquals("This is a test product", productDto.getDescription());
         assertEquals(BigDecimal.valueOf(9.99), productDto.getBasePrice());
+    }
+
+    @Test
+    void noArgConstructorCreatesInstance() {
+        ProductDTO productDto = new ProductDTO();
+        assertNotNull(productDto);
+        assertEquals(0, productDto.getProdId());
+        assertNull(productDto.getName());
+        assertNull(productDto.getDescription());
+        assertNull(productDto.getBasePrice());
     }
 }

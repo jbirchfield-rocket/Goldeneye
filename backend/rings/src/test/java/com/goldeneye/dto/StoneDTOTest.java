@@ -8,6 +8,8 @@ package com.goldeneye.dto;
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -30,5 +32,15 @@ public class StoneDTOTest {
         assertEquals("None", stoneDto.getName());
         assertEquals(0, stoneDto.getInventory());
         assertEquals(BigDecimal.valueOf(1.00), stoneDto.getPrice());
+    }
+
+    @Test
+    void noArgConstructorCreatesInstance() {
+        StoneDTO stoneDto = new StoneDTO();
+        assertNotNull(stoneDto);
+        assertEquals(0, stoneDto.getStoneId());
+        assertNull(stoneDto.getName());
+        assertEquals(0, stoneDto.getInventory());
+        assertNull(stoneDto.getPrice());
     }
 }

@@ -1,12 +1,15 @@
 package com.goldeneye.service;
 
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
-import java.math.BigDecimal;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import static com.goldeneye.constants.AppConstants.PRICESCALE;
 import com.goldeneye.dto.LocationDTO;
 import com.goldeneye.dto.MaterialDTO;
 import com.goldeneye.dto.OrderDTO;
@@ -16,11 +19,10 @@ import com.goldeneye.dto.OrderSummaryDTO;
 import com.goldeneye.dto.ProductDTO;
 import com.goldeneye.dto.StoneDTO;
 import com.goldeneye.dto.WidthDTO;
+import com.goldeneye.exception.InvalidOrderException;
+import com.goldeneye.exception.ResourceNotFoundException;
 import com.goldeneye.repo.OrderItemRepo;
 import com.goldeneye.repo.OrderRepo;
-import com.goldeneye.exception.InvalidOrderException;
-
-import static com.goldeneye.constants.AppConstants.PRICESCALE;
 
 
 /**
@@ -29,6 +31,8 @@ import static com.goldeneye.constants.AppConstants.PRICESCALE;
  */
 @Service
 public class OrderService {
+
+    private static final Logger logger = LoggerFactory.getLogger(OrderService.class);
 
     private final OrderRepo orderRepo;
     private final OrderItemRepo orderItemRepo;
@@ -50,12 +54,17 @@ public class OrderService {
 
     @Transactional
     public int createOrder(OrderDTO orderDTO) {
+        logger.info("Creating new order for customer ID: {}", orderDTO.getCustId());
         if (orderDTO.getOrderItems() == null || orderDTO.getOrderItems().isEmpty()) {
+            logger.warn("Order creation failed: no items provided for customer ID: {}", orderDTO.getCustId());
             throw new InvalidOrderException("Order must contain at least one item.");
         }
-        orderRepo.insertOrder(orderDTO.getCustId(), orderDTO.getLocationId());
+        for (OrderItemDTO dto : orderDTO.getOrderItems()) {
+            validateOrderItem(dto);
+        }
+        orderRepo.insertOrder(orderDTO.getCustId(), orderDTO.getLocationId(), orderDTO.getBillLocId());
         int orderId = orderRepo.getLastGeneratedId();
-
+        logger.debug("Order inserted with ID: {}", orderId);
 
         for (OrderItemDTO dto : orderDTO.getOrderItems()) {
             orderItemRepo.insertOrderItem(
@@ -69,18 +78,22 @@ public class OrderService {
             );
         }
 
+        logger.info("Order ID {} created successfully with {} item(s)", orderId, orderDTO.getOrderItems().size());
         return orderId;
     }
 
     public List<OrderSummaryDTO> getOrdersByCustId(int custId) {
-        return orderRepo.findOrderSummariesByCustId(custId)
+        logger.info("Fetching orders for customer ID: {}", custId);
+        List<OrderSummaryDTO> orders = orderRepo.findOrderSummariesByCustId(custId)
             .stream()
             .map(order -> {
                 LocationDTO location = locationService.getLocationById(order.getLocId());
+                LocationDTO billingLocation = locationService.getLocationById(order.getBillId());
 
                 List<OrderItemSummaryDTO> itemSummaries = orderItemRepo.findOrderItemSummariesByOrderId(order.getOrderId())
                     .stream()
                     .map(item -> new OrderItemSummaryDTO(
+                        item.getOrderItemId(),
                         item.getProdName(),
                         item.getMattName(),
                         item.getWidth(),
@@ -95,13 +108,114 @@ public class OrderService {
                     order.getName(),
                     order.getOrderDate(),
                     location,
+                    billingLocation,
                     itemSummaries
                 );
             })
             .toList();
+        if (orders.isEmpty()) {
+            logger.warn("No orders found for customer ID: {}", custId);
+            throw new ResourceNotFoundException("No orders found for customer ID: " + custId);
+        }
+        logger.debug("Retrieved {} orders for customer ID: {}", orders.size(), custId);
+        return orders;
+    }
+
+    @Transactional
+    public void deleteOrderByOrderId(int orderId) {
+        logger.info("Deleting order with ID: {}", orderId);
+        if (!orderRepo.existsById(orderId)) {
+            logger.warn("Delete failed: order not found with ID: {}", orderId);
+            throw new ResourceNotFoundException("Order not found with ID: " + orderId);
+        }
+        orderItemRepo.deleteByOrderId(orderId);
+        orderRepo.deleteByOrderId(orderId);
+        logger.debug("Order ID {} and its items deleted successfully", orderId);
+    }
+
+    public void updateOrder(int orderId, OrderDTO orderDTO) {
+        logger.info("Updating order with ID: {}", orderId);
+        if (!orderRepo.existsById(orderId)) {
+            logger.warn("Update failed: order not found with ID: {}", orderId);
+            throw new ResourceNotFoundException("Order not found with ID: " + orderId);
+        }
+        if (orderDTO.getOrderItems() == null || orderDTO.getOrderItems().isEmpty()) {
+            logger.warn("Update failed: no items provided for order ID: {}", orderId);
+            throw new InvalidOrderException("Order must contain at least one item.");
+        }
+        for (OrderItemDTO orderItem : orderDTO.getOrderItems()) {
+            validateOrderItem(orderItem);
+        }
+        orderRepo.updateOrder(orderDTO.getCustId(), orderDTO.getLocationId(), orderDTO.getBillLocId(), orderId);
+
+        for (OrderItemDTO orderItem : orderDTO.getOrderItems()) {
+            if (orderItem.getOrderItemId() != null) {
+                logger.debug("Updating existing order item ID: {}", orderItem.getOrderItemId());
+                updateOrderItem(orderItem.getOrderItemId(), orderItem);
+            } else {
+                logger.debug("Inserting new order item for order ID: {}", orderId);
+                BigDecimal unitPrice = calculateUnitPrice(orderItem.getProductId(), orderItem.getMaterialId(), orderItem.getWidthId(), orderItem.getStoneId(), orderItem.getQuantity());
+                orderItemRepo.insertOrderItem(
+                    orderId,
+                    orderItem.getProductId(),
+                    orderItem.getMaterialId(),
+                    orderItem.getWidthId(),
+                    orderItem.getStoneId(),
+                    unitPrice,
+                    orderItem.getQuantity()
+                );
+            }
+        }
+        logger.info("Order ID {} updated successfully", orderId);
+    }
+
+    public void deleteOrderItem(int ordItmId) {
+        logger.info("Deleting order item with ID: {}", ordItmId);
+        if (!orderItemRepo.existsById(ordItmId)) {
+            logger.warn("Delete failed: order item not found with ID: {}", ordItmId);
+            throw new ResourceNotFoundException("Order item not found with ID: " + ordItmId);
+        }
+        orderItemRepo.deleteByOrderItemId(ordItmId);
+        logger.debug("Order item ID {} deleted successfully", ordItmId);
+    }
+
+    public void updateOrderItem(int ordItmId, OrderItemDTO orderItem) {
+        logger.info("Updating order item with ID: {}", ordItmId);
+        if (!orderItemRepo.existsById(ordItmId)) {
+            logger.warn("Update failed: order item not found with ID: {}", ordItmId);
+            throw new ResourceNotFoundException("Order item not found with ID: " + ordItmId);
+        }
+        validateOrderItem(orderItem);
+        BigDecimal newUnitPrice = calculateUnitPrice(orderItem.getProductId(), orderItem.getMaterialId(), orderItem.getWidthId(), orderItem.getStoneId(), orderItem.getQuantity());
+        orderItemRepo.updateOrderItem(ordItmId, orderItem.getProductId(), orderItem.getMaterialId(), orderItem.getWidthId(), orderItem.getStoneId(), newUnitPrice, orderItem.getQuantity());
+        logger.debug("Order item ID {} updated with unit price: {}", ordItmId, newUnitPrice);
+    }
+
+    private void validateOrderItem(OrderItemDTO item) {
+        if (item.getQuantity() <= 0) {
+            logger.warn("Invalid quantity {} for product ID: {}", item.getQuantity(), item.getProductId());
+            throw new InvalidOrderException("Quantity must be greater than zero for product ID: " + item.getProductId());
+        }
+        if (item.getProductId() <= 0) {
+            logger.warn("Invalid product ID: {}", item.getProductId());
+            throw new InvalidOrderException("Invalid product ID: " + item.getProductId());
+        }
+        if (item.getMaterialId() <= 0) {
+            logger.warn("Invalid material ID: {}", item.getMaterialId());
+            throw new InvalidOrderException("Invalid material ID: " + item.getMaterialId());
+        }
+        if (item.getWidthId() <= 0) {
+            logger.warn("Invalid width ID: {}", item.getWidthId());
+            throw new InvalidOrderException("Invalid width ID: " + item.getWidthId());
+        }
+        if (item.getStoneId() <= 0) {
+            logger.warn("Invalid stone ID: {}", item.getStoneId());
+            throw new InvalidOrderException("Invalid stone ID: " + item.getStoneId());
+        }
     }
 
     public BigDecimal calculateUnitPrice(int productId, int materialId, int widthId, int stoneId, int quantity) {
+        logger.debug("Calculating unit price");
         // get base price from product
         ProductDTO product = productService.getProductById(productId);
         BigDecimal basePrice = product.getBasePrice().setScale(PRICESCALE, RoundingMode.HALF_UP);
@@ -123,6 +237,17 @@ public class OrderService {
         BigDecimal individualPrice = stonePrice.add(ringPrice).setScale(PRICESCALE, RoundingMode.HALF_UP);
         BigDecimal totalPrice = individualPrice.multiply(BigDecimal.valueOf(quantity)).setScale(PRICESCALE, RoundingMode.HALF_UP);
         
+        logger.debug("Calculated unit price: {}", totalPrice);
         return totalPrice;
+    }
+
+    public void deleteAllOrderItems(int orderId) {
+        logger.info("Deleting all order items for order ID: {}", orderId);
+        if (!orderRepo.existsById(orderId)) {
+            logger.warn("Delete failed: order not found with ID: {}", orderId);
+            throw new ResourceNotFoundException("Order not found with ID: " + orderId);
+        }
+        orderItemRepo.deleteByOrderId(orderId);
+        logger.debug("All order items for order ID {} deleted successfully", orderId);
     }
 }

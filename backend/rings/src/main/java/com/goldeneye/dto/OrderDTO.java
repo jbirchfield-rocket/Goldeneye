@@ -11,6 +11,7 @@ public class OrderDTO {
     private Integer orderId;
     private int custId;
     private int locationId;
+    private int billingLocationId;
     private LocalDate date;
     private List<OrderItemDTO> orderItems;
 
@@ -18,10 +19,11 @@ public class OrderDTO {
     }
 
 
-    public OrderDTO(Integer orderId, int custId, int locationId, LocalDate date, List<OrderItemDTO> orderItems) {
+    public OrderDTO(Integer orderId, int custId, int locationId, int billingLocationId, LocalDate date, List<OrderItemDTO> orderItems) {
         this.orderId = orderId;
         this.custId = custId;
         this.locationId = locationId;
+        this.billingLocationId = billingLocationId;
         this.date = date;
         this.orderItems = orderItems;
     }
@@ -47,6 +49,14 @@ public class OrderDTO {
     }
     public void setLocationId(int locationId) {
         this.locationId = locationId;
+    }
+
+    public int getBillLocId() {
+        return billingLocationId;
+    }
+
+    public void setBillLocId(int billingLocationId) {
+        this.billingLocationId = billingLocationId;
     }
 
     public LocalDate getDate() {

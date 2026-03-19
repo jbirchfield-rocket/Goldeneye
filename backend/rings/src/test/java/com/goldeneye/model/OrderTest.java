@@ -27,17 +27,18 @@ public class OrderTest {
     public void constructor_initializesAllFields() {
         LocalDate orderDate = LocalDate.of(2026, 3, 11);
 
-        Order order = new Order(1, 101, 5, orderDate);
+        Order order = new Order(1, 101, 5, 1, orderDate);
 
         assertEquals(1, order.getOrderId());
         assertEquals(101, order.getCustId());
         assertEquals(5, order.getLocationId());
+        assertEquals(1, order.getBillLocId());
         assertEquals(orderDate, order.getOrderDate());
     }
 
     @Test
     public void setOrderId_updatesValue() {
-        Order order = new Order(1, 101, 5, LocalDate.of(2026, 3, 11));
+        Order order = new Order(1, 101, 5, 1, LocalDate.of(2026, 3, 11));
 
         order.setOrderId(2);
 
@@ -46,7 +47,7 @@ public class OrderTest {
 
     @Test
     public void setCustId_updatesValue() {
-        Order order = new Order(1, 101, 5, LocalDate.of(2026, 3, 11));
+        Order order = new Order(1, 101, 5, 1, LocalDate.of(2026, 3, 11));
 
         order.setCustId(202);
 
@@ -54,8 +55,16 @@ public class OrderTest {
     }
 
     @Test
+    public void setBillLocId_updatesValue() {
+        Order order = new Order(1, 101, 5, 1, LocalDate.of(2026, 3, 11));
+        order.setBillLocId(2);
+
+        assertEquals(2, order.getBillLocId());
+    }
+
+    @Test
     public void setLocationId_updatesValue() {
-        Order order = new Order(1, 101, 5, LocalDate.of(2026, 3, 11));
+        Order order = new Order(1, 101, 5, 1, LocalDate.of(2026, 3, 11));
 
         order.setLocationId(10);
 
@@ -64,7 +73,7 @@ public class OrderTest {
 
     @Test
     public void setOrderDate_updatesValue() {
-        Order order = new Order(1, 101, 5, LocalDate.of(2026, 3, 11));
+        Order order = new Order(1, 101, 5, 1, LocalDate.of(2026, 3, 11));
         LocalDate updatedDate = LocalDate.of(2026, 4, 1);
 
         order.setOrderDate(updatedDate);
@@ -74,7 +83,7 @@ public class OrderTest {
 
     @Test
     public void setOrderDate_allowsNull() {
-        Order order = new Order(1, 101, 5, LocalDate.of(2026, 3, 11));
+        Order order = new Order(1, 101, 5, 1, LocalDate.of(2026, 3, 11));
 
         order.setOrderDate(null);
 
