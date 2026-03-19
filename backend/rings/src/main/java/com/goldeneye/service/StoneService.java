@@ -32,6 +32,10 @@ public class StoneService {
             .stream()
             .map(c -> new StoneDTO(c.getStoneId(), c.getStoneName(), c.getInventory(), c.getPrice()))
             .toList();
+        if (stones.isEmpty()) {
+            logger.warn("No stones found");
+            throw new ResourceNotFoundException("No stones found.");
+        }
         logger.debug("Retrieved {} stones", stones.size());
         return stones;
     }
