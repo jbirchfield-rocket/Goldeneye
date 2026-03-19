@@ -79,6 +79,12 @@ public class GoldeneyeController {
         return ResponseEntity.noContent().build();
     }
 
+    @DeleteMapping("/customer/{custId}")
+    public ResponseEntity<Void> deleteCustomer(@PathVariable int custId) {
+        customerService.deleteCustomer(custId);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/locations/{custId}")
     public ResponseEntity<List<LocationDTO>> getLocationsByCustId(@PathVariable int custId) {
         return ResponseEntity.ok(locationService.getLocationsByCustId(custId));
