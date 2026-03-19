@@ -103,7 +103,7 @@ onMounted(() => {
           placeholder="Enter new customer name" 
           class="new-customer-input">
         <button @click="handleAddCustomer" class="add-customer-button">Add Customer</button>
-    </div>
+      </div>
     </div>
     
     <div class="content-center">
