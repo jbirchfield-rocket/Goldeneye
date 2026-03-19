@@ -11,45 +11,69 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import static org.mockito.Mockito.when;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.goldeneye.dto.ProductDTO;
-import com.goldeneye.rings.RingsApplication;
- 
+import com.goldeneye.exception.ResourceNotFoundException;
+import com.goldeneye.model.Product;
+import com.goldeneye.repo.ProductRepo;
+
 /**
  *
- * @author scanales
+ * @author scanales and rskwall
  */
 
-
-@SpringBootTest(classes = RingsApplication.class)
 @DisplayName("Product Service Tests")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-@Tag("integration")
+@ExtendWith(MockitoExtension.class)
 class ProductServiceTests {
-    @Autowired
+
+    @Mock
+    private ProductRepo productRepo;
+
+    @InjectMocks
     private ProductService productService;
 
+    private Product product1;
+    private Product product2;
+
+    @BeforeEach
+    void setUpProducts() {
+        product1 = new Product(1, "Standard Fit Grooved Band", "A classic band with a center groove for a clean look.", BigDecimal.valueOf(120));
+        product2 = new Product(2, "Comfort Fit Plain Band", "A smooth, rounded interior band for all-day comfort.", BigDecimal.valueOf(100));
+    }
+
     @Test
-    void getAllProductsReturnsListOfProducts() {
-       List<ProductDTO> products = productService.getAllProducts();
-       assertNotNull(products);
-       assertFalse(products.isEmpty());
-       assertTrue(products.stream().allMatch(p -> p instanceof ProductDTO));
-       assertEquals(4, products.size());
-       assertTrue(products.stream().anyMatch(p -> p.getProdId() == 1 && p.getName().equals("Standard Fit Grooved Band")));
+    void getAllProductsReturnsListOfProductDTOs() {
+        when(productRepo.findAll()).thenReturn(List.of(product1, product2));
+
+        List<ProductDTO> products = productService.getAllProducts();
+
+        assertNotNull(products);
+        assertFalse(products.isEmpty());
+        assertEquals(2, products.size());
+        assertTrue(products.stream().allMatch(p -> p instanceof ProductDTO));
+        assertTrue(products.stream().anyMatch(p -> p.getProdId() == 1 && p.getName().equals("Standard Fit Grooved Band")));
+        assertTrue(products.stream().anyMatch(p -> p.getProdId() == 2 && p.getName().equals("Comfort Fit Plain Band")));
     }
 
     @Test
     void getProductByIdReturnsCorrectProduct() {
+        when(productRepo.findById(1)).thenReturn(product1);
+
         ProductDTO product = productService.getProductById(1);
+
         assertNotNull(product);
         assertEquals(1, product.getProdId());
         assertEquals("Standard Fit Grooved Band", product.getName());
@@ -57,51 +81,10 @@ class ProductServiceTests {
         assertEquals(0, product.getBasePrice().compareTo(BigDecimal.valueOf(120)));
     }
 
-    // @Test
-    // @Disabled
-    // void readproductsReturnsEmptyListWhenNoproducts() {
-    //     List<Product> products = productService.readproducts();
-    //     // TODO: Assert list is not null
-    //     // TODO: Assert list is empty
-    // }
+    @Test
+    void getProductByIdThrowsWhenProductNotFound() {
+        when(productRepo.findById(99)).thenReturn(null);
 
-    // @Test
-    // @Disabled
-    // void createproductAddsNewproduct() {
-    //     Product newproduct = new Product(0, "testProduct", "This is a test product.", BigDecimal.valueOf(9.99));
-    //     List<Product> startingproducts = productService.readproducts();
-    //     assumeTrue(startingproducts != null);
-    //     assumeFalse(startingproducts.contains(newproduct));
-
-    //     productService.createproduct(newproduct);
-    //     List<Product> updatedproducts = productService.readproducts();
-    //     // TODO: Assert list is not null
-    //     // TODO: Assert list is not empty
-    //     // TODO: Assert list contains the new product
-    // }
-    
-
-    // @Test
-    // @Disabled
-    // void updateproductModifiesExistingproduct() {
-    //     List<Product> existingproducts = productService.readproducts();
-    //     assumeTrue(existingproducts != null);
-    //     assumeFalse(existingproducts.isEmpty());
-
-    //     Product productToUpdate = existingproducts.get(0);
-    //     productToUpdate.setName("Updated Name");
-    //     productService.updateproduct(productToUpdate);
-
-    //     List<Product> updatedproducts = productService.readproducts();
-    //     // TODO: Assert list is not null
-    //     // TODO: Assert list is not empty
-    //     // TODO: Assert updated product has properly been updated
-    //     // TODO: Assert other products remain unchanged
-    // }
-
-    // @Test
-    // @Disabled
-    // void deleteproductRemovesproduct() {
-        
-    // }
+        assertThrows(ResourceNotFoundException.class, () -> productService.getProductById(99));
+    }
 }
