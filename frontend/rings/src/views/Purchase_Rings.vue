@@ -329,6 +329,7 @@ const addToCart = (ringId: number) => {
     const selectedMaterial = ring.materialTypes.find(m => m.materialId === options.materialType);
     const selectedWidth = ring.bandWidths.find(w => w.widthId === options.bandWidth);
     const selectedStone = ring.ringStones.find(s => s.stoneId === options.ringStone);
+    const selectedName = ring.name;
 
     addItemToCart({
       ringId: ring.prodId,
@@ -341,7 +342,8 @@ const addToCart = (ringId: number) => {
       addedAt: Date.now(),
       materialTypeName: selectedMaterial?.name,
       bandWidthName: selectedWidth ? `${selectedWidth.width}mm` : undefined,
-      ringStoneName: selectedStone?.name
+      ringStoneName: selectedStone?.name,
+      ringName: selectedName
     });
     
     alert(`Added ${options.quantity} ring(s) to cart!`);
