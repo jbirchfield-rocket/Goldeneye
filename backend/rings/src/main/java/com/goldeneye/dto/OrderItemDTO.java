@@ -10,35 +10,30 @@ import static com.goldeneye.constants.AppConstants.PRICESCALE;
  * @author dshelby
  */
 public class OrderItemDTO {
+    private Integer orderItemId;
     private int productId;
     private int materialId;
     private int widthId;
     private int stoneId;
-    private BigDecimal unitPrice;
     private int quantity;
 
     public OrderItemDTO() {
     }
 
-    public OrderItemDTO(int productId, int materialId, int widthId, int stoneId, BigDecimal unitPrice, int quantity) {
+    public OrderItemDTO(Integer orderItemId, int productId, int materialId, int widthId, int stoneId, int quantity) {
+        this.orderItemId = orderItemId;
         this.productId = productId;
         this.materialId = materialId;
         this.widthId = widthId;
         this.stoneId = stoneId;
-        this.unitPrice = unitPrice.setScale(PRICESCALE, RoundingMode.HALF_UP);
         this.quantity = quantity;
     }
 
+    public Integer getOrderItemId() { return orderItemId; }
+    public void setOrderItemId(Integer orderItemId) { this.orderItemId = orderItemId; }
 
     public int getProductId() { return productId; }
     public void setProductId(int productId) { this.productId = productId; }
-
-    public BigDecimal getUnitPrice() { 
-        return unitPrice.setScale(PRICESCALE, RoundingMode.HALF_UP); 
-    }
-    public void setUnitPrice(BigDecimal unitPrice) { 
-        this.unitPrice = unitPrice.setScale(PRICESCALE, RoundingMode.HALF_UP);
-    }
     
     public int getMaterialId() { return materialId; }
     public void setMaterialId(int materialId) { this.materialId = materialId; }
