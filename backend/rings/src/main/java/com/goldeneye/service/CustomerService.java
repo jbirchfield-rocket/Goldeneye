@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.goldeneye.dto.CustomerDTO;
 import com.goldeneye.repo.CustomerRepo;
+import com.goldeneye.constants.BoolEnum;
 
 /**
  *
@@ -29,7 +30,7 @@ public class CustomerService {
     public List<CustomerDTO> getAllCustomers() {
         return customerRepo.findAll()
             .stream()
-            .map(c -> new CustomerDTO(c.getCustId(), c.getName()))
+            .map(c -> new CustomerDTO(c.getCustId(), c.getName(), c.getActive()))
             .toList();
     }
 
@@ -41,5 +42,10 @@ public class CustomerService {
   
     public void updateCustomer(int custId, CustomerDTO customer) {
         customerRepo.updateCustomer(custId, customer.getName());
+    }
+
+    public void deleteCustomer(int custId) {
+        int activeFalse = BoolEnum.FALSE.ordinal();
+        customerRepo.deleteCustomer(custId, activeFalse);
     }
 }
