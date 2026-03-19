@@ -6,28 +6,65 @@
 package com.goldeneye.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
+
+import static com.goldeneye.constants.AppConstants.PRICESCALE;
 
 /**
  *
  * @author scanales
  */
+@Table("TBORDITM")
 public class OrderItem {
+    @Id
+    @Column("ORDITMID")
+    private Integer orderItemId;
+
+    @Column("ORDERID")
     private int orderId;
+
+    @Column("PRODID")
     private int productId;
+
+    @Column("MATTID")
     private int materialId;
+
+    @Column("WID")
     private int widthId;
+
+    @Column("STONEID")
     private int stoneId;
+
+    @Column("UNITPRICE")
     private BigDecimal unitPrice;
+
+    @Column("QTY")
     private int quantity;
 
-    public OrderItem(int orderId, int productId, int materialId, int widthId, int stoneId, BigDecimal unitPrice, int quantity) {
+    public OrderItem() {
+    }
+
+    public OrderItem(int orderItemId, int orderId, int productId, int materialId, int widthId, int stoneId, BigDecimal unitPrice, int quantity) {
+        this.orderItemId = orderItemId;
         this.orderId = orderId;
         this.productId = productId;
         this.materialId = materialId;
         this.widthId = widthId;
         this.stoneId = stoneId;
-        this.unitPrice = unitPrice;
+        this.unitPrice = unitPrice.setScale(PRICESCALE, RoundingMode.HALF_UP);
         this.quantity = quantity;
+    }
+
+    public Integer getOrderItemId() {
+        return orderItemId;
+    }
+
+    public void setOrderItemId(int orderItemId) {
+        this.orderItemId = orderItemId;
     }
 
     public int getOrderId() {
@@ -71,11 +108,11 @@ public class OrderItem {
     }
 
     public BigDecimal getUnitPrice() {
-        return unitPrice;
+        return unitPrice.setScale(PRICESCALE, RoundingMode.HALF_UP);
     }
 
     public void setUnitPrice(BigDecimal unitPrice) {
-        this.unitPrice = unitPrice;
+        this.unitPrice = unitPrice.setScale(PRICESCALE, RoundingMode.HALF_UP);
     }
 
     public int getQuantity() {
