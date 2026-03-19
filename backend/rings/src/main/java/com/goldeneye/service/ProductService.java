@@ -37,6 +37,10 @@ public class ProductService {
             .stream()
             .map(c -> new ProductDTO(c.getProdId(), c.getName(), c.getDescription(), c.getBasePrice()))
             .toList();
+        if (products.isEmpty()) {
+            logger.warn("No products found");
+            throw new ResourceNotFoundException("No products found.");
+        }
         logger.debug("Retrieved {} products", products.size());
         return products;
     }
