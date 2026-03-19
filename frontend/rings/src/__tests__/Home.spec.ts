@@ -29,9 +29,9 @@ function clearAllCookies() {
 
 // Mock customer data
 const mockCustomers = [
-  { custId: 1, name: 'Alice Johnson' },
-  { custId: 2, name: 'Bob Smith' },
-  { custId: 3, name: 'Charlie Brown' },
+  { custId: 1, name: 'Alice Johnson', active: 1 },
+  { custId: 2, name: 'Bob Smith', active: 1 },
+  { custId: 3, name: 'Charlie Brown', active: 1 },
 ]
 
 function createTestRouter() {

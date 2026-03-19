@@ -28,16 +28,16 @@ const mockProducts = [
 ]
 
 const mockStones = [
-  { stoneId: 1, name: 'Cubic Zirconia', multiplier: 1, Inventory: 100, price: 0 },
-  { stoneId: 2, name: 'Semi-precious', multiplier: 1.5, Inventory: 50, price: 20 },
-  { stoneId: 3, name: 'Lab-Grown Diamond', multiplier: 2, Inventory: 20, price: 40 },
-  { stoneId: 4, name: 'Natural Diamond', multiplier: 3, Inventory: 3, price: 80 },
+  { stoneId: 1, name: 'Cubic Zirconia', multiplier: 1, inventory: 100, price: 0 },
+  { stoneId: 2, name: 'Semi-precious', multiplier: 1.5, inventory: 50, price: 20 },
+  { stoneId: 3, name: 'Lab-Grown Diamond', multiplier: 2, inventory: 20, price: 40 },
+  { stoneId: 4, name: 'Natural Diamond', multiplier: 3, inventory: 3, price: 80 },
 ]
 
 const mockMaterials = [
-  { materialId: 1, name: 'Gold', multiplier: 1, Inventory: 100 },
-  { materialId: 2, name: 'Platinum', multiplier: 1.5, Inventory: 8 },
-  { materialId: 3, name: 'Palladium', multiplier: 1.2, Inventory: 30 },
+  { materialId: 1, name: 'Gold', multiplier: 1, inventory: 100 },
+  { materialId: 2, name: 'Platinum', multiplier: 1.5, inventory: 8 },
+  { materialId: 3, name: 'Palladium', multiplier: 1.2, inventory: 30 },
 ]
 
 const mockWidths = [

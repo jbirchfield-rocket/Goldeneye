@@ -85,7 +85,7 @@ const mockOrders = [
       zip: '75000',
       locID: 10,
     },
-    billLocation: {
+    billingLocation: {
       custId: 5,
       street: '200 Billing Ave',
       city: 'Billtown',

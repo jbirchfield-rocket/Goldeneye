@@ -30,8 +30,9 @@ function clearAllCookies() {
 
 // Factory for creating a CartItem
 function createCartItem(overrides: Partial<CartItem> = {}): CartItem {
+  const ringId = overrides.ringId ?? 1
   return {
-    ringId: 1,
+    ringId,
     ringImage: '/rings/ring1.png',
     materialType: 1,
     bandWidth: 5,
@@ -39,6 +40,7 @@ function createCartItem(overrides: Partial<CartItem> = {}): CartItem {
     quantity: 1,
     price: 100,
     addedAt: Date.now(),
+    ringName: `Ring #${ringId}`,
     ...overrides,
   }
 }
