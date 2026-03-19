@@ -23,15 +23,16 @@ public class CustomerTest {
 
     @Test
     public void constructor_initializesAllFields() {
-        Customer customer = new Customer(101, "Alice");
+        Customer customer = new Customer(101, "Alice", 1);
 
         assertEquals(101, customer.getCustId());
         assertEquals("Alice", customer.getName());
+        assertEquals(1, customer.getActive());
     }
 
     @Test
     public void setCustId_updatesValue() {
-        Customer customer = new Customer(101, "Alice");
+        Customer customer = new Customer(101, "Alice", 1);
 
         customer.setCustId(202);
 
@@ -40,7 +41,7 @@ public class CustomerTest {
 
     @Test
     public void setName_updatesValue() {
-        Customer customer = new Customer(101, "Alice");
+        Customer customer = new Customer(101, "Alice", 1);
 
         customer.setName("Bob");
 
@@ -49,7 +50,7 @@ public class CustomerTest {
 
     @Test
     public void setName_allowsNull() {
-        Customer customer = new Customer(101, "Alice");
+        Customer customer = new Customer(101, "Alice", 1);
 
         customer.setName(null);
 

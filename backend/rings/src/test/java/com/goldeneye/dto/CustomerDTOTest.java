@@ -31,10 +31,11 @@ public class CustomerDTOTest {
 
     @Test
     void constructorInitializesAllFields() {
-        CustomerDTO dto = new CustomerDTO(1, "Jane Doe");
+        CustomerDTO dto = new CustomerDTO(1, "Jane Doe", 1);
         assertNotNull(dto);
         assertEquals(1, dto.getCustId());
         assertEquals("Jane Doe", dto.getName());
+        assertEquals(1, dto.getActive());
     }
 
     @Test

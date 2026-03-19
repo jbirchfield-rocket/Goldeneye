@@ -14,9 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -25,20 +22,22 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import org.mockito.Mock;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.goldeneye.dto.OrderDTO;
-import com.goldeneye.dto.ProductDTO;
-import com.goldeneye.dto.StoneDTO;
-import com.goldeneye.dto.MaterialDTO;
-import com.goldeneye.dto.WidthDTO;
-import com.goldeneye.exception.InvalidOrderException;
 import com.goldeneye.dto.LocationDTO;
+import com.goldeneye.dto.MaterialDTO;
+import com.goldeneye.dto.OrderDTO;
 import com.goldeneye.dto.OrderItemDTO;
 import com.goldeneye.dto.OrderItemSummaryDTO;
 import com.goldeneye.dto.OrderSummaryDTO;
+import com.goldeneye.dto.ProductDTO;
+import com.goldeneye.dto.StoneDTO;
+import com.goldeneye.dto.WidthDTO;
+import com.goldeneye.exception.InvalidOrderException;
 import com.goldeneye.repo.OrderItemRepo;
 import com.goldeneye.repo.OrderItemSummaryRow;
 import com.goldeneye.repo.OrderRepo;
@@ -170,6 +169,8 @@ public class OrderServiceTests {
 
     @Test
     void deleteOrderByOrderIdDeletesOrder() {
+        when(orderRepo.existsById(1)).thenReturn(true);
+
         orderService.deleteOrderByOrderId(1);
         verify(orderItemRepo).deleteByOrderId(1);
         verify(orderRepo).deleteByOrderId(1);
@@ -179,6 +180,8 @@ public class OrderServiceTests {
     void updateOrderUpdatesExistingOrderItem() {
         OrderDTO updateDTO = new OrderDTO(1, 3, 2, 2, LocalDate.of(2026, 3, 12), List.of(item));
 
+        when(orderRepo.existsById(1)).thenReturn(true);
+        when(orderItemRepo.existsById(1)).thenReturn(true);
         when(productService.getProductById(1)).thenReturn(product);
         when(stoneService.getStoneById(1)).thenReturn(stone);
         when(materialService.getMaterialById(1)).thenReturn(material);
@@ -195,6 +198,7 @@ public class OrderServiceTests {
         OrderItemDTO newItem = new OrderItemDTO(null, 1, 1, 1, 1, 3);
         OrderDTO updateDTO = new OrderDTO(1, 3, 2, 2, LocalDate.of(2026, 3, 12), List.of(newItem));
 
+        when(orderRepo.existsById(1)).thenReturn(true);
         when(productService.getProductById(1)).thenReturn(product);
         when(stoneService.getStoneById(1)).thenReturn(stone);
         when(materialService.getMaterialById(1)).thenReturn(material);
@@ -208,12 +212,16 @@ public class OrderServiceTests {
 
     @Test
     void deleteOrderItemDeletesSingleItem() {
+        when(orderItemRepo.existsById(1)).thenReturn(true);
+
         orderService.deleteOrderItem(1);
         verify(orderItemRepo).deleteByOrderItemId(1);
     }
 
     @Test
     void deleteAllOrderItemsDeletesAllItems() {
+        when(orderRepo.existsById(1)).thenReturn(true);
+
         orderService.deleteAllOrderItems(1);
         verify(orderItemRepo).deleteByOrderId(1);
     }

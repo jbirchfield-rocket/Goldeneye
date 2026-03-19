@@ -119,6 +119,8 @@ public class LocationServiceTests {
 
     @Test
     void deleteLocationDeletesCorrectLocation() {
+        when(locationRepo.findByLocId(1)).thenReturn(Optional.of(location1));
+
         locationService.deleteLocation(1);
 
         verify(locationRepo).deleteByLocId(1);

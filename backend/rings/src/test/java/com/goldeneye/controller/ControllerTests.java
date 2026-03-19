@@ -81,8 +81,8 @@ public class ControllerTests {
     @Test
     void getAllCustomersReturns200WithCustomerList() throws Exception {
         when(customerService.getAllCustomers()).thenReturn(List.of(
-            new CustomerDTO(1, "Golden Halo Jewelers"),
-            new CustomerDTO(20, "Precious Band Co.")
+            new CustomerDTO(1, "Golden Halo Jewelers", 1),
+            new CustomerDTO(20, "Precious Band Co.", 1)
         ));
 
         mockMvc.perform(get("/api/customers"))
@@ -100,7 +100,7 @@ public class ControllerTests {
 
         mockMvc.perform(post("/api/customers")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"custId\":0,\"name\":\"Golden Halo Jewelers\"}"))
+                .content("{\"custId\":0,\"name\":\"Golden Halo Jewelers\",\"active\":1}"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$").value(1));
 
@@ -113,7 +113,7 @@ public class ControllerTests {
     void updateCustomerReturns204() throws Exception {
         mockMvc.perform(put("/api/customers/1")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"custId\":1,\"name\":\"Golden Halo Jewelers Updated\"}"))
+                .content("{\"custId\":1,\"name\":\"Golden Halo Jewelers Updated\",\"active\":1}"))
             .andExpect(status().isNoContent());
 
         ArgumentCaptor<CustomerDTO> captor = ArgumentCaptor.forClass(CustomerDTO.class);

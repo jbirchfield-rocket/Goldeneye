@@ -48,8 +48,8 @@ public class CustomerServiceTests {
 
     @BeforeEach
     void setUpDTOs() {
-        customer1 = new Customer(1, "Golden Halo Jewelers");
-        customer2 = new Customer(20, "Precious Band Co.");
+        customer1 = new Customer(1, "Golden Halo Jewelers", 1);
+        customer2 = new Customer(20, "Precious Band Co.", 1);
     }
 
     @Test
@@ -68,7 +68,7 @@ public class CustomerServiceTests {
 
     @Test
     void createCustomerReturnsNewCustomerId() {
-        CustomerDTO newCustomer = new CustomerDTO(0, "Golden Halo Jewelers");
+        CustomerDTO newCustomer = new CustomerDTO(0, "Golden Halo Jewelers", 1);
 
         when(customerRepo.getLastGeneratedId()).thenReturn(1);
 
@@ -80,7 +80,9 @@ public class CustomerServiceTests {
 
     @Test
     void updateCustomerUpdatesCorrectCustomer() {
-        CustomerDTO updatedCustomer = new CustomerDTO(1, "Golden Halo Jewelers Updated");
+        CustomerDTO updatedCustomer = new CustomerDTO(1, "Golden Halo Jewelers Updated", 1);
+
+        when(customerRepo.existsById(1)).thenReturn(true);
 
         customerService.updateCustomer(1, updatedCustomer);
 
