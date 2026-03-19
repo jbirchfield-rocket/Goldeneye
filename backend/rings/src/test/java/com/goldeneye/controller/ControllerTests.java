@@ -5,13 +5,11 @@
 
 package com.goldeneye.controller;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -39,6 +37,7 @@ import com.goldeneye.dto.CustomerDTO;
 import com.goldeneye.dto.LocationDTO;
 import com.goldeneye.dto.MaterialDTO;
 import com.goldeneye.dto.OrderDTO;
+import com.goldeneye.dto.OrderItemDTO;
 import com.goldeneye.dto.OrderSummaryDTO;
 import com.goldeneye.dto.ProductDTO;
 import com.goldeneye.dto.StoneDTO;
@@ -163,13 +162,12 @@ public class ControllerTests {
     }
 
     @Test
-    @Disabled
     void submitOrderReturns200WithNewOrderId() throws Exception {
         when(orderService.createOrder(any(OrderDTO.class))).thenReturn(40);
 
         mockMvc.perform(post("/api/order")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"custId\":2,\"locationId\":1,\"billLocId\":1,\"orderItems\":[]}"))
+                .content("{\"orderId\":null,\"custId\":2,\"locationId\":1,\"billingLocationId\":1,\"date\":\"2026-03-19\",\"orderItems\":[]}"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$").value(40));
 
@@ -202,11 +200,10 @@ public class ControllerTests {
     }
 
     @Test
-    @Disabled
     void updateOrderReturns204() throws Exception {
         mockMvc.perform(put("/api/order/40")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"custId\":2,\"locationId\":1,\"billLocId\":1,\"orderItems\":[]}"))
+                .content("{\"orderId\":40,\"custId\":2,\"locationId\":1,\"billingLocationId\":1,\"date\":\"2026-03-19\",\"orderItems\":[]}"))
             .andExpect(status().isNoContent());
 
         ArgumentCaptor<OrderDTO> captor = ArgumentCaptor.forClass(OrderDTO.class);
@@ -277,4 +274,29 @@ public class ControllerTests {
             .andExpect(jsonPath("$[1].prodId").value(2))
             .andExpect(jsonPath("$[1].name").value("Comfort Fit Plain Band"));
     }
+
+    @Test
+    void deleteOrderItemReturns204() throws Exception {
+        mockMvc.perform(delete("/api/orderitem/10"))
+            .andExpect(status().isNoContent());
+
+        verify(orderService).deleteOrderItem(10);
+    }
+
+    @Test
+    void updateOrderItemReturns204() throws Exception {
+        mockMvc.perform(put("/api/orderitem/10")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"orderItemId\":10,\"productId\":1,\"materialId\":2,\"widthId\":1,\"stoneId\":1,\"quantity\":5}"))
+            .andExpect(status().isNoContent());
+
+        ArgumentCaptor<OrderItemDTO> captor = ArgumentCaptor.forClass(OrderItemDTO.class);
+        verify(orderService).updateOrderItem(eq(10), captor.capture());
+        assertEquals(1, captor.getValue().getProductId());
+        assertEquals(2, captor.getValue().getMaterialId());
+        assertEquals(1, captor.getValue().getWidthId());
+        assertEquals(1, captor.getValue().getStoneId());
+        assertEquals(5, captor.getValue().getQuantity());
+    }
+
 }
