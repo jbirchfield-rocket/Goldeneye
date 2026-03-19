@@ -1,0 +1,103 @@
+name: Frontend E2E (Behave + Selenium)
+
+on:
+  push:
+    paths:
+      - 'frontend/rings/**'
+      - '.github/workflows/frontend-e2e.yml'
+  pull_request:
+    paths:
+      - 'frontend/rings/**'
+      - '.github/workflows/frontend-e2e.yml'
+  workflow_dispatch: {}
+
+jobs:
+  e2e-bdd:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    defaults:
+      run:
+        working-directory: frontend/rings
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'frontend/rings/package-lock.json'
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Run unit tests with coverage
+        run: npm run test:coverage
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-coverage
+          path: frontend/rings/coverage/
+          if-no-files-found: ignore
+
+      - name: Build Vue App (no TS type-check)
+        run: npm run build-only
+
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+
+      - name: Start preview server
+        run: |
+          npm run preview -- --port 5173 --strictPort --host &
+          npx wait-on http://localhost:5173
+
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+
+      - name: Install Python dependencies
+        working-directory: frontend/rings/tests/bdd
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Behave tests
+        working-directory: frontend/rings/tests/bdd
+        env:
+          BASE_URL: 'http://localhost:5173'
+          PYTHONUTF8: '1'
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
+        run: |
+          mkdir -p reports/html reports/junit
+          behave --no-capture --tags ~@api \
+            --format behave_html_formatter:HTMLFormatter --outfile reports/html/report.html \
+            --format pretty \
+            --junit --junit-directory reports/junit
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bdd-reports
+          path: |
+            frontend/rings/tests/bdd/reports/**
+          if-no-files-found: ignore
+
+      - name: Upload Behave artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bdd-artifacts
+          path: |
+            frontend/rings/tests/bdd/artifacts/logs/**
+            frontend/rings/tests/bdd/artifacts/screenshots/**
+          if-no-files-found: ignore

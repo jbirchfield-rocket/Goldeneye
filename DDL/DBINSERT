@@ -1,0 +1,592 @@
+insert into GLDEYE.TBCUST (Name) values ('Golden Halo Jewelers');
+insert into GLDEYE.TBCUST (Name) values ('Eternal Band Boutique');
+insert into GLDEYE.TBCUST (Name) values ('Diamond Circle Rings');
+insert into GLDEYE.TBCUST (Name) values ('Radiant Band Jewelers');
+insert into GLDEYE.TBCUST (Name) values ('ForeverStone Rings');
+insert into GLDEYE.TBCUST (Name) values ('HaloCraft Jewelers');
+insert into GLDEYE.TBCUST (Name) values ('Brilliant Band Studio');
+insert into GLDEYE.TBCUST (Name) values ('Circle of Promise Rings');
+insert into GLDEYE.TBCUST (Name) values ('PureGold Ring Co.');
+insert into GLDEYE.TBCUST (Name) values ('Infinity Band Jewelers');
+insert into GLDEYE.TBCUST (Name) values ('Silver Halo Ring Shop');
+insert into GLDEYE.TBCUST (Name) values ('Timeless Ring Atelier');
+insert into GLDEYE.TBCUST (Name) values ('Crown & Band Jewelers');
+insert into GLDEYE.TBCUST (Name) values ('Luxe Engagement Rings');
+insert into GLDEYE.TBCUST (Name) values ('Everlasting Circle Jewelers');
+insert into GLDEYE.TBCUST (Name) values ('PromiseStone Rings');
+insert into GLDEYE.TBCUST (Name) values ('Royal Band Jewelers');
+insert into GLDEYE.TBCUST (Name) values ('BrightHalo Bridal Rings');
+insert into GLDEYE.TBCUST (Name) values ('Unity Circle Jewelers');
+insert into GLDEYE.TBCUST (Name) values ('Precious Band Co.');
+
+
+
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (2, '123 Main St', 'Richmond', 'VA', '23203');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (2, '789 Oak Ave', 'San Francisco', 'CA', '94147');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (20, '123 Main St', 'New York City', 'NY', '10090');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (12, '123 Main St', 'Cincinnati', 'OH', '45203');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (13, '789 Oak Ave', 'Norfolk', 'VA', '23509');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (9, '789 Oak Ave', 'Wichita', 'KS', '67205');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (12, '456 Elm St', 'Miami', 'FL', '33196');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (3, '202 Maple Ln', 'Norwalk', 'CT', '06859');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (7, '789 Oak Ave', 'New Orleans', 'LA', '70149');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (13, '202 Maple Ln', 'Buffalo', 'NY', '14269');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (8, '789 Oak Ave', 'Greensboro', 'NC', '27409');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (12, '456 Elm St', 'Arlington', 'VA', '22205');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (14, '101 Pine Rd', 'Troy', 'MI', '48098');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (4, '123 Main St', 'Irvine', 'CA', '92619');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (18, '101 Pine Rd', 'San Antonio', 'TX', '78230');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (8, '202 Maple Ln', 'Albany', 'NY', '12232');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (19, '456 Elm St', 'Saint Paul', 'MN', '55172');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (10, '456 Elm St', 'Athens', 'GA', '30610');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (13, '123 Main St', 'Sioux City', 'IA', '51110');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (6, '202 Maple Ln', 'Des Moines', 'IA', '50310');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (10, '123 Main St', 'Spartanburg', 'SC', '29305');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (1, '101 Pine Rd', 'Orlando', 'FL', '32854');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (2, '202 Maple Ln', 'Lexington', 'KY', '40505');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (17, '789 Oak Ave', 'Louisville', 'KY', '40280');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (20, '101 Pine Rd', 'Sacramento', 'CA', '95828');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (16, '202 Maple Ln', 'Indianapolis', 'IN', '46207');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (7, '456 Elm St', 'Carol Stream', 'IL', '60351');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (3, '123 Main St', 'Miami', 'FL', '33190');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (1, '456 Elm St', 'Winston Salem', 'NC', '27116');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (14, '101 Pine Rd', 'Philadelphia', 'PA', '19093');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (16, '789 Oak Ave', 'Roanoke', 'VA', '24040');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (1, '456 Elm St', 'Stockton', 'CA', '95210');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (7, '202 Maple Ln', 'Philadelphia', 'PA', '19131');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (18, '456 Elm St', 'Van Nuys', 'CA', '91411');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (3, '123 Main St', 'Silver Spring', 'MD', '20918');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (6, '456 Elm St', 'Bradenton', 'FL', '34210');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (19, '101 Pine Rd', 'Springfield', 'MO', '65810');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (7, '789 Oak Ave', 'Bonita Springs', 'FL', '34135');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (14, '456 Elm St', 'Houston', 'TX', '77223');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (10, '456 Elm St', 'Cincinnati', 'OH', '45296');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (9, '456 Elm St', 'Bridgeport', 'CT', '06606');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (16, '123 Main St', 'Saint Louis', 'MO', '63104');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (15, '202 Maple Ln', 'Sunnyvale', 'CA', '94089');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (6, '123 Main St', 'Oakland', 'CA', '94622');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (20, '101 Pine Rd', 'Miami', 'FL', '33283');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (18, '101 Pine Rd', 'Hialeah', 'FL', '33018');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (8, '202 Maple Ln', 'Cincinnati', 'OH', '45249');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (2, '789 Oak Ave', 'Austin', 'TX', '78759');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (15, '456 Elm St', 'San Jose', 'CA', '95123');
+insert into GLDEYE.TBLOC (CUSTID, STR, City, ST, Zip)
+values (12, '202 Maple Ln', 'Hicksville', 'NY', '11854');
+
+
+
+insert into GLDEYE.TBPROD (Name, DSCRP, BasePrice)
+values (
+'Standard Fit Grooved Band',
+'A classic band with a center groove for a clean look.',
+120);
+insert into GLDEYE.TBPROD (Name, DSCRP, BasePrice)
+values (
+'Comfort Fit Flat Band',
+'A modern flat-surface band with rounded interior for all-day wear.',
+130);
+insert into GLDEYE.TBPROD (Name, DSCRP, BasePrice)
+values (
+'Standard Fit Vintage Band',
+'A traditional band with vintage-style detailing.',
+190);
+insert into GLDEYE.TBPROD (Name, DSCRP, BasePrice)
+values (
+'Comfort Fit Low Dome Band',
+'A softly rounded low-profile band for smooth, comfortable fit.',
+150);
+
+
+insert into GLDEYE.TBSTONE (Name, Inventory, Price)
+values ('None', 9, 0);
+insert into GLDEYE.TBSTONE (Name, Inventory, Price)
+values ('Cubic Zirconia', 17, 30);
+insert into GLDEYE.TBSTONE (Name, Inventory, Price)
+values ('Amethyst', 35, 80);
+insert into GLDEYE.TBSTONE (Name, Inventory, Price)
+values ('Garnet', 22, 80);
+insert into GLDEYE.TBSTONE (Name, Inventory, Price)
+values ('Ruby', 42, 80);
+insert into GLDEYE.TBSTONE (Name, Inventory, Price)
+values ('Lab-grown diamond', 47, 400);
+insert into GLDEYE.TBSTONE (Name, Inventory, Price)
+values ('Natural diamond', 43, 900);
+
+
+
+
+insert into GLDEYE.TBMATT (Name, Inventory, Multiplier)
+values ('Gold Plated', 71, 0.500);
+insert into GLDEYE.TBMATT (Name, Inventory, Multiplier)
+values ('Silver', 53, 1.000);
+insert into GLDEYE.TBMATT (Name, Inventory, Multiplier)
+values ('Gold (14K)', 99, 4.375);
+insert into GLDEYE.TBMATT (Name, Inventory, Multiplier)
+values ('Platinum', 90, 8.750);
+
+
+insert into GLDEYE.TBWIDTH (Width, Multiplier, MattUse)
+values (2, 0.9, 1);
+insert into GLDEYE.TBWIDTH (Width, Multiplier, MattUse)
+values (4, 1, 2);
+insert into GLDEYE.TBWIDTH (Width, Multiplier, MattUse)
+values (6, 1.25, 3);
+insert into GLDEYE.TBWIDTH (Width, Multiplier, MattUse)
+values (8, 1.5, 4);
+
+
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (5, '7/18/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (12, '11/8/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (14, '10/15/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (3, '9/11/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (18, '4/3/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (3, '2/27/2026');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (8, '2/6/2026');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (6, '9/13/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (16, '4/23/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (7, '11/2/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (16, '12/21/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (8, '11/1/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (5, '6/7/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (12, '7/16/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (8, '9/17/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (11, '10/13/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (11, '7/9/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (4, '1/22/2026');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (2, '6/16/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (3, '8/25/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (7, '3/23/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (11, '3/2/2026');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (12, '12/26/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (9, '12/6/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (4, '3/13/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (1, '5/28/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (9, '10/23/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (2, '5/28/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (20, '11/29/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (3, '6/4/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (20, '3/25/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (13, '8/30/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (4, '10/21/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (16, '5/1/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (14, '8/9/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (9, '12/28/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (2, '4/30/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (2, '2/20/2026');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (18, '5/21/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (11, '7/25/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (4, '2/2/2026');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (13, '8/12/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (13, '10/23/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (14, '4/1/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (5, '6/28/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (13, '2/24/2026');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (8, '11/11/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (11, '10/29/2025');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (7, '2/11/2026');
+insert into GLDEYE.TBORDER (CustID, OrderDate)
+values (17, '2/23/2026');
+
+
+
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (48, 3, 4, 3, 6, 1953.0, 10);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (6, 3, 4, 4, 3, 1502.3, 20);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (35, 4, 4, 1, 5, 2303.55, 30);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (14, 2, 3, 3, 3, 2281.69, 40);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (26, 2, 3, 4, 5, 2290.74, 40);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (37, 1, 4, 3, 7, 2644.43, 40);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (12, 1, 4, 3, 2, 1048.0, 50);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (48, 1, 1, 1, 5, 1774.05, 30);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (31, 2, 1, 2, 4, 843.56, 30);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (23, 2, 3, 3, 4, 582.4, 20);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (9, 1, 2, 1, 5, 961.5, 10);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (6, 2, 2, 2, 2, 1041.35, 50);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (2, 2, 2, 4, 7, 2008.04, 50);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (48, 2, 3, 3, 5, 1265.91, 50);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (26, 3, 1, 4, 7, 862.01, 20);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (12, 3, 4, 4, 5, 805.13, 50);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (34, 4, 4, 1, 7, 701.75, 30);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (47, 2, 3, 4, 7, 2349.84, 50);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (13, 3, 1, 2, 6, 2401.04, 50);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (20, 4, 1, 3, 3, 2398.31, 20);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (24, 1, 1, 4, 3, 1683.55, 10);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (25, 4, 3, 1, 4, 1750.15, 10);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (11, 2, 4, 2, 4, 1604.0, 50);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (39, 4, 1, 1, 6, 980.62, 30);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (36, 4, 4, 2, 2, 137.06, 20);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (39, 4, 4, 4, 1, 1880.62, 20);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (38, 1, 2, 4, 3, 1968.38, 40);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (38, 3, 1, 1, 7, 1839.74, 20);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (27, 1, 4, 4, 4, 1622.94, 40);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (41, 1, 4, 1, 2, 2773.16, 10);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (2, 3, 4, 3, 6, 103.97, 50);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (19, 3, 1, 3, 3, 706.59, 20);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (37, 2, 1, 2, 5, 2459.41, 40);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (8, 3, 2, 1, 6, 2893.55, 20);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (11, 3, 4, 1, 5, 1199.12, 30);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (10, 3, 1, 2, 2, 244.96, 20);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (38, 3, 4, 3, 3, 2120.37, 40);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (15, 2, 4, 1, 2, 1755.58, 50);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (8, 3, 1, 3, 1, 1196.09, 50);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (38, 1, 3, 2, 5, 2154.09, 50);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (39, 4, 4, 2, 6, 205.29, 10);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (35, 4, 4, 3, 2, 692.15, 10);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (17, 4, 2, 4, 5, 1367.56, 30);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (17, 3, 4, 3, 2, 2164.8, 50);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (18, 4, 2, 2, 6, 2400.04, 40);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (35, 4, 2, 3, 2, 1127.9, 30);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (30, 2, 4, 4, 1, 211.76, 50);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (34, 1, 3, 1, 3, 2385.24, 20);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (37, 1, 2, 4, 5, 130.63, 30);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (28, 4, 4, 4, 4, 1801.25, 10);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (3, 3, 4, 4, 4, 1422.22, 30);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (42, 2, 1, 1, 1, 440.74, 20);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (22, 1, 3, 3, 1, 2096.56, 30);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (49, 2, 4, 1, 5, 1294.1, 30);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (23, 3, 4, 3, 5, 1797.08, 20);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (5, 3, 4, 2, 6, 2391.1, 20);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (24, 2, 1, 1, 4, 920.26, 30);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (11, 2, 1, 3, 2, 1104.32, 20);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (47, 4, 3, 1, 7, 2464.62, 10);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (49, 4, 2, 2, 5, 424.17, 30);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (30, 3, 2, 3, 1, 975.15, 50);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (29, 4, 3, 1, 2, 269.68, 50);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (48, 1, 3, 2, 5, 2632.0, 10);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (30, 3, 3, 3, 5, 2557.24, 40);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (11, 3, 4, 4, 7, 2056.95, 30);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (10, 1, 1, 1, 3, 2907.16, 10);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (11, 1, 1, 4, 3, 1354.55, 30);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (44, 2, 2, 3, 2, 1141.85, 40);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (47, 2, 4, 1, 3, 1392.62, 40);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (42, 1, 3, 2, 2, 2105.46, 30);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (16, 2, 2, 1, 1, 2460.77, 50);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (27, 4, 4, 3, 6, 2153.14, 50);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (47, 4, 3, 2, 5, 2542.62, 20);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (6, 3, 1, 3, 7, 1031.45, 50);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (31, 1, 4, 4, 3, 969.59, 20);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (37, 2, 1, 2, 4, 321.22, 40);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (25, 2, 3, 3, 2, 2911.47, 10);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (18, 2, 3, 2, 1, 789.36, 40);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (32, 1, 3, 3, 4, 499.43, 50);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (33, 1, 2, 2, 6, 1515.82, 20);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (36, 2, 2, 4, 6, 502.16, 10);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (42, 3, 4, 2, 5, 2080.78, 50);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (14, 3, 4, 4, 2, 2666.11, 10);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (23, 1, 1, 1, 1, 1071.97, 50);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (48, 4, 1, 4, 6, 2162.46, 30);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (29, 4, 1, 4, 6, 1551.79, 50);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (37, 1, 1, 2, 5, 330.45, 30);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (29, 4, 4, 3, 7, 1403.32, 40);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (49, 3, 2, 3, 5, 2028.86, 30);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (43, 3, 4, 4, 5, 2773.3, 20);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (33, 2, 4, 2, 6, 1466.41, 40);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (27, 2, 1, 4, 7, 454.03, 30);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (36, 4, 3, 2, 3, 1001.04, 20);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (12, 1, 4, 4, 7, 1921.15, 40);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (34, 2, 3, 2, 7, 1224.56, 30);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (18, 3, 1, 3, 1, 2553.39, 30);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (1, 3, 1, 2, 3, 2753.02, 20);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (28, 4, 3, 3, 5, 1965.63, 30);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (50, 2, 2, 4, 6, 2087.41, 30);
+insert into GLDEYE.TBORDITM
+(OrderID, ProdID, MattID, WID, StoneID, UnitPrice, Qty)
+values (33, 2, 3, 2, 1, 2106.41, 40);
+
+
+COMMIT;

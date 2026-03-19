@@ -1,0 +1,17 @@
+<testsuite name="features.navigation.Primary navigation from Home" tests="1" errors="0" failures="0" skipped="0" time="0.631131" timestamp="2026-03-17T14:44:30.345057" hostname="RS-2HT3CB4"><testcase classname="features.navigation.Primary navigation from Home" name="Navigate from Home to Purchase Rings to Manage Orders to About Us" status="passed" time="0.631131"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Navigate from Home to Purchase Rings to Manage Orders to About Us
+    Given the app is running ... passed in 0.000s
+    And I open the home page ... passed in 0.113s
+    When I navigate to "Purchase Rings" ... passed in 0.161s
+    Then I should be on the "Purchase Rings" page ... passed in 0.007s
+    When I navigate to "Manage Orders" ... passed in 0.152s
+    Then I should be on the "Manage Orders" page ... passed in 0.012s
+    When I navigate to "About Us" ... passed in 0.178s
+    Then I should be on the "About Us" page ... passed in 0.008s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase></testsuite>
