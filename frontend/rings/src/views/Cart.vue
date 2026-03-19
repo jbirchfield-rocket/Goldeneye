@@ -299,7 +299,7 @@ onMounted(() => {
           <form @submit.prevent="handleAddLocation">
             <input class="location-input" v-model="newLocation.street" placeholder="Street" required />
             <input class="location-input" v-model="newLocation.city" placeholder="City" required />
-            <input class="location-input" v-model="newLocation.state" placeholder="State (Postal Code e.g. CA)" maxlength="2" required />
+            <input class="location-input" v-model="newLocation.state" placeholder="State (Postal Code e.g. CA)" maxlength="2" pattern="[A-Z]{2}" required />
             <input class="location-input" v-model="newLocation.zip" placeholder="ZIP Code" maxlength="5" pattern="[0-9]*" required />
             <button class="add-location-btn" type="submit">Add Location</button>
           </form>
