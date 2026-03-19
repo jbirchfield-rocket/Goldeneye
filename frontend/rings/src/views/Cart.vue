@@ -231,11 +231,11 @@ onMounted(() => {
           </div>
           
           <div class="item-details">
-            <h3>Ring #{{ item.ringId }}</h3>
+            <h3 class="cart-ring-name">{{ item.ringName }}</h3>
             <div class="item-specs">
-              <p><strong>Material:</strong> {{ item.materialType }}</p>
-              <p><strong>Band Width:</strong> {{ item.bandWidth }} mm</p>
-              <p><strong>Ring Stone:</strong> {{ item.ringStone }}</p>
+              <p><strong>Material:</strong> {{ item.materialTypeName ?? item.materialType }}</p>
+              <p><strong>Band Width:</strong> {{ item.bandWidthName ?? item.bandWidth + ' mm' }}</p>
+              <p><strong>Ring Stone:</strong> {{ item.ringStoneName ?? item.ringStone }}</p>
             </div>
           </div>
           
@@ -299,8 +299,8 @@ onMounted(() => {
           <form @submit.prevent="handleAddLocation">
             <input class="location-input" v-model="newLocation.street" placeholder="Street" required />
             <input class="location-input" v-model="newLocation.city" placeholder="City" required />
-            <input class="location-input" v-model="newLocation.state" placeholder="State" required />
-            <input class="location-input" v-model="newLocation.zip" placeholder="ZIP Code" required />
+            <input class="location-input" v-model="newLocation.state" placeholder="State (Postal Code e.g. CA)" maxlength="2" pattern="[A-Z]{2}" required />
+            <input class="location-input" v-model="newLocation.zip" placeholder="ZIP Code" maxlength="5" pattern="[0-9]*" required />
             <button class="add-location-btn" type="submit">Add Location</button>
           </form>
         </div>

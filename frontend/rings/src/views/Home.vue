@@ -9,6 +9,7 @@ const selectedCustomerId = ref<number | string | null>(null);
 interface Customer {
   custId: number;
   name: string;
+  active?: number; //active is a number (1 for active, 0 for inactive)
 }
 
 const customers = ref<Customer[]>([]);
@@ -37,8 +38,9 @@ const getAvailableCustomers = async () => {
   try {
     const response = await axios.get(`${import.meta.env.VITE_API_URL}/customers`);
     // Handle the response to populate customer options
-    customers.value = response.data;
-    console.log('Available customers:', response.data);
+    customers.value = response.data.filter((customer: { active: number; }) => customer.active === 1);
+   // customers.value = response.data;
+    console.log('Available customers:', customers.value);
   } catch (error) {
     console.error('Error fetching customers:', error);
     // mock data
@@ -57,8 +59,11 @@ const handleAddCustomer = async () => {
   }
 
   try {
+    console.log('Adding new customer with name:', newCustomerName.value);
     const response = await axios.post(`${import.meta.env.VITE_API_URL}/customers`, { name: newCustomerName.value });
+    
     const newCustomer: Customer = response.data;
+    console.log('New customer added:', newCustomer);
     customers.value.push(newCustomer);
     setCustomerIdCookie(newCustomer.custId);
     selectedCustomerId.value = newCustomer.custId;
@@ -98,7 +103,7 @@ onMounted(() => {
           placeholder="Enter new customer name" 
           class="new-customer-input">
         <button @click="handleAddCustomer" class="add-customer-button">Add Customer</button>
-    </div>
+      </div>
     </div>
     
     <div class="content-center">

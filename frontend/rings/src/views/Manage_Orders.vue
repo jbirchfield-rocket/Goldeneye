@@ -27,7 +27,7 @@ interface Order {
   customerName: string;
   orderDate?: string;
   location: Location;
-  billLocation?: Location;
+  billingLocation?: Location;
   orderItems: OrderRing[];
   status?: string;
   
@@ -48,6 +48,7 @@ const fetchOrders = async () => {
     //orders filtered by customer id
     // orders.value = response.data.filter((order: Order) => order.customerId === customerId);
     orders.value = response.data;
+    console.log('Fetched orders:', orders.value);
   } catch (err) {
     console.error('Error fetching orders:', err);
     // error.value = 'Failed to load orders';
@@ -255,7 +256,7 @@ onMounted(() => {
 
           <div class="additional-info">
             <div class="order-location">Delivery Location: {{ order.location.street }}, {{ order.location.city }}, {{ order.location.state }} {{ order.location.zip }}</div>
-            <div class="order-location" v-if="order.billLocation">Billing Location: {{ order.billLocation.street }}, {{ order.billLocation.city }}, {{ order.billLocation.state }} {{ order.billLocation.zip }}</div>
+            <div class="order-location" v-if="order.billingLocation">Billing Location: {{ order.billingLocation.street }}, {{ order.billingLocation.city }}, {{ order.billingLocation.state }} {{ order.billingLocation.zip }}</div>
             <div v-if="order.orderDate" class="order-date">Date: {{ order.orderDate }}</div>
             <!-- display order total -->
             <div class="order-total">Total: ${{ getOrderTotal(order).toFixed(2) }}</div>

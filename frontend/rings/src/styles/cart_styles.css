@@ -91,6 +91,7 @@ h1 {
 .item-details h3 {
   margin: 0 0 10px 0;
   color: #baaa51;
+  max-width: 80%;
 }
 
 .item-specs p {
@@ -267,6 +268,8 @@ h1 {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+
+
 
 @media (max-width: 1024px) {
   .cart-content {

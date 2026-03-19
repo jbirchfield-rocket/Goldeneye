@@ -9,6 +9,10 @@ export interface CartItem {
   quantity: number;
   price: number;
   addedAt: number;
+  materialTypeName?: string;
+  bandWidthName?: string;
+  ringStoneName?: string;
+  ringName?: string;
 }
 
 const CART_COOKIE_NAME = 'goldeneye_cart';

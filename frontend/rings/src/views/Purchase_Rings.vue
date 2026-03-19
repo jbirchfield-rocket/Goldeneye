@@ -25,7 +25,7 @@ interface Stones {
   stoneId: number;
   name: string;
   multiplier: number;
-  Inventory: number;
+  inventory: number;
   price: number;
 }
 
@@ -33,7 +33,7 @@ interface Material {
   materialId?: number;
   name: string;
   multiplier: number;
-  Inventory: number;
+  inventory: number;
 }
 
 interface Width {
@@ -67,24 +67,21 @@ const getRingImagePath = (prodId: number): string => {
 };
 
 //find what material is low and store it to be displayed in UI
-const lowmaterial = ref<string>('');
+const lowmaterials = ref<string[]>([]);
 const findLowMaterial = () => {
-  materials.value.forEach(material => {
-    if (material.Inventory < 10) {
-      lowmaterial.value = material.name;
-      console.log(`Low inventory for material: ${material.name}`);
-    }
-  });
+  lowmaterials.value = materials.value
+    .filter(material => material.inventory < 10)
+    .map(material => material.name);
+  lowmaterials.value.forEach(name => console.log(`Low inventory for material: ${name}`));
 };
 
-const lowstone = ref<string>('');
+const lowstones = ref<string[]>([]);
 const findLowStone = () => {
-  stones.value.forEach(stone => {
-    if (stone.Inventory < 5) {
-      lowstone.value = stone.name;
-      console.log(`Low inventory for stone: ${stone.name}`);
-    }
-  });
+  //exclude the stone if it is none because it is not an actual stone and does not have inventory
+  lowstones.value = stones.value
+    .filter(stone => stone.inventory < 10 && stone.name !== 'None')
+    .map(stone => stone.name);
+  lowstones.value.forEach(name => console.log(`Low inventory for stone: ${name}`));
 };
 
 //fetch products (ring base styles)
@@ -116,10 +113,10 @@ const fetchStones = async () => {
     console.error('Error fetching stones:', error);
     // Mock data
     stones.value = [
-      { stoneId: 1, name: 'Cubic Zirconia', multiplier: 1, Inventory: 100, price: 0 },
-      { stoneId: 2, name: 'Semi-precious', multiplier: 1.5, Inventory: 50, price: 20 },
-      { stoneId: 3, name: 'Lab-Grown Diamond', multiplier: 2, Inventory: 20, price: 40 },
-      { stoneId: 4, name: 'Natural Diamond', multiplier: 3, Inventory: 10, price: 80 }
+      { stoneId: 1, name: 'Cubic Zirconia', multiplier: 1, inventory: 100, price: 0 },
+      { stoneId: 2, name: 'Semi-precious', multiplier: 1.5, inventory: 50, price: 20 },
+      { stoneId: 3, name: 'Lab-Grown Diamond', multiplier: 2, inventory: 20, price: 40 },
+      { stoneId: 4, name: 'Natural Diamond', multiplier: 3, inventory: 10, price: 80 }
     ];
     console.log('Using mock stones:', stones.value);
   }
@@ -134,9 +131,9 @@ const fetchMaterials = async () => {
     console.error('Error fetching materials:', error);
     // Mock data
     materials.value = [
-      { name: 'Gold', multiplier: 1, Inventory: 100 },
-      { name: 'Platinum', multiplier: 1.5, Inventory: 50 },
-      { name: 'Palladium', multiplier: 1.2, Inventory: 30 }
+      { name: 'Gold', multiplier: 1, inventory: 100 },
+      { name: 'Platinum', multiplier: 1.5, inventory: 50 },
+      { name: 'Palladium', multiplier: 1.2, inventory: 30 }
     ];
     console.log('Using mock materials:', materials.value);
   }
@@ -326,6 +323,11 @@ const addToCart = (ringId: number) => {
   const options = selectedOptions.value[ringId];
   
   if (ring && options) {
+    const selectedMaterial = ring.materialTypes.find(m => m.materialId === options.materialType);
+    const selectedWidth = ring.bandWidths.find(w => w.widthId === options.bandWidth);
+    const selectedStone = ring.ringStones.find(s => s.stoneId === options.ringStone);
+    const selectedName = ring.name;
+
     addItemToCart({
       ringId: ring.prodId,
       ringImage: ring.image,
@@ -334,7 +336,11 @@ const addToCart = (ringId: number) => {
       ringStone: options.ringStone,
       quantity: options.quantity,
       price: options.proposedPrice,
-      addedAt: Date.now()
+      addedAt: Date.now(),
+      materialTypeName: selectedMaterial?.name,
+      bandWidthName: selectedWidth ? `${selectedWidth.width}mm` : undefined,
+      ringStoneName: selectedStone?.name,
+      ringName: selectedName
     });
     
     alert(`Added ${options.quantity} ring(s) to cart!`);
@@ -365,14 +371,18 @@ onMounted(async () => {
         </div>
 
         
-        <!-- show warning if lowMaterial string or lowStone isn't ''-->
-        <div class="Low-inventory-warning" v-if="lowmaterial || lowstone">
-          <!-- Return what specific material is low -->
-          <p class="warning-text" v-if="ring.materialTypes.some(m => m.Inventory < 10)">Low Material Alert!</p>
-          <p class="warning-text" v-if="ring.materialTypes.some(m => m.Inventory < 10)">{{ lowmaterial }} is low!</p>
-          <!-- Return what specific stone is low -->
-          <p class="warning-text" v-if="ring.ringStones.some(s => s.Inventory < 5)">Low Stone Alert!</p>
-          <p class="warning-text" v-if="ring.ringStones.some(s => s.Inventory < 5)">{{ lowstone }} is low!</p>
+        <!-- show warning if any materials or stones are low -->
+        <div class="Low-inventory-warning" v-if="lowmaterials.length || lowstones.length">
+          <!-- Return each specific material that is low -->
+          <template v-if="lowmaterials.length">
+            <h3 class="warning-text">Low Material Alert!</h3>
+            <p class="warning-text" v-for="name in lowmaterials" :key="name">{{ name }} is low!</p>
+          </template>
+          <!-- Return each specific stone that is low -->
+          <template v-if="lowstones.length">
+            <h3 class="warning-text">Low Stone Alert!</h3>
+            <p class="warning-text" v-for="name in lowstones" :key="name">{{ name }} is low!</p>
+          </template>
         </div>
 
         <div class="ring-options">
