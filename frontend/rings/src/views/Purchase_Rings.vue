@@ -303,16 +303,16 @@ const updatePrice = (ringId: number) => {
     // swap the price multipliers with multipliers from db
     let price = ring.basePrice;
     // use fetched values for attributes to calc price
-    const selectedWidth = ring.bandWidths.find(m => m.width === options.bandWidth);
+    const selectedWidth = ring.bandWidths.find(m => m.widthId === options.bandWidth);
     console.log('Selected Width:', selectedWidth);
     const selectedMaterial = ring.materialTypes.find(m => m.materialId === options.materialType);
     console.log('Selected Material:', selectedMaterial);
     const selectedStone = ring.ringStones.find(m => m.stoneId === options.ringStone);
     console.log('Selected Stone:', selectedStone);
 
-    if (selectedWidth) price *= selectedWidth.multiplier;
-    if (selectedMaterial) price *= selectedMaterial.multiplier;
-    if (selectedStone) price += selectedStone.price || 0;
+    if (selectedWidth && selectedMaterial && selectedStone) price = (price *selectedWidth.multiplier * selectedMaterial.multiplier) + (selectedStone.price || 0);
+    // if (selectedMaterial) price *= selectedMaterial.multiplier;
+    // if (selectedStone) price += selectedStone.price || 0;
 
     options.proposedPrice = price * options.quantity;
   }
@@ -390,7 +390,7 @@ onMounted(async () => {
             <div class="option-group">
               <label>Select Material Type</label>
               <select 
-                v-model="selectedOptions[ring.prodId]!.materialType"
+                v-model.number="selectedOptions[ring.prodId]!.materialType"
                 @change="updatePrice(ring.prodId)"
                 id="material-select"
                 class="option-select"
@@ -404,13 +404,13 @@ onMounted(async () => {
             <div class="option-group">
               <label>Select Band Width</label>
               <select 
-                v-model="selectedOptions[ring.prodId]!.bandWidth"
+                v-model.number="selectedOptions[ring.prodId]!.bandWidth"
                 @change="updatePrice(ring.prodId)"
                 class="option-select"
                 id="width-select"
               >
                 <option v-for="width in ring.bandWidths" :key="width.width" :value="width.widthId">
-                  {{ width.width }}
+                  {{ width.width }} mm
                 </option>
               </select>
             </div>
