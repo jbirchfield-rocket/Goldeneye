@@ -5,11 +5,13 @@
 
 package com.goldeneye.service;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,6 +26,7 @@ import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.goldeneye.dto.CustomerDTO;
+import com.goldeneye.exception.ResourceNotFoundException;
 import com.goldeneye.model.Customer;
 import com.goldeneye.repo.CustomerRepo;
  
@@ -87,6 +90,70 @@ public class CustomerServiceTests {
         customerService.updateCustomer(1, updatedCustomer);
 
         verify(customerRepo).updateCustomer(1, "Golden Halo Jewelers Updated");
+    }
+
+    @Test
+    void getAllCustomersThrowsWhenNoCustomersFound() {
+        when(customerRepo.findAll()).thenReturn(Collections.emptyList());
+
+        assertThrows(ResourceNotFoundException.class, () -> customerService.getAllCustomers());
+    }
+
+    @Test
+    void createCustomerThrowsWhenNameIsNull() {
+        CustomerDTO nullNameCustomer = new CustomerDTO(0, null, 1);
+
+        assertThrows(IllegalArgumentException.class, () -> customerService.createCustomer(nullNameCustomer));
+    }
+
+    @Test
+    void createCustomerThrowsWhenNameIsBlank() {
+        CustomerDTO blankNameCustomer = new CustomerDTO(0, "   ", 1);
+
+        assertThrows(IllegalArgumentException.class, () -> customerService.createCustomer(blankNameCustomer));
+    }
+
+    @Test
+    void updateCustomerThrowsWhenCustomerNotFound() {
+        CustomerDTO customer = new CustomerDTO(99, "Test", 1);
+
+        when(customerRepo.existsById(99)).thenReturn(false);
+
+        assertThrows(ResourceNotFoundException.class, () -> customerService.updateCustomer(99, customer));
+    }
+
+    @Test
+    void updateCustomerThrowsWhenNameIsNull() {
+        CustomerDTO nullNameCustomer = new CustomerDTO(1, null, 1);
+
+        when(customerRepo.existsById(1)).thenReturn(true);
+
+        assertThrows(IllegalArgumentException.class, () -> customerService.updateCustomer(1, nullNameCustomer));
+    }
+
+    @Test
+    void updateCustomerThrowsWhenNameIsBlank() {
+        CustomerDTO blankNameCustomer = new CustomerDTO(1, "   ", 1);
+
+        when(customerRepo.existsById(1)).thenReturn(true);
+
+        assertThrows(IllegalArgumentException.class, () -> customerService.updateCustomer(1, blankNameCustomer));
+    }
+
+    @Test
+    void deleteCustomerDeletesCorrectCustomer() {
+        when(customerRepo.existsById(1)).thenReturn(true);
+
+        customerService.deleteCustomer(1);
+
+        verify(customerRepo).deleteCustomer(1, 0);
+    }
+
+    @Test
+    void deleteCustomerThrowsWhenCustomerNotFound() {
+        when(customerRepo.existsById(99)).thenReturn(false);
+
+        assertThrows(ResourceNotFoundException.class, () -> customerService.deleteCustomer(99));
     }
     
 }

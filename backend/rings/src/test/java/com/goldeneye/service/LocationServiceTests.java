@@ -5,6 +5,7 @@
 
 package com.goldeneye.service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +28,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.goldeneye.dto.LocationDTO;
 import com.goldeneye.exception.InvalidLocationException;
+import com.goldeneye.exception.ResourceNotFoundException;
 import com.goldeneye.model.Location;
 import com.goldeneye.repo.LocationRepo;
 
@@ -124,5 +126,82 @@ public class LocationServiceTests {
         locationService.deleteLocation(1);
 
         verify(locationRepo).deleteByLocId(1);
+    }
+
+    @Test
+    void getLocationsByCustIdThrowsWhenNoLocationsFound() {
+        when(locationRepo.findByCustId(99)).thenReturn(Collections.emptyList());
+
+        assertThrows(ResourceNotFoundException.class, () -> locationService.getLocationsByCustId(99));
+    }
+
+    @Test
+    void deleteLocationThrowsWhenLocationNotFound() {
+        when(locationRepo.findByLocId(99)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> locationService.deleteLocation(99));
+    }
+
+    @Test
+    void addLocationThrowsWhenCustIdIsNull() {
+        LocationDTO nullCustId = new LocationDTO(0, null, "789 Pine Rd.", "Richmond", "VA", "23222");
+
+        assertThrows(InvalidLocationException.class, () -> locationService.addLocation(nullCustId));
+    }
+
+    @Test
+    void addLocationThrowsWhenStreetIsNull() {
+        LocationDTO nullStreet = new LocationDTO(0, 2, null, "Richmond", "VA", "23222");
+
+        assertThrows(InvalidLocationException.class, () -> locationService.addLocation(nullStreet));
+    }
+
+    @Test
+    void addLocationThrowsWhenStreetIsBlank() {
+        LocationDTO blankStreet = new LocationDTO(0, 2, "   ", "Richmond", "VA", "23222");
+
+        assertThrows(InvalidLocationException.class, () -> locationService.addLocation(blankStreet));
+    }
+
+    @Test
+    void addLocationThrowsWhenCityIsNull() {
+        LocationDTO nullCity = new LocationDTO(0, 2, "789 Pine Rd.", null, "VA", "23222");
+
+        assertThrows(InvalidLocationException.class, () -> locationService.addLocation(nullCity));
+    }
+
+    @Test
+    void addLocationThrowsWhenCityIsBlank() {
+        LocationDTO blankCity = new LocationDTO(0, 2, "789 Pine Rd.", "   ", "VA", "23222");
+
+        assertThrows(InvalidLocationException.class, () -> locationService.addLocation(blankCity));
+    }
+
+    @Test
+    void addLocationThrowsWhenStateIsNull() {
+        LocationDTO nullState = new LocationDTO(0, 2, "789 Pine Rd.", "Richmond", null, "23222");
+
+        assertThrows(InvalidLocationException.class, () -> locationService.addLocation(nullState));
+    }
+
+    @Test
+    void addLocationThrowsWhenStateIsBlank() {
+        LocationDTO blankState = new LocationDTO(0, 2, "789 Pine Rd.", "Richmond", "  ", "23222");
+
+        assertThrows(InvalidLocationException.class, () -> locationService.addLocation(blankState));
+    }
+
+    @Test
+    void addLocationThrowsWhenZipIsNull() {
+        LocationDTO nullZip = new LocationDTO(0, 2, "789 Pine Rd.", "Richmond", "VA", null);
+
+        assertThrows(InvalidLocationException.class, () -> locationService.addLocation(nullZip));
+    }
+
+    @Test
+    void addLocationThrowsWhenZipIsBlank() {
+        LocationDTO blankZip = new LocationDTO(0, 2, "789 Pine Rd.", "Richmond", "VA", "   ");
+
+        assertThrows(InvalidLocationException.class, () -> locationService.addLocation(blankZip));
     }
 }

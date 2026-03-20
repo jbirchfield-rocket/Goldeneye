@@ -7,6 +7,7 @@ package com.goldeneye.service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -38,6 +39,7 @@ import com.goldeneye.dto.ProductDTO;
 import com.goldeneye.dto.StoneDTO;
 import com.goldeneye.dto.WidthDTO;
 import com.goldeneye.exception.InvalidOrderException;
+import com.goldeneye.exception.ResourceNotFoundException;
 import com.goldeneye.repo.OrderItemRepo;
 import com.goldeneye.repo.OrderItemSummaryRow;
 import com.goldeneye.repo.OrderRepo;
@@ -224,5 +226,107 @@ public class OrderServiceTests {
 
         orderService.deleteAllOrderItems(1);
         verify(orderItemRepo).deleteByOrderId(1);
+    }
+
+    @Test
+    void getOrdersByCustIdThrowsWhenNoOrdersFound() {
+        when(orderRepo.findOrderSummariesByCustId(99)).thenReturn(Collections.emptyList());
+
+        assertThrows(ResourceNotFoundException.class, () -> orderService.getOrdersByCustId(99));
+    }
+
+    @Test
+    void deleteOrderByOrderIdThrowsWhenOrderNotFound() {
+        when(orderRepo.existsById(99)).thenReturn(false);
+
+        assertThrows(ResourceNotFoundException.class, () -> orderService.deleteOrderByOrderId(99));
+    }
+
+    @Test
+    void updateOrderThrowsWhenOrderNotFound() {
+        OrderDTO updateDTO = new OrderDTO(99, 3, 2, 2, LocalDate.of(2026, 3, 12), List.of(item));
+
+        when(orderRepo.existsById(99)).thenReturn(false);
+
+        assertThrows(ResourceNotFoundException.class, () -> orderService.updateOrder(99, updateDTO));
+    }
+
+    @Test
+    void updateOrderThrowsWhenNoItems() {
+        OrderDTO emptyItemsDTO = new OrderDTO(1, 3, 2, 2, LocalDate.of(2026, 3, 12), List.of());
+
+        when(orderRepo.existsById(1)).thenReturn(true);
+
+        assertThrows(InvalidOrderException.class, () -> orderService.updateOrder(1, emptyItemsDTO));
+    }
+
+    @Test
+    void updateOrderThrowsWhenNullItems() {
+        OrderDTO nullItemsDTO = new OrderDTO(1, 3, 2, 2, LocalDate.of(2026, 3, 12), null);
+
+        when(orderRepo.existsById(1)).thenReturn(true);
+
+        assertThrows(InvalidOrderException.class, () -> orderService.updateOrder(1, nullItemsDTO));
+    }
+
+    @Test
+    void deleteOrderItemThrowsWhenItemNotFound() {
+        when(orderItemRepo.existsById(99)).thenReturn(false);
+
+        assertThrows(ResourceNotFoundException.class, () -> orderService.deleteOrderItem(99));
+    }
+
+    @Test
+    void updateOrderItemThrowsWhenItemNotFound() {
+        when(orderItemRepo.existsById(99)).thenReturn(false);
+
+        assertThrows(ResourceNotFoundException.class, () -> orderService.updateOrderItem(99, item));
+    }
+
+    @Test
+    void deleteAllOrderItemsThrowsWhenOrderNotFound() {
+        when(orderRepo.existsById(99)).thenReturn(false);
+
+        assertThrows(ResourceNotFoundException.class, () -> orderService.deleteAllOrderItems(99));
+    }
+
+    @Test
+    void createOrderThrowsWhenQuantityIsZero() {
+        OrderItemDTO badItem = new OrderItemDTO(null, 1, 1, 1, 1, 0);
+        OrderDTO orderDTO = new OrderDTO(1, 2, 1, 1, LocalDate.of(2026, 3, 11), List.of(badItem));
+
+        assertThrows(InvalidOrderException.class, () -> orderService.createOrder(orderDTO));
+    }
+
+    @Test
+    void createOrderThrowsWhenProductIdIsInvalid() {
+        OrderItemDTO badItem = new OrderItemDTO(null, 0, 1, 1, 1, 3);
+        OrderDTO orderDTO = new OrderDTO(1, 2, 1, 1, LocalDate.of(2026, 3, 11), List.of(badItem));
+
+        assertThrows(InvalidOrderException.class, () -> orderService.createOrder(orderDTO));
+    }
+
+    @Test
+    void createOrderThrowsWhenMaterialIdIsInvalid() {
+        OrderItemDTO badItem = new OrderItemDTO(null, 1, 0, 1, 1, 3);
+        OrderDTO orderDTO = new OrderDTO(1, 2, 1, 1, LocalDate.of(2026, 3, 11), List.of(badItem));
+
+        assertThrows(InvalidOrderException.class, () -> orderService.createOrder(orderDTO));
+    }
+
+    @Test
+    void createOrderThrowsWhenWidthIdIsInvalid() {
+        OrderItemDTO badItem = new OrderItemDTO(null, 1, 1, 0, 1, 3);
+        OrderDTO orderDTO = new OrderDTO(1, 2, 1, 1, LocalDate.of(2026, 3, 11), List.of(badItem));
+
+        assertThrows(InvalidOrderException.class, () -> orderService.createOrder(orderDTO));
+    }
+
+    @Test
+    void createOrderThrowsWhenStoneIdIsInvalid() {
+        OrderItemDTO badItem = new OrderItemDTO(null, 1, 1, 1, 0, 3);
+        OrderDTO orderDTO = new OrderDTO(1, 2, 1, 1, LocalDate.of(2026, 3, 11), List.of(badItem));
+
+        assertThrows(InvalidOrderException.class, () -> orderService.createOrder(orderDTO));
     }
 }

@@ -25,6 +25,18 @@ import org.junit.jupiter.api.Test;
 public class OrderItemTest {
 
     @Test
+    public void defaultConstructor_createsInstance() {
+        OrderItem orderItem = new OrderItem();
+        assertNull(orderItem.getOrderItemId());
+        assertEquals(0, orderItem.getOrderId());
+        assertEquals(0, orderItem.getProductId());
+        assertEquals(0, orderItem.getMaterialId());
+        assertEquals(0, orderItem.getWidthId());
+        assertEquals(0, orderItem.getStoneId());
+        assertEquals(0, orderItem.getQuantity());
+    }
+
+    @Test
     public void constructor_initializesAllFields() {
         BigDecimal unitPrice = new BigDecimal("89.99");
 
@@ -102,6 +114,15 @@ public class OrderItemTest {
         orderItem.setQuantity(7);
 
         assertEquals(7, orderItem.getQuantity());
+    }
+
+    @Test
+    public void setOrderItemId_updatesValue() {
+        OrderItem orderItem = new OrderItem(1, 10, 20, 30, 40, 50, new BigDecimal("89.99"), 2);
+
+        orderItem.setOrderItemId(99);
+
+        assertEquals(99, orderItem.getOrderItemId());
     }
 
     @Test

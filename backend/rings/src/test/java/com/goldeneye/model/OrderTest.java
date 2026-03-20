@@ -24,6 +24,16 @@ import org.junit.jupiter.api.Test;
 public class OrderTest {
 
     @Test
+    public void defaultConstructor_createsInstance() {
+        Order order = new Order();
+        assertNull(order.getOrderId());
+        assertEquals(0, order.getCustId());
+        assertEquals(0, order.getLocationId());
+        assertEquals(0, order.getBillLocId());
+        assertNull(order.getOrderDate());
+    }
+
+    @Test
     public void constructor_initializesAllFields() {
         LocalDate orderDate = LocalDate.of(2026, 3, 11);
 

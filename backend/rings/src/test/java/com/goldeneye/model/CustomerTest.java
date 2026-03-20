@@ -56,4 +56,13 @@ public class CustomerTest {
 
         assertNull(customer.getName());
     }
+
+    @Test
+    public void setActive_updatesValue() {
+        Customer customer = new Customer(101, "Alice", 1);
+
+        customer.setActive(0);
+
+        assertEquals(0, customer.getActive());
+    }
 }

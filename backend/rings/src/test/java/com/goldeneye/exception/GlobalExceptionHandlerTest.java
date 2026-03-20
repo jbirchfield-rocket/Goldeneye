@@ -7,8 +7,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 /**
  *
@@ -83,5 +87,47 @@ public class GlobalExceptionHandlerTest {
         assertNotNull(response.getBody());
         assertEquals(500, response.getBody().getStatus());
         assertEquals("An unexpected error occurred", response.getBody().getMessage());
+    }
+
+    @Test
+    void handleTypeMismatchReturns400() {
+        MethodArgumentTypeMismatchException ex = mock(MethodArgumentTypeMismatchException.class);
+        when(ex.getValue()).thenReturn("abc");
+        when(ex.getName()).thenReturn("id");
+        when((Class<?>) ex.getRequiredType()).thenReturn((Class) Integer.class);
+
+        ResponseEntity<ErrorResponse> response = handler.handleTypeMismatch(ex);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(400, response.getBody().getStatus());
+        assertEquals("Invalid value 'abc' for parameter 'id'. Expected type: Integer.", response.getBody().getMessage());
+    }
+
+    @Test
+    void handleTypeMismatchReturns400WhenRequiredTypeIsNull() {
+        MethodArgumentTypeMismatchException ex = mock(MethodArgumentTypeMismatchException.class);
+        when(ex.getValue()).thenReturn("abc");
+        when(ex.getName()).thenReturn("id");
+        when(ex.getRequiredType()).thenReturn(null);
+
+        ResponseEntity<ErrorResponse> response = handler.handleTypeMismatch(ex);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(400, response.getBody().getStatus());
+        assertEquals("Invalid value 'abc' for parameter 'id'. Expected type: unknown.", response.getBody().getMessage());
+    }
+
+    @Test
+    void handleMessageNotReadableReturns400() {
+        HttpMessageNotReadableException ex = mock(HttpMessageNotReadableException.class);
+
+        ResponseEntity<ErrorResponse> response = handler.handleMessageNotReadable(ex);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(400, response.getBody().getStatus());
+        assertEquals("Malformed or missing request body.", response.getBody().getMessage());
     }
 }

@@ -122,6 +122,14 @@ public class ControllerTests {
     }
 
     @Test
+    void deleteCustomerReturns204() throws Exception {
+        mockMvc.perform(delete("/api/customer/5"))
+            .andExpect(status().isNoContent());
+
+        verify(customerService).deleteCustomer(5);
+    }
+
+    @Test
     void getLocationsByCustIdReturns200WithLocationList() throws Exception {
         when(locationService.getLocationsByCustId(2)).thenReturn(List.of(
             new LocationDTO(1, 2, "123 Main St.", "Richmond", "VA", "23220"),

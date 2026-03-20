@@ -47,4 +47,13 @@ public class CustomerDTOTest {
         assertEquals(42, dto.getCustId());
         assertEquals("John Smith", dto.getName());
     }
+
+    @Test
+    void setActiveUpdatesField() {
+        CustomerDTO dto = new CustomerDTO(1, "Jane Doe", 1);
+
+        dto.setActive(0);
+
+        assertEquals(0, dto.getActive());
+    }
 }
