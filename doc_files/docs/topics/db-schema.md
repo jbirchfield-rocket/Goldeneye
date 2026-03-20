@@ -20,7 +20,9 @@ The GoldenEye Exquisite Rings database schema enables customers to configure rin
 | Name | Type | Rules |
 | --- | --- | --- |
 | OrderID | Integer | Not Null, Positive, Starts with one, Increments by 1, Caches at 100, PK |
+| BillID | Integer | Not Null, Positive, Starts with one, Increments by 1, Caches at 100, FK from Billing |
 | CustID | Integer | Not Null, FK from Customer |
+| OrderDate | Date | Not Null, Default: Current Date |
 | LocID | Integer | Not Null, FK from Location |
 
 **Description:** The Order table serves as the primary transaction record. Orders serve as the parent record for OrderItem entries, allowing customers to order multiple customized rings in a single transaction. Each order is tied to a specific customer and delivery location.
@@ -29,7 +31,9 @@ The GoldenEye Exquisite Rings database schema enables customers to configure rin
 
 - Each order must be associated with an existing customer and a valid delivery location
 - Orders can contain multiple line items (OrderItems), each representing a different ring customization
+- Billing information is linked via BillID for payment processing and record-keeping
 - LocID links orders to a specific delivery address for fulfillment
+- OrderDate defaults to the current date when the order is created
 - The order acts as the primary grouping mechanism for fulfillment and billing purposes
 
 #### OrderItem
@@ -61,6 +65,7 @@ The GoldenEye Exquisite Rings database schema enables customers to configure rin
 | --- | --- | --- |
 | CustID | Integer | Not Null, Positive, Starts with one, Increments by 1, Caches at 50, PK |
 | Name | Varchar | Not Null, up to 120 characters |
+| Active | Integer | Not Null, default 1 |
 
 **Description:** The Customer table maintains core customer information for the ring sales system, serving as the foundation for all orders and associated delivery locations.
 
@@ -69,6 +74,7 @@ The GoldenEye Exquisite Rings database schema enables customers to configure rin
 - Each customer is uniquely identified by CustID
 - Customer names support up to 120 characters
 - One-to-many relationships: A customer can have multiple locations and place multiple orders
+- Active field indicates whether the customer is currently active (1) or inactive (0), allowing for soft deletion and historical record-keeping
 
 #### Location
 
@@ -114,9 +120,8 @@ The GoldenEye Exquisite Rings database schema enables customers to configure rin
 | Name | Type | Rules |
 | --- | --- | --- |
 | MattID | Integer | Not Null, Positive, Starts with one, Increments by 1, Caches at 50, PK |
-| Name | Varchar | Not Null, up to 120 characters allowed |
-| Dscrp | Varchar | Not Null, up to 512 characters allowed |
-| BasePrice | Decimal | Not Null, positive |
+| Inventory | Integer | Not Null, default 0 |
+| Multiplier | Decimal | Not Null, default 1.0000, decimal 8,4 |
 
 **Description:** The Material table catalogs available metal and material options for ring customization. Each material option represents a different metal type or composition. BasePrice functions as a price component applied to the order item's unit price calculation.
 
