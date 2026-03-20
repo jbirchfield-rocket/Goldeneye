@@ -119,10 +119,6 @@
       
     
     
-      <link rel="stylesheet" href="../css/print-site.css">
-    
-      <link rel="stylesheet" href="../css/print-site-material.css">
-    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -673,9 +669,19 @@
 <td>Not Null, Positive, Starts with one, Increments by 1, Caches at 100, PK</td>
 </tr>
 <tr>
+<td>BillID</td>
+<td>Integer</td>
+<td>Not Null, Positive, Starts with one, Increments by 1, Caches at 100, FK from Billing</td>
+</tr>
+<tr>
 <td>CustID</td>
 <td>Integer</td>
 <td>Not Null, FK from Customer</td>
+</tr>
+<tr>
+<td>OrderDate</td>
+<td>Date</td>
+<td>Not Null, Default: Current Date</td>
 </tr>
 <tr>
 <td>LocID</td>
@@ -689,7 +695,9 @@
 <ul>
 <li>Each order must be associated with an existing customer and a valid delivery location</li>
 <li>Orders can contain multiple line items (OrderItems), each representing a different ring customization</li>
+<li>Billing information is linked via BillID for payment processing and record-keeping</li>
 <li>LocID links orders to a specific delivery address for fulfillment</li>
+<li>OrderDate defaults to the current date when the order is created</li>
 <li>The order acts as the primary grouping mechanism for fulfillment and billing purposes</li>
 </ul>
 <h4 id="orderitem">OrderItem</h4>
@@ -773,6 +781,11 @@
 <td>Varchar</td>
 <td>Not Null, up to 120 characters</td>
 </tr>
+<tr>
+<td>Active</td>
+<td>Integer</td>
+<td>Not Null, default 1</td>
+</tr>
 </tbody>
 </table>
 <p><strong>Description:</strong> The Customer table maintains core customer information for the ring sales system, serving as the foundation for all orders and associated delivery locations.</p>
@@ -781,6 +794,7 @@
 <li>Each customer is uniquely identified by CustID</li>
 <li>Customer names support up to 120 characters</li>
 <li>One-to-many relationships: A customer can have multiple locations and place multiple orders</li>
+<li>Active field indicates whether the customer is currently active (1) or inactive (0), allowing for soft deletion and historical record-keeping</li>
 </ul>
 <h4 id="location">Location</h4>
 <table>
@@ -824,7 +838,7 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Description:</strong> The Location table stores delivery and billing addresses for customers, supporting multiple addresses per customer (e.g., home, work, alternate locations). Orders reference specific locations to ensure accurate delivery.</p>
+<p><strong>Description:</strong> The Location table stores delivery and billing addresses for customers, supporting multiple business addresses per customer. Orders reference specific locations to ensure accurate delivery.</p>
 <p><strong>Business Logic:</strong></p>
 <ul>
 <li>Each location is tied to a specific customer via CustID</li>
@@ -889,19 +903,14 @@
 <td>Not Null, Positive, Starts with one, Increments by 1, Caches at 50, PK</td>
 </tr>
 <tr>
-<td>Name</td>
-<td>Varchar</td>
-<td>Not Null, up to 120 characters allowed</td>
+<td>Inventory</td>
+<td>Integer</td>
+<td>Not Null, default 0</td>
 </tr>
 <tr>
-<td>Dscrp</td>
-<td>Varchar</td>
-<td>Not Null, up to 512 characters allowed</td>
-</tr>
-<tr>
-<td>BasePrice</td>
+<td>Multiplier</td>
 <td>Decimal</td>
-<td>Not Null, positive</td>
+<td>Not Null, default 1.0000, decimal 8,4</td>
 </tr>
 </tbody>
 </table>
@@ -1061,8 +1070,6 @@
     
     
       <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
-      
-        <script src="../js/print-site.js"></script>
       
     
   </body>
