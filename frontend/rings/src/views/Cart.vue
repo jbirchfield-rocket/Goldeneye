@@ -85,19 +85,18 @@ const handleCheckout = () => {
     
   };
     // sending order to backend to be submitted and processed
-    try {
-      console.log('Submitting order:', order);
-      axios.post(`${import.meta.env.VITE_API_URL}/order`, order)
-        .then(response => {
-          console.log('Order submitted successfully:', response.data);
-          alert('Order submitted successfully! Your order number is: ' + response.data.orderNumber);
-          clearCart();
-        })
-        
-    } catch(error) {
-      console.error('Error submitting order:', error);
-      alert('Failed to submit order. Please try again.');
-    }
+    console.log('Submitting order:', order);
+    axios.post(`${import.meta.env.VITE_API_URL}/order`, order)
+      .then(response => {
+        console.log('Order submitted successfully:', response.data);
+        const orderNumber = response.data;
+        alert('Order submitted successfully! Your order number is: ' + orderNumber);
+        clearCart();
+      })
+      .catch(error => {
+        console.error('Error submitting order:', error);
+        alert('Failed to submit order. Please try again.');
+      });
   
 
 };
