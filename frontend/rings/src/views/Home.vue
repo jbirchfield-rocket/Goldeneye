@@ -3,29 +3,44 @@ import { ref, onMounted } from 'vue';
 import { setCustomerIdCookie, getCurrentCustomerId } from '@/services/customerService';
 import axios from 'axios';
 
-const selectedCustomerId = ref<number | null>(null);
+const selectedCustomerId = ref<number | string | null>(null);
 
 //Interface for customer data
 interface Customer {
   custId: number;
   name: string;
+  active?: number; //active is a number (1 for active, 0 for inactive)
 }
 
 const customers = ref<Customer[]>([]);
+const newCustomerName = ref<string>('');
+const showNewCustomerSection = ref<boolean>(false);
 
 //function to store a customer id in cookie to use in API calls
 const handleCustomerChange = (event: Event) => {
-  const customerId = Number((event.target as HTMLSelectElement).value);
-  setCustomerIdCookie(customerId);
-  selectedCustomerId.value = customerId;
+  const target = event.target as HTMLSelectElement;
+  if (target.value === 'ADD_NEW') {
+    showNewCustomerSection.value = true;
+    
+    setTimeout(() => {
+      selectedCustomerId.value = null;
+    }, 0);
+  } else {
+    showNewCustomerSection.value = false;
+    // Store the selected customer ID in the cookie
+    const customerId = Number(target.value);
+    selectedCustomerId.value = customerId;
+    setCustomerIdCookie(customerId);
+  }
 };
 
 const getAvailableCustomers = async () => {
   try {
     const response = await axios.get(`${import.meta.env.VITE_API_URL}/customers`);
     // Handle the response to populate customer options
-    customers.value = response.data;
-    console.log('Available customers:', response.data);
+    customers.value = response.data.filter((customer: { active: number; }) => customer.active === 1);
+   // customers.value = response.data;
+    console.log('Available customers:', customers.value);
   } catch (error) {
     console.error('Error fetching customers:', error);
     // mock data
@@ -34,6 +49,28 @@ const getAvailableCustomers = async () => {
       { custId: 2, name: 'Customer 2' },
       { custId: 3, name: 'Customer 3' }
     ];
+  }
+};
+
+const handleAddCustomer = async () => {
+  if (!newCustomerName.value.trim()) {
+    alert('Please enter a valid customer name.');
+    return;
+  }
+
+  try {
+    console.log('Adding new customer with name:', newCustomerName.value);
+    const response = await axios.post(`${import.meta.env.VITE_API_URL}/customers`, { name: newCustomerName.value });
+    
+    const newCustomer: Customer = response.data;
+    console.log('New customer added:', newCustomer);
+    customers.value.push(newCustomer);
+    setCustomerIdCookie(newCustomer.custId);
+    selectedCustomerId.value = newCustomer.custId;
+    newCustomerName.value = '';
+  } catch (error) {
+    console.error('Error adding customer:', error);
+    alert('Failed to add customer. Please try again.');
   }
 };
 
@@ -56,7 +93,17 @@ onMounted(() => {
       >
         <option value="" disabled>Select Customer</option>
         <option v-for="customer in customers" :key="customer.custId" :value="customer.custId">{{ customer.name }}</option>
+        <option value="ADD_NEW">Add New Customer</option>
       </select>
+
+      <div class="new-customer-section" v-if="showNewCustomerSection">
+        <input 
+          type="text" 
+          v-model="newCustomerName" 
+          placeholder="Enter new customer name" 
+          class="new-customer-input">
+        <button @click="handleAddCustomer" class="add-customer-button">Add Customer</button>
+      </div>
     </div>
     
     <div class="content-center">
@@ -68,7 +115,9 @@ onMounted(() => {
         Have gold in your eyes and on your fingers.
       </p>
     </div>
+    
   </div>
+  
 </template>
 
 <style scoped>

@@ -68,6 +68,8 @@ h1 {
   width: 100%;
 }
 
+
+/* FIX: Image is outside of its container */
 .item-image {
   width: 150px;
   height: 150px;
@@ -77,18 +79,19 @@ h1 {
   align-items: center;
   justify-content: center;
   padding: 10px;
+  box-sizing: border-box;
 }
 
 .item-image img {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  margin-right: 50px;
 }
 
 .item-details h3 {
   margin: 0 0 10px 0;
   color: #baaa51;
+  max-width: 80%;
 }
 
 .item-specs p {
@@ -141,6 +144,9 @@ h1 {
   font-size: 1.5em;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .remove-btn:hover {
@@ -185,7 +191,7 @@ h1 {
   border-top: 2px solid #baaa51;
 }
 
-.delivery-select {
+.location-select {
   width: 100%;
   padding: 10px;
   border-radius: 4px;
@@ -262,6 +268,8 @@ h1 {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+
+
 
 @media (max-width: 1024px) {
   .cart-content {

@@ -7,12 +7,12 @@ import { getCurrentCustomerId } from '@/services/customerService';
 const { cartItems, cartCount, cartTotal, removeFromCart, updateQuantity, clearCart } = useCart();
 
 interface Locations {
-  custID: number;
+  custId: number;
   street: string;
   city: string;
   state: string;
   zip: string;
-  locID: number;
+  locId: number;
 }
 
 interface Order {
@@ -21,6 +21,7 @@ interface Order {
   orderDate?: string;
   status?: string;
   locationId: number;
+  billingLocationId: number;
 }
 
 interface OrderRing {
@@ -73,6 +74,7 @@ const handleCheckout = () => {
   const order: Order = {
     custId: customerId, //require customer ID
     locationId: Number(selectedLocation.value) || 0,
+    billingLocationId: Number(selectedBillingLocation.value) || 0,
     orderItems: cartItems.value.map(item => ({
       productId: item.ringId,
       materialId: item.materialType,
@@ -108,60 +110,61 @@ const fetchLocations = async () => {
     
     const response = await axios.get(`${import.meta.env.VITE_API_URL}/locations/${customerId}`);
     // Filter locations to only show those matching the current customer ID
-    locations.value = response.data.filter((location: Locations) => location.custID === customerId);
-    
+    locations.value = response.data.filter((location: Locations) => location.custId === customerId);
+    console.log('Fetched locations from API:', response.data);
   } catch (error) {
     console.error('Error fetching delivery locations:', error);
     // Mock data for development - filter to match current customerId
     const mockData = [
       {
-        custID: 1,
+        custId: 1,
         street: '123 Main St',
         city: 'Anytown',
         state: 'CA',
         zip: "12345",
-        locID: 1
+        locId: 1
       },
       {
-        custID: 1,
+        custId: 1,
         street: '456 Oak Ave',
         city: 'Othertown',
         state: 'NY',
         zip: "67890",
-        locID: 2
+        locId: 2
       },
       {
-        custID: 2,
+        custId: 2,
         street: '789 Pine Rd',
         city: 'Somewhere',
         state: 'TX',
         zip: "54321",
-        locID: 3
+        locId: 3
       },
       {
-        custID: 3,
+        custId: 3,
         street: '321 Elm St',
         city: 'Springfield',
         state: 'IL',
         zip: "98765",
-        locID: 4
+        locId: 4
       }
     ];
     
     // Filter mock data to only show locations for current customer
-    locations.value = mockData.filter(location => location.custID === customerId);
+    locations.value = mockData.filter(location => location.custId === customerId);
     console.log('Using mock locations data:', mockData);
     console.log('Filtered locations for customer ID', customerId, ':', locations.value);
   }
 }
 
-const addLocation = (newLocation: Omit<Locations, 'custID' | 'locID'>) => {
+const addLocation = (newLocation: Omit<Locations, 'custId' | 'locId'>) => {
   // function to add a new delivery location for the current customer
   const customerId = getCurrentCustomerId() || 3; // Default to 3 if no customer ID is found
-  const locationToAdd = { ...newLocation, custID: customerId, locID: 0 };
+  const locationToAdd = { ...newLocation };
   
   try {
-    axios.post(`${import.meta.env.VITE_API_URL}/customers/${customerId}/locations`, locationToAdd)
+    console.log('Adding new location:', locationToAdd);
+    axios.post(`${import.meta.env.VITE_API_URL}/locations/${customerId}`, locationToAdd)
       .then(response => {
         console.log('Location added successfully:', response.data);
         locations.value.push(response.data); // Add the new location to the list
@@ -174,6 +177,7 @@ const addLocation = (newLocation: Omit<Locations, 'custID' | 'locID'>) => {
 
 const showNewLocationSection = ref(false);
 const selectedLocation = ref('');
+const selectedBillingLocation = ref('');
 
 const handleAddLocation = () => {
   addLocation(newLocation.value);
@@ -227,11 +231,11 @@ onMounted(() => {
           </div>
           
           <div class="item-details">
-            <h3>Ring #{{ item.ringId }}</h3>
+            <h3 class="cart-ring-name">{{ item.ringName }}</h3>
             <div class="item-specs">
-              <p><strong>Material:</strong> {{ item.materialType }}</p>
-              <p><strong>Band Width:</strong> {{ item.bandWidth }}</p>
-              <p><strong>Ring Stone:</strong> {{ item.ringStone }}</p>
+              <p><strong>Material:</strong> {{ item.materialTypeName ?? item.materialType }}</p>
+              <p><strong>Band Width:</strong> {{ item.bandWidthName ?? item.bandWidth + ' mm' }}</p>
+              <p><strong>Ring Stone:</strong> {{ item.ringStoneName ?? item.ringStone }}</p>
             </div>
           </div>
           
@@ -272,20 +276,31 @@ onMounted(() => {
           <span>${{ cartTotal.toFixed(2) }}</span>
         </div>
         
-        <select class="delivery-select" @click="fetchLocations"  @change="handleLocationChange" v-model="selectedLocation">
+        <h3>Choose Delivery Location:</h3>
+        <select class="location-select" @click="fetchLocations"  @change="handleLocationChange" v-model="selectedLocation">
           <option disabled value="">Select Delivery Location</option>
-          <option v-for="location in locations" :key="`${location.custID}-${location.locID}`" :value="`${location.locID}`"> 
+          <option v-for="location in locations" :key="`${location.custId}-${location.locId}`" :value="`${location.locId}`"> 
             {{ location.street }}, {{ location.city }}, {{ location.state }} {{ location.zip }}
           </option>
           <option value="ADD_NEW">Add New Location</option>
         </select>
+
+        <h3>Choose Billing Location:</h3>
+        <select class="location-select" @click="fetchLocations" v-model="selectedBillingLocation">
+          <option disabled value="">Select Billing Location</option>
+          <option v-for="location in locations" :key="`billing-${location.custId}-${location.locId}`" :value="`${location.locId}`"> 
+            {{ location.street }}, {{ location.city }}, {{ location.state }} {{ location.zip }}
+          </option>
+          <option value="ADD_NEW">Add New Location</option>
+        </select>
+
         <div class="no-location" v-show="showNewLocationSection">
           <h3>Location not found? Add a new one!</h3>
           <form @submit.prevent="handleAddLocation">
             <input class="location-input" v-model="newLocation.street" placeholder="Street" required />
             <input class="location-input" v-model="newLocation.city" placeholder="City" required />
-            <input class="location-input" v-model="newLocation.state" placeholder="State" required />
-            <input class="location-input" v-model="newLocation.zip" placeholder="ZIP Code" required />
+            <input class="location-input" v-model="newLocation.state" placeholder="State (Postal Code e.g. CA)" maxlength="2" pattern="[A-Z]{2}" required />
+            <input class="location-input" v-model="newLocation.zip" placeholder="ZIP Code" maxlength="5" pattern="[0-9]*" required />
             <button class="add-location-btn" type="submit">Add Location</button>
           </form>
         </div>
