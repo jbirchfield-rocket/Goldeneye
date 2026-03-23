@@ -5,17 +5,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import StaleElementReferenceException
 
 
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
-
 def _wait(driver, timeout=20):
     return WebDriverWait(driver, timeout)
-
-
-# ---------------------------------------------------------------------------
-# Given steps
-# ---------------------------------------------------------------------------
 
 @given("I ensure the cart is empty")
 def step_ensure_cart_empty(context):
@@ -27,10 +18,6 @@ def step_ensure_cart_empty(context):
         clear_btns[0].click()
         _wait(d).until(EC.presence_of_element_located((By.CSS_SELECTOR, ".empty-cart")))
 
-
-# ---------------------------------------------------------------------------
-# When steps
-# ---------------------------------------------------------------------------
 
 @when("I click the empty cart Continue Shopping link")
 def step_click_empty_cart_continue(context):
@@ -44,11 +31,6 @@ def step_click_empty_cart_continue(context):
 @when("I select Add New Location from the delivery dropdown")
 def step_select_add_new_location(context):
     d = context.driver
-    # Use JS to set value + fire exactly ONE change event.
-    # Selenium's Select.select_by_value() triggers a native change event via a click;
-    # a second explicit dispatchEvent then runs AFTER Vue's setTimeout(0) has reset
-    # selectedLocation.value back to '', causing handleLocationChange to see '' and
-    # set showNewLocationSection = false.  Doing it all in one script avoids that race.
     delivery_sel_el = _wait(d).until(
         EC.presence_of_element_located((By.CSS_SELECTOR, ".cart-summary .location-select"))
     )
@@ -117,10 +99,6 @@ def step_select_first_delivery_location(context):
     raise AssertionError("No real delivery location found in the dropdown")
 
 
-# ---------------------------------------------------------------------------
-# Then steps
-# ---------------------------------------------------------------------------
-
 @then("the cart page heading should be visible")
 def step_cart_heading(context):
     d = context.driver
@@ -156,10 +134,10 @@ def step_order_summary_visible(context):
 
 @then("the delivery location dropdown should be present")
 def step_delivery_dropdown_present(context):
-    # d = context.driver
-    # _wait(d).until(
-    #     EC.visibility_of_element_located((By.CSS_SELECTOR, ".location-select"))
-    # )
+    d = context.driver
+    _wait(d).until(
+        EC.visibility_of_element_located((By.CSS_SELECTOR, ".location-select"))
+    )
     pass
 
 
@@ -189,18 +167,10 @@ def step_delivery_dropdown_has_options(context):
 @then("the add new location form should be visible")
 def step_add_new_location_form_visible(context):
     d = context.driver
-    # Wait for Vue to make the .no-location div visible (v-show removes display:none)
     form = _wait(d).until(
         EC.visibility_of_element_located((By.CSS_SELECTOR, ".cart-summary .no-location"))
     )
-    # Scroll it into the viewport so it appears in any failure screenshot
     d.execute_script("arguments[0].scrollIntoView(true);", form)
-
-    # element = WebDriverWait(d, 20).until(
-    #     EC.visibility_of_element_located((By.CSS_SELECTOR, "#app > div > div > div > div > div > div.cart-summary > div.no-location"))
-    # )
-    # d.execute_script("arguments[0].scrollIntoView(true);", element)
-
 
 @then("the cart item count should have decreased")
 def step_cart_count_decreased(context):

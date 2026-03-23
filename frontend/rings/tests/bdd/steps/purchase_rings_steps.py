@@ -210,8 +210,6 @@ def step_cart_item_quantity(context):
 @then("the first cart item should show the selected material value")
 def step_cart_item_material(context):
     d = context.driver
-    # Cart.vue displays materialTypeName (the text name), not the numeric materialId.
-    # Use selected_material_text so the assertion works with both mock and real API data.
     expected = getattr(context, "selected_material_text", None)
     if not expected:
         return
@@ -224,8 +222,6 @@ def step_cart_item_material(context):
 @then("the first cart item should show the selected stone value")
 def step_cart_item_stone(context):
     d = context.driver
-    # Cart.vue displays ringStoneName (the text name), not the numeric stoneId.
-    # Use selected_stone_text so the assertion works with both mock and real API data.
     expected = getattr(context, "selected_stone_text", None)
     if not expected:
         return

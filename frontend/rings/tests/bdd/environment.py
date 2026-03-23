@@ -20,14 +20,10 @@ def _ensure_clean_dir(d: Path):
             p.unlink(missing_ok=True)
 
 def before_all(context):
-    # Prepare artifacts (fresh each run)
     _ensure_clean_dir(LOGS_DIR)
     _ensure_clean_dir(SCREENSHOTS_DIR)
-
-    # Base URL for app
     context.base_url = os.getenv("BASE_URL", "http://localhost:5173")
-
-    # Headless Chrome (Selenium Manager will fetch the driver)
+    
     options = Options()
     options.add_argument("--headless=new")
     options.add_argument("--no-sandbox")
