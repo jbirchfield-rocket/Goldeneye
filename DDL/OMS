@@ -3,12 +3,14 @@
 -- Groups orders by date and customer with totals
 ------------------------------------------------------------------------
 
+
 SELECT
     O.ORDERDATE,
-    C.CUSTID,
-    C.NAME AS CUSTOMER_NAME,
-    COUNT(DISTINCT O.ORDERID) AS TOTAL_ORDERS,
-    SUM(OI.UNITPRICE) AS TOTAL_AMOUNT,
+    SUBSTR(C.CUSTID, 1, 2) CUSTID,
+    SUBSTR(C.NAME, 1, 30) AS CUST_NAME,
+    SUBSTR(COUNT(DISTINCT O.ORDERID), 1, 10) AS TOTAL_ORDERS,
+    LPAD(TRIM(SUBSTR(DECIMAL(SUM(OI.UNITPRICE), 15, 2), 1, 12)),
+     12, ' ') AS TOTAL_AMT,
     SUM(OI.QTY) AS TOTAL_ITEMS
 FROM
     GLDEYE.TBORDER O
@@ -29,6 +31,46 @@ COMMIT;
 
 
 ------------------------------------------------------------------------
--- Order History Summary by Day and Customer
--- Groups orders by date and customer with totals
-----------------------------------------------------------------------
+-- Item Level Summary Report
+-- Aggregates orders with identical product and attribute combinations
+-- Shows combined quantities for each unique product configuration
+------------------------------------------------------------------------
+
+SELECT
+    SUBSTR(P.NAME, 1, 26) AS PRODUCT_NAME,
+    SUBSTR(M.NAME, 1, 12) AS MATERIAL,
+    SUBSTR(S.NAME, 1, 18) AS STONE,
+    SUBSTR(W.WIDTH, 1, 2) AS WIDTH,
+    SUBSTR(COUNT(DISTINCT OI.ORDERID), 1, 2) AS NUM_ORDERS,
+    SUBSTR(SUM(OI.QTY), 1, 2) AS TOTAL_QTY,
+    LPAD(TRIM(SUBSTR(DECIMAL(SUM(OI.UNITPRICE)/SUM(OI.QTY),
+     15, 2), 1, 10)), 10, ' ')
+    AS UNIT_PRICE,
+    LPAD(TRIM(SUBSTR(DECIMAL(SUM(OI.UNITPRICE), 15, 2), 
+    1, 10)), 10, ' ') AS TOTAL_REVENUE
+FROM
+    GLDEYE.TBORDITM OI
+    INNER JOIN GLDEYE.TBPROD P
+        ON OI.PRODID = P.PRODID
+    INNER JOIN GLDEYE.TBMATT M
+        ON OI.MATTID = M.MATTID
+    INNER JOIN GLDEYE.TBSTONE S
+        ON OI.STONEID = S.STONEID
+    INNER JOIN GLDEYE.TBWIDTH W
+        ON OI.WID = W.WID
+GROUP BY
+    P.NAME,
+    M.NAME,
+    S.NAME,
+    W.WIDTH,
+    OI.PRODID,
+    OI.MATTID,
+    OI.STONEID,
+    OI.WID
+ORDER BY
+    TOTAL_QTY DESC,
+    TOTAL_REVENUE DESC;
+
+COMMIT;
+
+
