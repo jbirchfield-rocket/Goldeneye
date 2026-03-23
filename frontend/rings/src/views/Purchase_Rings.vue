@@ -170,8 +170,8 @@ const fetchRings = async () => {
     
     rings.value.forEach(ring => {
       selectedOptions.value[ring.prodId] = {
-        materialType: ring.materialTypes[0]?.materialId || 0,
-        bandWidth: ring.bandWidths[0]?.widthId || 0,
+        materialType: ring.materialTypes[1]?.materialId || 0,
+        bandWidth: ring.bandWidths[1]?.widthId || 0,
         ringStone: ring.ringStones[0]?.stoneId || 0,
         quantity: 1,
         proposedPrice: ring.basePrice || 0
