@@ -38,20 +38,16 @@ const loading = ref(true);
 const error = ref<string | null>(null);
 
 const fetchOrders = async () => {
-  const customerId = getCurrentCustomerId() || 2; // Default to customer 1 if not set
+  const customerId = getCurrentCustomerId() || 2; 
   
   try {
     loading.value = true;
     error.value = null;
-    // Replace with real endpoint
     const response = await axios.get(`${import.meta.env.VITE_API_URL}/orders/${customerId}`);
-    //orders filtered by customer id
-    // orders.value = response.data.filter((order: Order) => order.customerId === customerId);
     orders.value = response.data;
     console.log('Fetched orders:', orders.value);
   } catch (err) {
     console.error('Error fetching orders:', err);
-    // error.value = 'Failed to load orders';
     // Mock data 
     const mockOrders: Order[] = [
       {

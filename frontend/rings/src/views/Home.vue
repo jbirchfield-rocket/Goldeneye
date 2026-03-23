@@ -9,7 +9,7 @@ const selectedCustomerId = ref<number | string | null>(null);
 interface Customer {
   custId: number;
   name: string;
-  active?: number; //active is a number (1 for active, 0 for inactive)
+  active?: number;
 }
 
 const customers = ref<Customer[]>([]);
@@ -27,7 +27,6 @@ const handleCustomerChange = (event: Event) => {
     }, 0);
   } else {
     showNewCustomerSection.value = false;
-    // Store the selected customer ID in the cookie
     const customerId = Number(target.value);
     selectedCustomerId.value = customerId;
     setCustomerIdCookie(customerId);
@@ -39,7 +38,6 @@ const getAvailableCustomers = async () => {
     const response = await axios.get(`${import.meta.env.VITE_API_URL}/customers`);
     // Handle the response to populate customer options
     customers.value = response.data.filter((customer: { active: number; }) => customer.active === 1);
-   // customers.value = response.data;
     console.log('Available customers:', customers.value);
   } catch (error) {
     console.error('Error fetching customers:', error);
@@ -74,7 +72,7 @@ const handleAddCustomer = async () => {
   }
 };
 
-// Load the current customer ID when component mounts
+
 onMounted(() => {
   selectedCustomerId.value = getCurrentCustomerId();
   getAvailableCustomers();
