@@ -1,0 +1,34 @@
+------------------------------------------------------------------------
+-- Order History Summary by Day and Customer
+-- Groups orders by date and customer with totals
+------------------------------------------------------------------------
+
+SELECT
+    O.ORDERDATE,
+    C.CUSTID,
+    C.NAME AS CUSTOMER_NAME,
+    COUNT(DISTINCT O.ORDERID) AS TOTAL_ORDERS,
+    SUM(OI.UNITPRICE) AS TOTAL_AMOUNT,
+    SUM(OI.QTY) AS TOTAL_ITEMS
+FROM
+    GLDEYE.TBORDER O
+    INNER JOIN GLDEYE.TBCUST C
+        ON O.CUSTID = C.CUSTID
+    INNER JOIN GLDEYE.TBORDITM OI
+        ON O.ORDERID = OI.ORDERID
+GROUP BY
+    O.ORDERDATE,
+    C.CUSTID,
+    C.NAME
+ORDER BY
+    O.ORDERDATE DESC,
+    C.NAME ASC;
+
+COMMIT;
+
+
+
+------------------------------------------------------------------------
+-- Order History Summary by Day and Customer
+-- Groups orders by date and customer with totals
+----------------------------------------------------------------------
