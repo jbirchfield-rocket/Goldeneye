@@ -23,6 +23,9 @@ public interface CustomerRepo extends ListCrudRepository<Customer, Integer> {
     @Query("SELECT CUSTID, NAME, ACTIVE FROM GLDEYE.TBCUST")
     List<Customer> findAll();
 
+    @Query("SELECT COUNT(CUSTID) FROM GLDEYE.TBCUST WHERE CUSTID = :id")
+    boolean existsById(@Param("id") int id);
+
     @Query("SELECT INTEGER(IDENTITY_VAL_LOCAL()) FROM SYSIBM.SYSDUMMY1")
     int getLastGeneratedId();
 
