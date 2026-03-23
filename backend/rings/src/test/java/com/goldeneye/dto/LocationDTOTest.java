@@ -63,29 +63,5 @@ public class LocationDTOTest {
         assertEquals("TX", locationDto.getState());
         assertEquals("78701", locationDto.getZip());
     }
-
-    // @Test
-    // void constructorDoesNotAllowNullFields() {
-    //     // LocationDTO: CustID, Street, City, State, Zip
-    //     IllegalArgumentException exception = assertThrows(
-    //         IllegalArgumentException.class,
-    //         () -> new LocationDTO(null, "999 Test St", "Testville", "TX", "99999-9999")
-    //     );
-    // }
-
-    // @Test
-    // void constructorDoesNotAllowEmptyFields() {
-    //     IllegalArgumentException exception = assertThrows(
-    //         IllegalArgumentException.class,
-    //         () -> new LocationDTO(2, "", "Testville", "TX", "99999-9999")
-    //     );
-    // }
-
-    // @Test
-    // void constructorDoesNotAllowInvalidValues() {
-    //     IllegalArgumentException exception = assertThrows(
-    //         IllegalArgumentException.class,
-    //         () -> new LocationDTO(-1, "999 Test St", "Testville", "TX", "99999-999")
-    //     );
-    // }
+    
 }

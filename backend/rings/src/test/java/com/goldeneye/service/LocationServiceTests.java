@@ -34,7 +34,7 @@ import com.goldeneye.repo.LocationRepo;
 
 /**
  *
- * @author scanales and rskwall
+ * @author scanales and kwall
  */
 
 @DisplayName("Location Service Tests")

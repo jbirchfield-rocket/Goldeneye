@@ -31,7 +31,7 @@ import com.goldeneye.repo.ProductRepo;
 
 /**
  *
- * @author scanales and rskwall
+ * @author scanales kwall
  */
 
 @DisplayName("Product Service Tests")

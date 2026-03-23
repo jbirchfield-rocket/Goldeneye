@@ -32,7 +32,7 @@ import com.goldeneye.repo.CustomerRepo;
  
 /**
  *
- * @author scanales rskwall
+ * @author scanales kwall
  */
 
 @DisplayName("Customer Service Tests")
