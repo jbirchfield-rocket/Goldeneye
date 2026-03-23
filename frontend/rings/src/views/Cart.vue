@@ -51,7 +51,6 @@ const handleQuantityChange = (index: number, newQuantity: number) => {
 
 const handleCheckout = () => {
   if (cartItems.value.length === 0) {
-    // alert('Your cart is empty!');
     return;
   }
 
@@ -72,7 +71,7 @@ const handleCheckout = () => {
 
   // Adding cart items to an order interface item
   const order: Order = {
-    custId: customerId, //require customer ID
+    custId: customerId, 
     locationId: Number(selectedLocation.value) || 0,
     billingLocationId: Number(selectedBillingLocation.value) || 0,
     orderItems: cartItems.value.map(item => ({
@@ -101,9 +100,9 @@ const handleCheckout = () => {
 
 };
 
+// function to get delivery locations for a specific customer
 const fetchLocations = async () => {
-  // function to get delivery locations for a specific customer
-  const customerId = getCurrentCustomerId() || 3; // Default to 3 if no customer ID is found
+  const customerId = getCurrentCustomerId() || 3; 
   
   try {
     
@@ -113,7 +112,6 @@ const fetchLocations = async () => {
     console.log('Fetched locations from API:', response.data);
   } catch (error) {
     console.error('Error fetching delivery locations:', error);
-    // Mock data for development - filter to match current customerId
     const mockData = [
       {
         custId: 1,
@@ -156,9 +154,10 @@ const fetchLocations = async () => {
   }
 }
 
+// function to add a new delivery location for the current customer
 const addLocation = (newLocation: Omit<Locations, 'custId' | 'locId'>) => {
-  // function to add a new delivery location for the current customer
-  const customerId = getCurrentCustomerId() || 3; // Default to 3 if no customer ID is found
+  
+  const customerId = getCurrentCustomerId() || 3; 
   const locationToAdd = { ...newLocation };
   
   try {
@@ -166,7 +165,7 @@ const addLocation = (newLocation: Omit<Locations, 'custId' | 'locId'>) => {
     axios.post(`${import.meta.env.VITE_API_URL}/locations/${customerId}`, locationToAdd)
       .then(response => {
         console.log('Location added successfully:', response.data);
-        locations.value.push(response.data); // Add the new location to the list
+        locations.value.push(response.data);
       })
   } catch (error) {
     console.error('Error adding delivery location:', error);
