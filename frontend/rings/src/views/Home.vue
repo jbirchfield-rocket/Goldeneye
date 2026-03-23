@@ -58,7 +58,7 @@ const handleAddCustomer = async () => {
 
   try {
     console.log('Adding new customer with name:', newCustomerName.value);
-    const response = await axios.post(`${import.meta.env.VITE_API_URL}/customers`, { name: newCustomerName.value });
+    const response = await axios.post(`${import.meta.env.VITE_API_URL}/customers`, { name: newCustomerName.value, active: 1 });
     
     const newCustomer: Customer = response.data;
     console.log('New customer added:', newCustomer);
